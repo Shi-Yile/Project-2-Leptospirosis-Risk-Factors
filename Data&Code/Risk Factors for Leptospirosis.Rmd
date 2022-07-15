@@ -1,0 +1,118 @@
+---
+title: "Risk Factors for Leptospirosis"
+author: "Yile Shi"
+date: '2022-07-12'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+Sys.setlocale("LC_ALL", "UK")
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+```
+
+## Exploratory Data Analysis (EDA)
+
+First, we load the Leptospirosis dataset into R and drop duplicated observations as they are probably recorded by accident.
+
+```{r}
+# load Leptospirosis data
+lep_dat <- readxl::read_excel("Leptospirosis data for MSc SWDS.xlsx")
+# drop duplicated observations in the dataset
+lep_dat <- unique(lep_dat)
+```
+
+Then, we have a look at the number of missing values in each column and the corresponding proportion.
+
+```{r}
+miss_mat <- matrix(nrow = ncol(lep_dat), ncol = 2)
+# the number of missing values in each column
+miss_mat[, 1] <- apply(lep_dat, 2, function(x) length(x[is.na(x)]))
+# the proportion of missing values in each column
+miss_mat[, 2] <- round(miss_mat[, 1] / nrow(lep_dat), 4)
+row.names(miss_mat) <- colnames(lep_dat)
+colnames(miss_mat) <- c("Number", "Proportion")
+# keep the columns with missing values
+miss_mat <- miss_mat[which(miss_mat[, 1] > 0), ]
+# display the matrix in decreasing order
+miss_mat[order(miss_mat[, 1], decreasing = TRUE),]
+```
+
+Most columns have no missing data. From the matrix above, we can find that `age`, `gender` and `landuse` have missing values less than 1%. Thus, we can drop these rows as we do not loss much information of the original dataset.
+
+```{r}
+# drop rows with missing values in age, gender and landuse
+lep_dat <- lep_dat %>% drop_na(c(landuse, gender, age))
+```
+
+As for `occupation`, `disthosp`, `livestk_home` and `location`, which contain a large amount of missing values, we cannot drop the corresponding observations directly. Instead, we explore the distribution of each variable and determine a proper way to deal with them.
+
+### `location`
+
+According to the data description, `location` is the anonymised location of area where sampling was done, from 1 to 19. A possible way to deal with the missing data in this column is using the `village` variable, with no missing value, in the same row to determine the corresponding location, as each village belongs to a location with no overlap. 
+However, looking at the dataset and referring to Google Maps, we decide to use `constituency` to represent the geographical feature of each sample, instead of `village` and `location`, based on the following reasons:
+\begin{itemize}
+  \item `constituency` has no missing value
+  \item `constituency` contains information in `village` and `location`
+  \item `constituency` has fewer categories but more significant geographical differences
+\end{itemize}
+
+From the map, we can observe a potential order in `constituency` based on the distance to Tana River and the terrain. Further details will be discussed in the feature transformation step.
+
+### `livestk_home`
+
+`livestk_home` is a binary variable indicating whether or not livestock is kept in the household of sampled person. The work of Cook et al (2016) found that the exposure to livestocks could be an important risk factor for Leptospirosis and we might also expect the significant contribution to Leptospirosis diagnosis of this variable. However, from the histogram below, we observe a significant imbalance in this column as most families have livestocks at home. In this case, we won't include this variable in our further analysis as the imbalance probably leads to insignificant results of this variable.
+
+```{r}
+ggplot(data = lep_dat, aes(x = factor(livestk_home)))+
+  geom_bar(stat = "count", width = 0.25, color="darkblue", fill="lightblue") +
+  labs(x ="livestk_home")
+```
+
+### `disthosp`
+
+`disthosp` is the Euclidean distance from the sampled person's household to local hospital. Here, we assume that people from the same village go to the same and unique hospital. Thus, we can use the mean distance to the local hospital of each village to impute the missing values in this column.
+
+Note that `disthosp` in village 12, 13 and 23 are completely missing. We cannot calculate the mean distance to the local hospital and further fail to impute the missing data.
+
+?drop the rows or use `constituency` to impute village 12, 13 and 23?
+
+```{r}
+# compute the mean distance of each village
+dist_mean <- lep_dat %>%
+  select(disthosp, village) %>%
+  drop_na() %>%
+  group_by(village) %>%
+  summarize(dist = mean(disthosp))
+
+# impute missing values
+for (i in dist_mean$village){
+  idx <- which(lep_dat$village == i & is.na(lep_dat$disthosp))
+  lep_dat$disthosp[idx] <- dist_mean$dist[which(dist_mean$village == i)]
+}
+```
+
+### `occupation`
+
+The job of a person could have influence on the prevalence of Leptospirosis. Specifically, Cook et al (2016) pointed out that people whose working places are closer to water or animals are more likely to suffer from Leptospirosis. However, in our dataset, the column for the occupation of sampled person contains over 1/3 missing data. Unlike `location`, whose information is included in `constituency`, `occupation`has no other column to use instead and omission of missing values could result in a huge loss of information. Thus, we consider using other columns including `age` and `gender` to impute the variable. A general imputation idea is using the mode in some specific stratification.
+
+It is a common and reasonable assumption that people less than 18 years old are most likely to be students. Therefore, we impute the occupation of people below 18 years old with "Student".
+
+```{r}
+# histogram for occupation of people below 18
+ggplot(data = lep_dat %>% filter(age < 18) %>% drop_na(occupation), 
+       aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.25, color="darkblue", fill="lightblue") +
+  labs(x ="occupation of people below 18")
+# indices of people below 18 with unrecorded occupation 
+idx <- which(lep_dat$age < 18 & is.na(lep_dat$occupation))
+# impute with "Student"
+lep_dat$occupation[idx] = "Student"
+```
+
+
+```{r}
+
+```
+
