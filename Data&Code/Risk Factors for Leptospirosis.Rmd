@@ -10,15 +10,20 @@ Sys.setlocale("LC_ALL", "UK")
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggplot2)
+library(gridExtra)
 ```
 
 ## Exploratory Data Analysis (EDA)
 
-First, we load the Leptospirosis dataset into R and drop duplicated observations as they are probably recorded by accident.
+First, we load the Leptospirosis dataset into R. Before any further steps, we find some wrong data when exploring the dataset and fix them. After then, we drop duplicated observations as they are probably recorded by accident.
 
 ```{r}
 # load Leptospirosis data
 lep_dat <- readxl::read_excel("Leptospirosis data for MSc SWDS.xlsx")
+# fix wrong data
+lep_dat$relationshiphh[lep_dat$relationshiphh == "Son Lnlaw"] = "Son In Law"
+lep_dat$gender[lep_dat$relationshiphh %in% c("Wife", "Daughter")] = "Female"
+lep_dat$gender[lep_dat$relationshiphh == "Son"] = "Male"
 # drop duplicated observations in the dataset
 lep_dat <- unique(lep_dat)
 ```
@@ -95,7 +100,7 @@ for (i in dist_mean$village){
 
 ### `occupation`
 
-The job of a person could have influence on the prevalence of Leptospirosis. Specifically, Cook et al (2016) pointed out that people whose working places are closer to water or animals are more likely to suffer from Leptospirosis. However, in our dataset, the column for the occupation of sampled person contains over 1/3 missing data. Unlike `location`, whose information is included in `constituency`, `occupation`has no other column to use instead and omission of missing values could result in a huge loss of information. Thus, we consider using other columns including `age` and `gender` to impute the variable. A general imputation idea is using the mode in some specific stratification.
+The job of a person could have influence on the prevalence of Leptospirosis. Specifically, Cook et al (2016) pointed out that people whose working places are closer to water or animals are more likely to suffer from Leptospirosis. However, in our dataset, the column for the occupation of sampled person contains over 1/3 missing data. Unlike `location`, whose information is included in `constituency`, `occupation`has no other column to use instead and omission of missing values could result in a huge loss of information. Thus, we consider using other columns including `age`, `gender` and `landuse` to impute the variable. A general imputation idea is using the mode in some specific stratification.
 
 It is a common and reasonable assumption that people less than 18 years old are most likely to be students. Therefore, we impute the occupation of people below 18 years old with "Student".
 
@@ -110,9 +115,81 @@ idx <- which(lep_dat$age < 18 & is.na(lep_dat$occupation))
 # impute with "Student"
 lep_dat$occupation[idx] = "Student"
 ```
+For people at least 18 years old, we observe different distributions of occupations in different `gender` and `landuse` groups. For sampled people whose land use is "riverine" or "irrigation", their occupation are most likely to be "Farmer". Thus, we impute the missing values in `occupation` with "Farmer", if `landuse` in the same row is "riverine" or "irrigation". 
 
+However, for people with land use of "pastoral", most of them work as a "Pastoralist". Moreover, specifying the female group, people also have a high probability to be a housewife. In this case, if a person with `landuse` as "pastoral" is a male, we impute his `occupation` with "Pastoralist"; if this person is female, we randomly impute this column with "Pastoralist" or "Housewife", based on a weighted probability ($P(Pastoralist) = \frac{\#Pastoralist}{\#Pastoralist + \#Housewife}, \ P(Housewife) = \frac{\#Housewife}{\#Pastoralist + \#Housewife}$)
+
+```{r, fig.width = 9, fig.height = 6}
+# landuse = riverine
+p1 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & landuse == "riverine") %>% 
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.1, color="darkblue", fill="lightblue") +
+  labs(x ="occupation of people at least 18 & landuse = riverine")
+
+# landuse = irrigation
+p2 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & landuse == "irrigation") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.3, color="darkblue", fill="lightblue") +
+  labs(x ="occupation of people at least 18 & landuse = irrigation")
+
+grid.arrange(p1, p2)
+
+```
+
+```{r, fig.width = 9, fig.height = 6}
+# landuse = pastoral & gender = male
+p1 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & landuse == "pastoral" & gender == "Male") %>% 
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.3, color="darkblue", fill="lightblue") +
+  labs(x ="occupation of men at least 18 & landuse = pastoral")
+
+# landuse = pastoral & gender = female
+p2 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & landuse == "pastoral" & gender == "Female") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.2, color="darkblue", fill="lightblue") +
+  labs(x ="occupation of women at least 18 & landuse = pastoral")
+
+grid.arrange(p1, p2)
+```
 
 ```{r}
+# imputation: riverine / irrigation
+idx <- which(lep_dat$age >= 18 & 
+               lep_dat$landuse %in% c("riverine", "irrigation") & 
+               is.na(lep_dat$occupation)) 
+lep_dat$occupation[idx] <- rep("Farmer", length(idx))
 
+# imputation: pastoral + male
+idx <- which(lep_dat$age >= 18 & 
+               lep_dat$gender == "Male" &
+               lep_dat$landuse == "pastoral" & 
+               is.na(lep_dat$occupation))
+lep_dat$occupation[idx] <- rep("Pastoralist", length(idx))
+  
+# imputation: pastoral + female
+idx <- which(lep_dat$age >= 18 & 
+               lep_dat$gender == "Female" &
+               lep_dat$landuse == "pastoral" & 
+               is.na(lep_dat$occupation))
+num_hf <- length(which(lep_dat$age >= 18 & 
+                         lep_dat$gender == "Female" &
+                         lep_dat$landuse == "pastoral" &
+                         lep_dat$occupation == "Housewife"))
+num_pa <- length(which(lep_dat$age >= 18 & 
+                         lep_dat$gender == "Female" &
+                         lep_dat$landuse == "pastoral" &
+                         lep_dat$occupation == "Pastoralist"))
+set.seed(1)
+lep_dat$occupation[idx] <- sample(c("Pastoralist", "Housewife"), length(idx),
+                                  prob = c(num_pa, num_hf) / (num_pa + num_hf),
+                                  replace = TRUE)
 ```
 
