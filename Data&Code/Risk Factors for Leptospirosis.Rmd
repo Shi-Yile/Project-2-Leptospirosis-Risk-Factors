@@ -141,9 +141,34 @@ grid.arrange(p1, p2)
 ```
 
 ```{r, fig.width = 9, fig.height = 6}
+# landuse = irrigation + constituency = Tana North
+p1 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & landuse == "irrigation" & 
+                        constituency == "Tana North") %>% 
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.2, color="darkblue", fill="lightblue") +
+  labs(x ="Tana North")
+
+# landuse = irrigation _ constituency = Tana River
+p2 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & landuse == "irrigation" & 
+                        constituency == "Tana River") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.1, color="darkblue", fill="lightblue") +
+  labs(x ="Tana River")
+
+grid.arrange(p1, p2)
+
+```
+
+```{r, fig.width = 9, fig.height = 6}
 # landuse = pastoral & gender = male
 p1 <- ggplot(data = lep_dat %>% 
-               filter(age >= 18 & landuse == "pastoral" & gender == "Male") %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Male") %>% 
                drop_na(occupation), 
              aes(x = factor(occupation)))+
   geom_bar(stat = "count", width = 0.3, color="darkblue", fill="lightblue") +
@@ -151,7 +176,9 @@ p1 <- ggplot(data = lep_dat %>%
 
 # landuse = pastoral & gender = female
 p2 <- ggplot(data = lep_dat %>% 
-               filter(age >= 18 & landuse == "pastoral" & gender == "Female") %>%
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Female") %>%
                drop_na(occupation), 
              aes(x = factor(occupation)))+
   geom_bar(stat = "count", width = 0.2, color="darkblue", fill="lightblue") +
@@ -160,12 +187,111 @@ p2 <- ggplot(data = lep_dat %>%
 grid.arrange(p1, p2)
 ```
 
+```{r, fig.width = 9, fig.height = 10}
+# landuse = pastoral + constituency = Tana North + gender = Male
+p1 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Male" & 
+                        constituency == "Tana North") %>% 
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.2, color="darkblue", fill="lightblue") +
+  labs(x ="Tana North, Male")
+
+# landuse = pastoral + constituency = Tana North + gender = Female
+p2 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Female" &
+                        constituency == "Tana North") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.08, color="darkblue", fill="lightblue") +
+  labs(x ="Tana North, Female")
+
+# landuse = pastoral + constituency = Tana River + gender = Male
+p3 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Male" &
+                        constituency == "Tana River") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.2, color="darkblue", fill="lightblue") +
+  labs(x ="Tana River, Male")
+
+# landuse = pastoral + constituency = Tana North + gender = Female
+p4 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Female" &
+                        constituency == "Tana River") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.08, color="darkblue", fill="lightblue") +
+  labs(x ="Tana River, Female")
+
+# landuse = pastoral + constituency = Ijara + gender = Male
+p5 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Male" &
+                        constituency == "Ijara") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.15, color="darkblue", fill="lightblue") +
+  labs(x ="Ijara, Male")
+
+# landuse = pastoral + constituency = Ijara + gender = Female
+p6 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Female" &
+                        constituency == "Ijara") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.2, color="darkblue", fill="lightblue") +
+  labs(x ="Ijara, Female")
+
+# landuse = pastoral + constituency = Sangailu + gender = Male
+p7 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Male" &
+                        constituency == "Sangailu") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.3, color="darkblue", fill="lightblue") +
+  labs(x ="Sangailu, Male")
+
+# landuse = pastoral + constituency = Sangailu + gender = Female
+p8 <- ggplot(data = lep_dat %>% 
+               filter(age >= 18 & 
+                        landuse == "pastoral" & 
+                        gender == "Female" &
+                        constituency == "Sangailu") %>%
+               drop_na(occupation), 
+             aes(x = factor(occupation)))+
+  geom_bar(stat = "count", width = 0.2, color="darkblue", fill="lightblue") +
+  labs(x ="Sangailu, Female")
+
+grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, ncol = 2)
+
+```
+
 ```{r}
-# imputation: riverine / irrigation
+# imputation: landuse = riverine 
 idx <- which(lep_dat$age >= 18 & 
-               lep_dat$landuse %in% c("riverine", "irrigation") & 
+               lep_dat$landuse == "riverine" & 
                is.na(lep_dat$occupation)) 
 lep_dat$occupation[idx] <- rep("Farmer", length(idx))
+
+# imputation: landuse = irrigation
+idx <- which(lep_dat$age >= 18 & 
+               lep_dat$landuse == "irrigation" & 
+               lep_dat$constituency == "Tana River" & 
+               is.na(lep_dat$occupation))
 
 # imputation: pastoral + male
 idx <- which(lep_dat$age >= 18 & 
@@ -192,4 +318,3 @@ lep_dat$occupation[idx] <- sample(c("Pastoralist", "Housewife"), length(idx),
                                   prob = c(num_pa, num_hf) / (num_pa + num_hf),
                                   replace = TRUE)
 ```
-
