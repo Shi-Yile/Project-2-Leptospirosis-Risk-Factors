@@ -11,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggplot2)
 library(gridExtra)
+library(lme4)
 ```
 
 ## Exploratory Data Analysis (EDA)
@@ -24,6 +25,7 @@ lep_dat <- readxl::read_excel("Leptospirosis data for MSc SWDS.xlsx")
 lep_dat$relationshiphh[lep_dat$relationshiphh == "Son Lnlaw"] = "Son In Law"
 lep_dat$gender[lep_dat$relationshiphh %in% c("Wife", "Daughter")] = "Female"
 lep_dat$gender[lep_dat$relationshiphh == "Son"] = "Male"
+lep_dat$village[lep_dat$village == "village 5"] = "Village 5"
 # drop duplicated observations in the dataset
 lep_dat <- unique(lep_dat)
 ```
@@ -318,3 +320,42 @@ lep_dat$occupation[idx] <- sample(c("Pastoralist", "Housewife"), length(idx),
                                   prob = c(num_pa, num_hf) / (num_pa + num_hf),
                                   replace = TRUE)
 ```
+
+## Inplementation
+
+Model: Linear Mixed Model
+
+```{r}
+# 
+lep_narm <- lep_dat %>%
+  drop_na(occupation, disthosp, location) %>%
+  select(c(result, gender, occupation, age, landuse, hhoccup, famsize,
+           disthosp, village, location, constituency))
+
+lep_narm$result <- ifelse(lep_narm$result == "Negative", 0, 1)
+# lep_narm$gender <- ifelse(lep_narm$gender == "Male", 0, 1)
+lep_narm$occupation[lep_narm$occupation %in% 
+                        c("Farmer", "Crop Farming")] = "Farming"
+lep_narm$occupation[lep_narm$occupation %in% 
+                        c("Herdsman", "Pastoralist")] = "Pastoral"
+lep_narm$occupation[!lep_narm$occupation %in% 
+                        c("Farming", "Pastoral", "Student")] = "Others"
+
+lep_narm$hhoccup[lep_narm$hhoccup %in% 
+                        c("Farmer", "Crop Farming")] = "Farming"
+lep_narm$hhoccup[lep_narm$hhoccup %in% 
+                        c("Herdsman", "Pastoralist")] = "Pastoral"
+lep_narm$hhoccup[!lep_narm$hhoccup %in% 
+                        c("Farming", "Pastoral")] = "Others"
+
+# lep_narm$occupation <- lep_narm
+```
+
+```{r}
+# an initial model
+model_1 <- glmer(result ~ 1 + gender + occupation + age + landuse + hhoccup + 
+                   disthosp + (1 | village), data = lep_narm,
+                 family = binomial(link = "logit"))
+summary(model_1)
+```
+
