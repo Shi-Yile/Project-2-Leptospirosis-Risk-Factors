@@ -73,7 +73,7 @@ From the map, we can observe a potential order in `constituency` based on the di
 
 ```{r}
 ggplot(data = lep_dat, aes(x = factor(livestk_home)))+
-  geom_bar(stat = "count", width = 0.25, color="darkblue", fill="lightblue") +
+  geom_bar(stat = "count", width = 0.2, color="darkblue", fill="lightblue") +
   labs(x ="livestk_home")
 ```
 
@@ -117,9 +117,12 @@ idx <- which(lep_dat$age < 18 & is.na(lep_dat$occupation))
 # impute with "Student"
 lep_dat$occupation[idx] = "Student"
 ```
+
 For people at least 18 years old, we observe different distributions of occupations in different `gender` and `landuse` groups. For sampled people whose land use is "riverine" or "irrigation", their occupation are most likely to be "Farmer". Thus, we impute the missing values in `occupation` with "Farmer", if `landuse` in the same row is "riverine" or "irrigation". 
 
 However, for people with land use of "pastoral", most of them work as a "Pastoralist". Moreover, specifying the female group, people also have a high probability to be a housewife. In this case, if a person with `landuse` as "pastoral" is a male, we impute his `occupation` with "Pastoralist"; if this person is female, we randomly impute this column with "Pastoralist" or "Housewife", based on a weighted probability ($P(Pastoralist) = \frac{\#Pastoralist}{\#Pastoralist + \#Housewife}, \ P(Housewife) = \frac{\#Housewife}{\#Pastoralist + \#Housewife}$)
+
+### Imputation of `occupation`
 
 ```{r, fig.width = 9, fig.height = 6}
 # landuse = riverine
@@ -321,19 +324,21 @@ lep_dat$occupation[idx] <- sample(c("Pastoralist", "Housewife"), length(idx),
                                   replace = TRUE)
 ```
 
-## Inplementation
 
-Model: Linear Mixed Model
+### Feature Selection
 
+Here, we drop the observations with missing values in `occupation` and `disthosp`
+directly from the dataset. After then, we combine some categories in `occupation` and `hhoccup` to ensure that each category contains sufficient observations. We make boxplots and barplots to explore if the feature affects `result` significantly:
 ```{r}
-# 
+# drop NAs in `occupation` and `disthosp`
 lep_narm <- lep_dat %>%
-  drop_na(occupation, disthosp, location) %>%
-  select(c(result, gender, occupation, age, landuse, hhoccup, famsize,
-           disthosp, village, location, constituency))
+  drop_na(occupation, disthosp) %>%
+  filter(disthosp < 100)
 
-lep_narm$result <- ifelse(lep_narm$result == "Negative", 0, 1)
-# lep_narm$gender <- ifelse(lep_narm$gender == "Male", 0, 1)
+# factorize the response, i.e. result
+lep_narm$result <- factor(lep_narm$result)
+
+# combine categories in `occupation`
 lep_narm$occupation[lep_narm$occupation %in% 
                         c("Farmer", "Crop Farming")] = "Farming"
 lep_narm$occupation[lep_narm$occupation %in% 
@@ -341,21 +346,132 @@ lep_narm$occupation[lep_narm$occupation %in%
 lep_narm$occupation[!lep_narm$occupation %in% 
                         c("Farming", "Pastoral", "Student")] = "Others"
 
+# combine categories in `hhoccup`
 lep_narm$hhoccup[lep_narm$hhoccup %in% 
                         c("Farmer", "Crop Farming")] = "Farming"
 lep_narm$hhoccup[lep_narm$hhoccup %in% 
                         c("Herdsman", "Pastoralist")] = "Pastoral"
 lep_narm$hhoccup[!lep_narm$hhoccup %in% 
                         c("Farming", "Pastoral")] = "Others"
-
-# lep_narm$occupation <- lep_narm
 ```
+
+```{r, fig.height = 10, fig.width = 8}
+# boxplots for continuous variables
+# age
+p1 <- ggplot(lep_narm, aes(x = result, y = age)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# altitude
+p2 <- ggplot(lep_narm, aes(x = result, y = altitude)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# nmales
+p3 <- ggplot(lep_narm, aes(x = result, y = nmales)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# nfemales
+p4 <- ggplot(lep_narm, aes(x = result, y = nfemales)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# famsize
+p5 <- ggplot(lep_narm, aes(x = result, y = famsize)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# disthosp
+p6 <- ggplot(lep_narm, aes(x = result, y = disthosp)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# display plots
+grid.arrange(p1, p2, p3, p4, p5, p6, ncol = 2)
+```
+
+```{r, fig.height = 5, fig.width = 8}
+# stacked barplots for discrete factors
+# gender
+p1 <- ggplot(lep_narm, aes(x = gender, fill = result)) + 
+  geom_bar(width = 0.2) + 
+  scale_fill_manual(values = c("lightblue", "darkblue")) +
+  labs(x ="gender")
+
+# occupation
+p2 <- ggplot(lep_narm, aes(x = occupation, fill = result)) + 
+  geom_bar(width = 0.35) + 
+  scale_fill_manual(values = c("lightblue", "darkblue")) +
+  labs(x ="occupation")
+
+# landuse
+p3 <- ggplot(lep_narm, aes(x = landuse, fill = result)) + 
+  geom_bar(width = 0.3) + 
+  scale_fill_manual(values = c("lightblue", "darkblue")) +
+  labs(x ="landuse")
+
+# hhoccup
+p4 <- ggplot(lep_narm, aes(x = hhoccup, fill = result)) + 
+  geom_bar(width = 0.3) + 
+  scale_fill_manual(values = c("lightblue", "darkblue")) +
+  labs(x ="hhoccup")
+
+# display plots
+grid.arrange(p1, p2, p3, p4, ncol = 2)
+```
+
+```{r, fig.height = 8, fig.width = 10}
+# village
+p1 <- ggplot(lep_narm, aes(x = village, fill = result)) + 
+  geom_bar() + 
+  scale_fill_manual(values = c("lightblue", "darkblue")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x ="village")
+
+# location
+p2 <- ggplot(lep_narm, aes(x = location, fill = result)) + 
+  geom_bar() + 
+  scale_fill_manual(values = c("lightblue", "darkblue")) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x ="location")
+
+# constituency
+p3 <- ggplot(lep_narm, aes(x = constituency, fill = result)) + 
+  geom_bar(width = 0.2) + 
+  scale_fill_manual(values = c("lightblue", "darkblue")) +
+  labs(x ="constituency")
+
+# display plots
+grid.arrange(p1, p2, p3)
+```
+
+## Inplementation
+
+Model: Linear Mixed Model
 
 ```{r}
 # an initial model
-model_1 <- glmer(result ~ 1 + gender + occupation + age + landuse + hhoccup + 
-                   disthosp + (1 | village), data = lep_narm,
+model_1 <- glmer(result ~ 1 + gender + age + occupation * landuse + altitude +
+                   famsize + hhoccup + disthosp + (1 | village), 
+                 data = lep_narm,
                  family = binomial(link = "logit"))
 summary(model_1)
 ```
+```{r}
+model_2 <- glm(result ~ 1 + gender + age + occupation * landuse + altitude +
+                   hhoccup + disthosp, data = lep_narm,
+                 family = binomial(link = "logit"))
+anova(model_1, model_2)
+```
+
+```{r}
+model_3 <- glmer(result ~ 1 + gender + age + occupation * landuse + altitude +
+                   hhoccup + disthosp + (1 + landuse| village),
+                 data = lep_narm,
+                 family = binomial(link = "logit"))
+anova(model_1, model_2, model_3)
+```
+
+
 
