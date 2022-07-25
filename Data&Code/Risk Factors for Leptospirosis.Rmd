@@ -451,27 +451,54 @@ grid.arrange(p1, p2, p3)
 Model: Linear Mixed Model
 
 ```{r}
-# an initial model
-model_1 <- glmer(result ~ 1 + gender + age + occupation * landuse + altitude +
+# an initial model with glm without random effect
+model_1 <- glm(result ~ gender + age + occupation * landuse + altitude +
+                   famsize + hhoccup + disthosp + village, 
+                 data = lep_narm,
+                 family = binomial(link = "logit"))
+
+# glmer with random effect on intercept
+model_2 <- glmer(result ~ gender + age + occupation * landuse + altitude +
                    famsize + hhoccup + disthosp + (1 | village), 
                  data = lep_narm,
                  family = binomial(link = "logit"))
-summary(model_1)
-```
-```{r}
-model_2 <- glm(result ~ 1 + gender + age + occupation * landuse + altitude +
-                   hhoccup + disthosp, data = lep_narm,
-                 family = binomial(link = "logit"))
-anova(model_1, model_2)
-```
 
-```{r}
 model_3 <- glmer(result ~ 1 + gender + age + occupation * landuse + altitude +
                    hhoccup + disthosp + (1 + landuse| village),
                  data = lep_narm,
                  family = binomial(link = "logit"))
-anova(model_1, model_2, model_3)
+
+model_4 <- glmer(result ~ 1 + gender + age + occupation * landuse + altitude +
+                   hhoccup + disthosp + (1 + altitude| village),
+                 data = lep_narm,
+                 family = binomial(link = "logit"))
+
+anova(model_2, model_1, model_3, model_4)
+```
+
+```{r}
+summary(model_2)
+```
+
+```{r}
+drop1(model_1, test = "Chisq")
 ```
 
 
+```{r}
+model_5 <- glmer(result ~ 1 + gender + age + occupation * landuse + altitude +
+                   hhoccup + disthosp + (1 | constituency),
+                 data = lep_narm,
+                 family = binomial(link = "logit"))
+
+model_6 <- glm(result ~ age + altitude + hhoccup + occupation * landuse +
+                 village, data = lep_narm, family = binomial(link = "logit"))
+
+model_7 <- glmer(result ~ age + altitude + hhoccup + occupation * landuse +
+                   (1 | village), 
+                 data = lep_narm, 
+                 family = binomial(link = "logit"))
+
+anova(model_2, model_1, model_6, model_7)
+```
 
