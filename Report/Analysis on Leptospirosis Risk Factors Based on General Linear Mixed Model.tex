@@ -1,0 +1,454 @@
+\documentclass[11pt,twoside]{article}
+\usepackage{geometry}
+\usepackage{enumerate}
+\usepackage{latexsym,booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage[colorlinks, linkcolor = blue]{hyperref}
+\usepackage[singlespacing]{setspace}
+\usepackage{calc}
+\usepackage{multirow}
+
+
+\geometry{a4paper,left=2cm,right=2.0cm, top=2cm, bottom=2.0cm}
+
+\newtheorem{Definition}{Definition}
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Corollary}{Corollary}
+\newtheorem{Proposition}{Proposition}
+\newtheorem{Algorithm}{Algorithm}
+\numberwithin{Theorem}{section}
+\numberwithin{Definition}{section}
+\numberwithin{Lemma}{section}
+\numberwithin{Algorithm}{section}
+\numberwithin{equation}{section}
+
+\newcommand{\dottedline}[1]{\makebox[#1]{.\dotfill}}
+
+\begin{document}
+	
+\pagestyle{empty}
+
+ %=============================================================================
+ %Title page
+ %=============================================================================
+\begin{titlepage}
+\vspace*{.5em}
+\centering
+\textbf{\Large{The School of Mathematics}} \\
+\vspace*{1em}
+\begin{figure}[!h]
+\centering
+\includegraphics[width=180pt]{CentredLogoCMYK.jpg}
+\end{figure}
+\vspace{2em}
+\textbf{\Huge{Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Models}}\\[2em]
+\textbf{\LARGE{by}}\\
+\vspace{2em}
+\textbf{\LARGE{Yile Shi}}\\
+\vspace{6.5em}
+\Large{Dissertation Presented for the Degree of\\
+MSc in Statistics with Data Science}\\
+\vspace{6.5em}
+\Large{August 2021}\\
+\vspace{3em}
+\Large{Supervised by\\Dr. Gail Robertson and Dr. Amy Wilson}
+\vfill
+\end{titlepage}
+
+\clearpage
+
+% =============================================================================
+% Executive summary, acknowledgments, and own work declaration
+% =============================================================================
+\begin{center}
+\Large{Executive Summary}
+\end{center}
+
+\textbf{Background:} Dementia, a major international public health concern, seriously affects people's lives. It is reported that 50 million people around the world had been diagnosed with dementia in 2019, and this number is estimated to reach 152 million by 2050 \cite{alzheimer2019world}. Currently, the cure of dementia is still absent, hence effective prevention strategies become critical to reduce the risk of dementia and lessen its burden on society. 
+
+\
+
+\textbf{Research question:} This research aims to shed light on the potential risk factors that affects individual's cognitive function, and further generate knowledge to inform the development of lifestyle interventions for dementia risk reduction. We consider 13 factors: age, gender, country, education, drinking behaviour, smoking, obesity, physical activity, chronic disease, working status, household finance, social connection and depression.
+
+\
+
+\textbf{Data:} We use a subset of easySHARE dataset from Survey of Health, Ageing and Retirement in Europe, which contains 57310 subjects recorded in 2013.
+
+\
+
+\textbf{Methods:} We construct Bayesian networks where the response of interest is individual's cognitive score. Modified network based on Hill-climbing algorithm is selected due to best performance through 10-fold cross-validation. Further, we use the network to estimate model parameters and plot line graphs to explore the trends of conditional probabilities of cognitive score in different groups.
+
+\
+
+\textbf{Results:} Age, gender, country, education and depression are shown to have significant effects on individual's cognitive impairment. Generally, age and depression have negative influence where individual's cognitive impairment gets more severe as age or depression level increases. Particularly, cognitive impairment seems to aggregate for individuals over 65 years or experiencing severe depression (figure \ref{summary}). A positive effect of education level on cognition is observed, where people with higher education background usually have lower dementia risk. For the binary factor country, individuals living in countries with low average gross domestic product are more likely to suffer from dementia. Besides, female groups have higher dementia risk than males.
+
+\clearpage
+
+\begin{center}
+\Large{Acknowledgments}
+\end{center}
+
+I am sincerely grateful to the supervisors of this project, Dr. Sara Wade and Dr. Cecilia Balocchi, as well as PhD supporter Steven Soutar, for their advice and guidance. I would also like to thank SHARE for providing the data and background information used in the research. 
+
+This report uses data from SHARE Waves 1 \cite{share1}, 2 \cite{share2}, 3 \cite{share3}, 4 \cite{share4}, 5 \cite{share5}, 6 \cite{share6}, 7 \cite{share7}, and 8 \cite{share8}. The SHARE data collection has been funded by the European Commission, DG RTD through FP5 (QLK6-CT-2001-00360), FP6 (SHARE-I3: RII-CT-2006-062193, COMPARE: CIT5-CT-2005-028857, SHARELIFE: CIT4-CT-2006-028812), FP7 (SHARE-PREP: GA N°211909, SHARE-LEAP: GA N°227822, SHARE M4: GA N°261982, DASISH: GA N°283646) and Horizon 2020 (SHARE-DEV3: GA N°676536, SHARE-COHESION: GA N°870628, SERISS: GA N°654221, SSHOC: GA N°823782, SHARE-COVID19: GA N°101015924) and by DG Employment, Social Affairs \& Inclusion through VS 2015/0195, VS 2016/0135, VS 2018/0285, VS 2019/0332, and VS 2020/0313. Additional funding from the German Ministry of Education and Research, the Max Planck Society for the Advancement of Science, the U.S. National Institute on Aging (U01\_AG09740-13S2, P01\_AG005842, P01\_AG08291, P30\_AG12815, R21\_AG025169, Y1-AG-4553-01, IAG\_BSR06-11, OGHA\_04-064, HHSN271201300071C, RAG052527A) and from various national funding sources is gratefully acknowledged (see \href{www.share-project.org}{www.share-project.org}).
+
+This report also uses data from the generated easySHARE data set \cite{easyshare}. The easySHARE release 8.0.0 is based on SHARE Waves 1, 2, 3, 4, 5, 6, 7 and 8.
+
+\clearpage
+
+
+\begin{center}
+\Large{University of Edinburgh – Own Work Declaration}
+\end{center}
+
+This sheet must be filled in, signed and dated - your work will not be marked unless this is done.
+\vspace{1cm}
+
+Name: Yile Shi
+
+Matriculation Number: s2168022
+
+Title of work: Analysis on Dementia Risk Factors Based on Bayesian Networks
+
+\vspace{1cm}
+
+We confirm that all this work is my own except where indicated, and that We have:
+\begin{itemize}
+\item	Clearly referenced/listed all sources as appropriate	 				
+\item	Referenced and put in inverted commas all quoted text (from books, web, etc)	
+\item	Given the sources of all pictures, data etc. that are not my own				
+\item	Not made any use of the report(s) or essay(s) of any other student(s) either past 	
+or present	
+\item	Not sought or used the help of any external professional academic agencies for the work
+\item	Acknowledged in appropriate places any help that We have received from others	(e.g. fellow students, technicians, statisticians, external sources)
+\item	Complied with any other plagiarism criteria specified in the Course handbook
+\end{itemize}
+
+We understand that any false claim for this work will be penalised in accordance with
+the University regulations	(\url{https://teaching.maths.ed.ac.uk/main/msc-students/msc-programmes/statistics/data-science/assessment/academic-misconduct}).								
+
+\vspace{1cm}
+
+Signature:
+
+\begin{figure}[!h]
+	\includegraphics[width = 0.5\textwidth]{Images/Signature.png}
+\end{figure}
+
+\vspace{5mm}
+
+Date: 2022/8/10
+
+\clearpage
+
+
+% =============================================================================
+% Table of contents, tables, and pictures (if applicable)
+% =============================================================================
+\pagestyle{plain}
+\setcounter{page}{1}
+\pagenumbering{Roman}
+
+\tableofcontents
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+\nocite{*}
+\bibliographystyle{unsrt}
+\clearpage
+
+\section{Introduction}
+\label{sec:intro}
+
+Dementia, a clinical state characterized by loss of function in multiple cognitive domains, becomes a serious public health concern worldwide \cite{seixas2014bayesian}. Someone develops dementia every 3 seconds and current annual cost of dementia is estimated at 1 million dollars, which is set double in 2030 \cite{alzheimer2019world}. Because of the absence of effective treatment, prevention strategy to reduce dementia risk becomes an active research topic. This report aims to contribute to this topic by identifying potential risk factors behind dementia diagnosis. We expect that a better understanding of the influence of factors on cognitive impairment can help to inform the development of lifestyle interventions for dementia risk reduction. 
+
+We apply exploratory data analysis on easySHARE dataset from Survey of Health, Ageing and Retirement in Europe (SHARE) and extract a sample of 57310 individuals recorded in 2013. Based on the subset, we build Bayesian networks and select the one with the best performance. Our goal is to find, among the following factors, the most likely to be relevant to cognitive decline: age; gender; country; education; drinking behaviour; smoking; obesity; physical activity; chronic disease; working status; household finance; social isolation; and depression. 
+
+\section{Exploratory Data Analysis}  
+\label{sec: EDA}
+
+\subsection{Erroneous Data and Duplicated Data}
+
+We start with going through the dataset to have some initial insight of the data and detect that there exist some fault data against our general knowledge. For example, according to the column \texttt{relationshiphh}, some sampled people are the daughters of their corresponding household heads while their genders are recoded as "Male". We fix these problems. Besides, we observe and drop some duplicated data which are possibly recorded by accident. 
+
+Note that there also exist some pairs of observations that are different in \texttt{sampleid} and \texttt{parent} but have same values in other columns. We decide to keep both of them in the dataset as we cannot tell whether these observations are duplicated or not.  
+
+\subsection{Missing Data}
+
+Table \ref{tab:missing} displays the number and the proportion (4 decimal places) of missing values in variables, arranged in descending order. 
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Variable & Number & Proportion \\
+		\hline
+		\texttt{occupation} & 343 & 0.3649 \\ 
+		\texttt{disthosp} &259 & 0.2755 \\
+		\texttt{livestk\_home}  &  236 & 0.2511 \\
+        \texttt{location}  &  236 & 0.2511 \\
+		\texttt{landuse} & 4 & 0.0043 \\
+		\texttt{gender} & 1 & 0.0011 \\
+		\texttt{age} & 1 & 0.0011 \\
+		\hline
+	\end{tabular}
+	\caption{Number and proportion of missing values in variables}
+	\label{tab:missing}
+\end{table}
+
+According to the table above, we find that \texttt{landuse}, \texttt{gender} and \texttt{age} contain missing values less than 1\%. Thus, we drop the corresponding observations as it doesn't lead to much loss of information of the original dataset.
+
+As for \texttt{occupation}, \texttt{disthosp}, \texttt{livestk\_home} and \texttt{location}, which contains a large amount of missing data respectively, they require exploration and discussion in more detail to determine a proper way to deal with missing data.
+
+\subsubsection{livestk\_home}
+
+According to the data description, \texttt{livestk\_home} is a binary variable indicating whether or not livestock is kept in the household of sampled person. The work of Cook et al in 2016 \cite{cook2016} found that the exposure to livestocks could be an important risk factor for Leptospirosis, hence we might also expect the significant contribution to Leptospirosis diagnosis of this variable. However, from figure \ref{fig:livestk}, we observe a significant imbalance in this column where most families of sampled people have livestocks at their homes. In this case, we will not include this variable in further analysis as the imbalance probably leads to insignificant results of this variable. It becomes unnecessary to think of the missing values in this column.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/livestk.png}
+	\caption{Distribution of \texttt{livestk\_home}}
+	\label{fig:livestk}
+\end{figure}
+
+\subsubsection{disthosp}
+
+\texttt{disthosp} is the Euclidean distance from the sampled person's household to local hospital. Here, we assume that there is only one hospital in each village and people from that village only go to that hospital. Then, we use the mean distance to the local hospital of each village to impute the missing values in this column, which works for most villages. We observe that data in \texttt{disthosp} in village 12, 13 and 23 are completely missing, so we cannot obtain the mean distance to the local hospital and further fail to impute the missing distance in these villages. As a result, we drop the corresponding rows of village 12, 13 and 23.
+
+\subsubsection{location}
+
+\texttt{location} is the anonymised location of area where sampling was done, ranging from 1 to 19. This column has over 25\% missing data. Again, we consider using the \texttt{village} variable, which has no missing value, to determine the corresponding location in the same row. However, two problems are detected:
+
+\begin{itemize}
+	\item Similar to the case of \texttt{disthosp}, the locations of observations in some villages are completely missing, which makes it impossible to determine the correct locations.
+	\item Some observations in the same village belong to different locations, e.g. some individuals from village 17 belong to location 9 while others belong to location 18.
+\end{itemize}
+
+As a result, we drop all missing values in this column instead of imputation.
+
+\subsubsection{occupation}
+
+The column \texttt{occupation} represents the occupation of the person sampled, which could have influence on the prevalence of Leptospirosis. Specifically, \cite{cook2016} pointed out that people whose working places are closer to water or animals are more likely to suffer from Leptospirosis. Therefore, we may want to take this variable into consideration when modelling and deal with this column more carefully. 
+
+The occupation of a person could be associated with various aspects. We first consider the influence of individual's age. Figure \ref{fig:occ1} and \ref{fig:occ2} show the conditional distributions of \texttt{occupation} in juvenile (< 18 yeas old) and adult ($\geq$ 18 years old) groups respectively. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/occupation_age_1.png}
+	\caption{Distribution of \texttt{occupation} in juvenile group}
+	\label{fig:occ1}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/occupation_age_2.png}
+	\caption{Distribution of \texttt{occupation} in adult group}
+	\label{fig:occ2}
+\end{figure}
+
+We observe very different distributions in two groups from the plots. For juveniles under 18 years old, they are most likely to be students, hence we impute the missing occupation for juvenile individuals with "Student", which is consistent with our general knowledge. However, the case for adult is more complex, as their occupations are also correlated with other variables. 
+
+\texttt{landuse} denotes the characterization of the sampling site based on land use, which might be correlated with individual's occupation. Figure \ref{fig:occ3} displays the conditional distributions of adults' occupations in different \texttt{landuse} groups.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/occupation_landuse.png}
+	\caption{Distributions of \texttt{occupation} in adult group, conditioning on \texttt{landuse}}
+	\label{fig:occ3}		
+\end{figure} 
+
+
+
+
+
+Here, we hold \texttt{landuse} as "pastoral" and plot the distributions of \texttt{occupation} in the adult group, conditioning on different genders and constituencies. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/occupation_gender_constituency.png}
+	\caption{Conditional distributions of \texttt{occupation} (\texttt{age} $\geq$ 18, \texttt{landuse} = "pastoral")}
+	\label{fig:occ4}		
+\end{figure} 
+
+According to figure \ref{fig:occ4}, we observe very different distributions of people's occupations among groups. 
+
+\subsection{Feature Selection and Transformation}
+
+
+\clearpage
+
+\section{Implementation}
+\label{sec:implementation}
+
+In this section, we introduce the Bayesian network and algorithms used for modelling. Moreover, we explain the evaluation of networks, and further the modification on the selected network.
+
+\subsection{Bayesian Network}
+
+The exposition in this subsection follows that in Scutari (2010) \cite{scutari2010learning}.
+
+A Bayesian network is a probabilistic graphical model that represents a set of variables and their conditional dependencies via a directed acyclic graph (DAG). The graph is denoted by $\mathcal{G} = (V,E)$, where $V$ is the node set consisting of variables of interest and $E$ is the edge set. Each edge in $E$ represents a direct dependence between two noes.  For example, edge "A $\rightarrow$ B" means that node B depends on A. In this case, A is called the parent, while B is called the child. As name suggests, the graph supposed to be acyclic. Cycles such as "A $\rightarrow$ B $\rightarrow$ A" are not permitted. Table \ref{tab:bn_type} shows the 3 types of Bayesian networks:
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		Type & Feature & Common choices of local distributions \\
+		\hline
+		Discrete & Only has discrete variables & Multinomial, Binomial, Poisson \\
+		Continuous & Only has continuous variables & Multivariate normal, Student-t, Beta \\
+		Mixed & Has both discrete and continuous variables & - \\
+		\hline
+	\end{tabular}
+	\caption{Types of Bayesian networks}
+	\label{tab:bn_type} 
+\end{table}
+
+Bayesian network analysis starts with structure learning, which has two categories of algorithms:
+\begin{itemize}
+
+\item \textbf{Constraint-based algorithms}: these algorithms learn the network structure by analysing the probabilistic relations entailed by the Markov property of Bayesian networks with conditional independence tests (e.g. mutual information) and then constructing a graphs satisfying the corresponding d-separation statements. The common choices could be \emph{Peter-Clark (PC)} algorithm, and \emph{Incremental Association (IAMB)} algorithm.
+
+\item \textbf{Score-based algorithms}: these algorithms assign a score (e.g. Bayesian Information Criteria) to each candidate Bayesian network and try to maximize it with some heuristic search algorithm. \emph{Hill-climbing (HC)}, based on greedy search algorithms, is the common choice.
+
+\end{itemize}
+
+Next, a blacklist and a whitelist are defined, based on general information and expert knowledge, to avoid or ensure some edges in the network. We define the blacklist following the rules below:
+
+\begin{itemize}
+	\item No arrow starts from the response node, cognitive score.
+	\item No arrow points to nodes of respondents' natures, i.e. age, gender or country.
+	\item As an early-life factor, education is only possibly influenced by age, gender and country.
+\end{itemize}
+
+We define the whitelist with two edges "working status $\rightarrow$ household finance" and "social isolation $\rightarrow$ depression" based on our common sense.
+
+\subsection{Evaluation of Algorithms}
+
+We now evaluate the performance of structure learning algorithms including \emph{PC}, \emph{IAMB} and \emph{HC}. For each algorithm, we calculate the average loss for the response node, cognitive score, through 10-fold cross-validations on the extracted subset. Classification error is implemented as the loss function, because most loss functions, including mean squared error, are not available in discrete networks.Values of cognitive score are predicted using the information present in its local distribution from its parent nodes. Lower value of the loss indicates better performance. Considering the random effect of cross-validation, we repeat computing average loss of each algorithm with different random seeds. As shown in table \ref{tab:bn_cv}, network based on HC over-performs the other two algorithms. Therefore, HC is selected for further modification and estimation. Figure \ref{fig:hc} displays the initial Bayesian Network based on HC.
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		algorithm & seed = 1 & seed = 2 & seed = 3 & seed = 4 & seed = 5 \\
+		\hline
+		PC & 0.3285017 & 0.3273365 & 0.3285484 & 0.3274023 &  0.3276248 \\
+		IAMB & 0.3231999 & 0.3242536 & 0.3238454 & 0.3234789 & 0.3229207 \\
+		HC & 0.3226488 & 0.3224045 & 0.3230326 & 0.3227360 & 0.3227883 \\
+		\hline
+	\end{tabular}
+	\caption{Average loss of algorithms after 10-fold cross-validation with different random seeds}
+	\label{tab:bn_cv}
+\end{table}
+
+\subsection{Model Modification}
+
+ The network above may miss some edges of interest as algorithms do not exhaust all possible edges. Besides, casual effects indicated in some edges violates our general knowledge, although they are statistically significant. Thus, the network need further modification to make it more reasonable. Unlike constraint-based algorithms, HC doesn't require conditional independence test before any modification. We compare model performance after all modifications are finished.
+
+First, we drop the edge "household finance $\rightarrow$ smoking" as we do not believe the financial status of the household affects one's smoking habit directly. Similarly, edges "education $\rightarrow$ drinking behaviour" and "depression $\rightarrow$ physical activity" are dropped. Besides, we reverse the edge "depression $\rightarrow$ chronic disease" following the logic that physical diseases influence individual's mental health.
+
+Next, we add the edge "gender $\rightarrow$ cognitive score" into the network as gender is believed to have significant effect on respondents' cognition according to \cite{beam2018differences}. Moreover, since all risk factors are assumed to have direct or indirect effect on individual's cognitive function through at least one path, we add the edges "depression $\rightarrow$ cognitive score", "obesity $\rightarrow$ depression", "physical activity $\rightarrow$ obesity" and "drinking behaviour $\rightarrow$ obesity" to ensure the assumption holds. 
+
+We calculate the average loss of modified networks through 10-fold cross-validations, and compare the results with the initial network. We repeat the computation with different random seeds to reduce the random effect of cross-validations. The results are shown in table \ref{tab:hc}:
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		seed & before & after \\
+		\hline
+		1 & 0.3226488 & 0.3191122 \\
+		2 & 0.3224045 & 0.3198102 \\
+		3 & 0.3230326 & 0.3190773 \\
+		4 & 0.3227360 & 0.3192692 \\
+		5 & 0.3227883 & 0.3184842 \\
+		\hline
+	\end{tabular}
+	\caption{Average classification error of the network before and after modification}
+	\label{tab:hc}
+\end{table}
+
+As a result, the modified network performs better and is selected for subsequent estimation and interpretation.
+
+\clearpage
+
+\section{Results}
+\label{sec:results}
+
+The modified Bayesian network based on Hill-climbing algorithm is determined as the final network, shown in figure \ref{fig:hc_mod}.  As the parents of cognitive score, \textbf{age}, \textbf{gender}, \textbf{country}, \textbf{education} and \textbf{depression} tend to have significant effects on respondents' cognitive function. 
+
+Next, we estimate the parameters of local distributions of these parent nodes. We use the classical Bayesian posterior estimator with imaginary sample size of 10000, which provides smoother and more robust estimates, comparing with the alternative method using maximum likelihood estimation. We plot line graphs to explore the trends of the conditional probabilities of cognitive score, conditioning on its parent nodes. Since model overfitting happens in stratifications with sparse counts when conditioning on too many nodes, plots of the basic model are wiggly. As a remedy, we apply ordered logistic regressions of cognitive score, grouped by gender, over other parent nodes. Figure \ref{fig:smoothing} displays the improvement of line graphs after using ordered logistic regression.
+
+
+With smoother line graphs, we discuss the influence of parent nodes on dementia risk:
+
+\subsection{Age}
+
+Age shows a negative influence on individual's cognitive function from the line graphs. Generally, as respondents age, the conditional probability of having severe cognitive impairment increases, while the probability of being cognitively normal drops. This is consistent with our common sense. As people get older, they suffer from worse health condition and more loneliness, which could lead to cognitive decline. The path "age $\rightarrow$ chronic diseases $\rightarrow$ depression $\rightarrow$ cognitive score" in the network supports this view. 
+
+We condition on people's education and depression level. Given a specific gender group, we observe better cognitive function among respondents from countries with high aGDP in all age groups, as they have higher probability to be cognitively normal and lower probability to have severe cognitive impairment than those from countries with low aGDP. On the other hand, looking at individuals from the same country group, female respondents show higher chance to suffer from severe cognitive impairment than males, especially in higher age groups (e.g. over 85). Figure \ref{fig:age1} displays the trends of cognitive score over age in different gender and country groups, among respondents with no education and low depression level.
+
+
+Interestingly, we notice that most lines become steeper after 65 yeas old, indicating faster decline on people's cognition. Thus, we think that 65 could be an important time point where individual's cognitive decline aggregates. This is consistent with results from the study of Lee et al (2018) \cite{lee2018association} in China. Furthermore, we particularly focus on the influence of other factors in the age groups around 65.
+
+\subsection {Education}
+
+Education level tends to have a positive effect on dementia risk reduction. According to line graphs, conditional probability of severe cognitive impairment decreases when respondents have higher education levels, and these people have higher chance to be cognitively normal. It has been proved that education, as a main contributor, stimulates people's cognitive function in early life according to the work of Black et al (2018) \cite{blacker2018brain}. Besides, individual's education level might influence the work and further the income in midlife, which are also believed to have effects on cognition in other researches \cite{livingston2017dementia}.
+
+Similarly, we condition on age and depression level here. In each gender group, though the trends of lines are very similar, people from countries with low aGDP seems to have higher dementia risk, due to lower conditional probability of being cognitively normal and higher probability of having severe impairment on cognition. In each country group, again, female respondents could be more likely to suffer from cognitive impairment, particularly in low education levels. Figure \ref{fig:edu1} shows the trends of cognitive score over education levels in different gender and country groups, holding 65-69 yeas old and low depression level.
+
+\subsection{Depression}
+
+Depression is found to aggravate individual's cognitive impairment. From the line graphs, we observe that as depression level increases, the conditional probability of normal cognition drops and people are more likely to suffer from severe cognitive impairment. As a part of the prodrome and early stages of dementia, depression is associated with various possible psychological or physiological mechanisms. This can be supported by edges corresponding to depression across many domains in the network including "social $\rightarrow$ depression", "household finance $\rightarrow$ depression, "chronic diseases $\rightarrow$ depression" and "obesity $\rightarrow$ depression".  Poor health condition, low income and social isolation all tends to cause the feeling of depression, and further influence individual's cognition.
+
+Given age, gender and education level, the conditional probability of normal cognition of respondents from countries with high aGDP is significantly higher than those from countries with low aGDP at each depression level. Accordingly, the probability of suffering from severe cognitive impairment in countries with high aGDP is much lower than it in the other stratification. Conditioning on the country group, we find that women possibly have higher dementia risk than men from the plots. Figure \ref{fig:depression1} shows the trends of the conditional probabilities of different cognitive function levels over depression, holding 65-69 age group and no education level.
+
+Moreover, we notice that segments from medium to high depression level become much steeper than those from low to medium level. According to the ranges of depression levels, respondents with at least 5 negative feelings are determined with high depression. Thus, we guess it could be a threshold that people experiencing over 4 negative feelings have much higher dementia risk than others.
+
+\subsection{Gender}
+
+Gender shows consistent influence on cognitive function across analysis on age, education and depression that generally females have higher dementia risk than males, holding other factors constant. In particular, this difference is observed to be more significant in elder age groups. These results are consistent with the conclusions in \cite{beam2018differences}.  A possible explanation for females having higher probabilities of cognitive impairment may be that women generally survive to longer ages than men, making the proportion of women become larger in elder groups. On the other hand, due to their longevity, female respondents are more likely to live alone. This could result in more severe social isolation, increases their depression level and finally affects their cognition, which is supported by the path "female $\rightarrow$ social isolation $\rightarrow$ depression". Besides, we believe that gender could affect individual's cognitive function in other ways including the education level and obesity, from the network.
+
+\subsection{Country}
+
+Recall that we divide countries into two groups, based on their average gross domestic product in 2013. According to previous analysis, we conclude that respondents from countries with high aGDP tend to have lower dementia risk than those from countries with low aGDP. The influence of country can be various. From the network, we observe that country are significantly associated with nodes including education, obesity, drinking behaviour and household finance. Generally, countries with high aGDP probably have better welfare, which means they could provide higher-standard education and more advanced health care for their citizens than other countries, positively affecting the cognitive function. Moreover, provided with better welfare, people in these countries may live with more joy, hence they have lower depression level, which also reduces the probability of cognitive decline.
+
+\clearpage
+
+\section{Conclusions}
+
+We construct a modified Bayesian network on a subset of easySHARE dataset to identify risk factors on dementia. As a result, age, gender, country, education and depression tend to have significant influence on individual's cognitive function. Specifically, the probability of severe cognitive impairment rises as age or depression level increases. In particular, individuals over 65 years old or experiencing high-level depression have much higher dementia risk. Education shows opposite influence on cognitive function that people with higher education levels have lower risk. Gender and country affect individual's cognition in a variety of ways. Generally, females have higher dementia risk than males; people from countries with low aGDP have higher probability to suffer from dementia.
+
+There are some limitations of this research. First, although hearing loss, diabetes, and hypertension are believed to have important effect on cognitive impairment in \cite{livingston2017dementia}, their influence could not be identified due to the lack of relevant columns in easySHARE data. We could only define a general factor "chronic diseases" to count the number of chronic diseases the respondents had and explore its possible influence on dementia risk instead. To determine the specific effects of these diseases, we need to access data with relevant variables. Second, our research belongs to cross-sectional analysis, which focuses on data at a specific time point among different individuals and obtains conclusions for the general population. In this case, our research is lack of the exploration on longitudinal effects of some risk factors on dementia risk among particular respondents over the time.
+
+\clearpage
+
+%the entries have to be in the file literature.bib
+\bibliographystyle{unsrt}
+\bibliography{literature}
+\clearpage
+
+\appendix
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+
+Programming part in this research is completed with R. 
+
+\subsection*{R packages:}
+
+For EDA section, we use the \texttt{tidyverse} and \texttt{gridExtra} packages. We construct and estimate the networks with \texttt{bnlearn} package and display the network with \texttt{Rgraphviz} package. \texttt{MASS} package is used to fit the ordered logistic regression on cognitive score. All histograms and line graphs are generated with \texttt{ggplot2}.
+
+\subsection*{R code: }
+The complete code is available via this \href{https://github.com/Shi-Yile/Project-1-Dementia-Risk-Factors.git}{Github repository}.
+
+\clearpage
+
+\section*{Word Count}
+\addcontentsline{toc}{section}{Word Count}
+
+This report contains 4828 words, including executive summary, main text, references and appendix. The screenshot using  \texttt{Analyse Text} function in TeXstudio is provided.
+
+\end{document}
