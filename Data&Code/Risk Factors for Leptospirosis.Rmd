@@ -6,14 +6,16 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-Sys.setlocale("LC_ALL", "UK")
 knitr::opts_chunk$set(echo = TRUE)
+Sys.setlocale("LC_ALL", "UK")
 library(tidyverse)
 library(ggplot2)
 library(gridExtra)
 library(lme4)
 library(car)
 library(DHARMa)
+library(pROC)
+library(caret)
 ```
 
 ## Exploratory Data Analysis (EDA)
@@ -267,9 +269,6 @@ directly from the dataset. After then, we combine some categories in `occupation
 lep_narm <- lep_dat %>%
   drop_na(occupation, disthosp, location) %>%
   filter(disthosp < 100)
-
-# factorize the response, i.e. result
-lep_narm$result <- factor(lep_narm$result)
 ```
 
 ```{r, fig.width = 8}
@@ -400,7 +399,7 @@ p5 <- ggplot(lep_narm, aes(x = hhgender, fill = result)) +
 grid.arrange(p1, p2, p3, p4, p5, ncol = 2)
 ```
 
-```{r, fig.height = 8, fig.width = 10}
+```{r, fig.height = 8, fig.width = 8}
 # village
 p1 <- ggplot(lep_narm, aes(x = village, fill = result)) + 
   geom_bar() + 
@@ -430,6 +429,8 @@ grid.arrange(p1, p2, p3)
 Model: Linear Mixed Model
 
 ```{r}
+# factorize the response, i.e. result
+lep_narm$result <- factor(lep_narm$result)
 # initial GLM for binomial response over feature candidates
 glm <- glm(result ~ gender + age + occupation + landuse + altitude +
              famsize + hhoccup + disthosp, 
@@ -438,52 +439,54 @@ glm <- glm(result ~ gender + age + occupation + landuse + altitude +
 
 # identify which columns are significant based on model summary
 summary(glm)
+# significance check using step()
+step(glm, test = "Chisq")
 ```
 
 ```{r}
 # GLM with selected variables
-glm_selected <- glm(result ~ gender + hhoccup + landuse, 
+glm_selected <- glm(result ~ gender + landuse + hhoccup, 
                   data = lep_narm,
                   family = binomial(link = "logit"))
 
 # model summary
 summary(glm_selected)
 # Chi-square test for variables
-drop1(glm_selected, test = "Chisq")
+step(glm_selected, test = "Chisq")
 ```
 
 
 ```{r}
 # glmer with random effect of constituency on intercept
-glmer_c_1 <- glmer(result ~ gender  + landuse + hhoccup + (1 | constituency), 
+glmer_v_1 <- glmer(result ~ gender + landuse + hhoccup + (1 | village), 
                    data = lep_narm,
                    family = binomial(link = "logit"))
 
 # ANOVA
-anova(glmer_c_1, glm_selected)
+anova(glmer_v_1, glm_selected)
 ```
 ```{r}
 # constituency model considering random slopes
 # gender
-glmer_c_2 <- glmer(result ~ gender + landuse + hhoccup + 
-                     (1 + gender| constituency), 
+glmer_v_2 <- glmer(result ~ gender + landuse + hhoccup + 
+                     (1 + gender| village), 
                  data = lep_narm,
                  family = binomial(link = "logit"))
 
 # landuse
-glmer_c_3 <- glmer(result ~ gender + landuse + hhoccup + 
-                     (1 + landuse| constituency), 
+glmer_v_3 <- glmer(result ~ gender + landuse + hhoccup + 
+                     (1 + landuse| village), 
                  data = lep_narm,
                  family = binomial(link = "logit"))
 
 # hhoccup
-glmer_c_4 <- glmer(result ~ gender + landuse + hhoccup + 
-                     (1 + hhoccup| constituency), 
+glmer_v_4 <- glmer(result ~ gender + landuse + hhoccup + 
+                     (1 + hhoccup| village), 
                  data = lep_narm,
                  family = binomial(link = "logit"))
 
 # ANOVA
-anova(glmer_c_1, glmer_c_2, glmer_c_3, glmer_c_4)
+anova(glmer_v_1, glmer_v_2, glmer_v_3, glmer_v_4)
 ```
 
 ```{r}
@@ -492,39 +495,28 @@ glmer_l <- glmer(result ~ gender + landuse + hhoccup + (1 | location),
                  data = lep_narm,
                  family = binomial(link = "logit"))
 
-# glmer with random effect of village on intercept
-glmer_v <- glmer(result ~ gender + landuse + hhoccup + (1 | village),  
-                 data = lep_narm, 
-                 family = binomial(link = "logit"))
-
 # AIC
-AIC(glmer_c_1, glmer_l, glmer_v)
+AIC(glmer_v_1, glmer_l)
 ```
 
 ```{r}
-# constituency model summary
-summary(glmer_c_1)
+# village model summary
+summary(glmer_v_1)
 ```
 
 ```{r}
 # location model summary
 summary(glmer_l)
 ```
-```{r}
-# village model summary
-summary(glmer_v)
-```
 
-```{r, warning = FALSE}
-vif(glmer_c_1)
-vif(glmer_l)
-vif(glmer_v)
+```{r}
+vif(glmer_v_1)
 ```
 
 
 ```{r, fig.width = 8}
 # use plot function in DHARMa package for model diagnosis
-sim <- simulateResiduals(glmer_c_1)
+sim <- simulateResiduals(glmer_v_1, 1000)
 plot(sim)
 ```
 
@@ -537,9 +529,130 @@ plot(sim, form = lep_narm$hhoccup)
 ```{r, warning = FALSE, fig.width = 8}
 # diagnosis plot for some features unused in the model
 plot(sim, form = lep_narm$age)
-plot(sim, form = lep_narm$altitude)
+plot(sim, form = lep_narm$famsize)
 plot(sim, form = lep_narm$disthosp)
 plot(sim, form = lep_narm$occupation)
 ```
 
+```{r, fig.width = 8}
+# model predictions
+# glmer - village
+pred_v_1 <- predict(glmer_v_1, newdata = lep_narm, type = "response")
+# glmer - location
+pred_l <- predict(glmer_l, newdata = lep_narm, type = "response")
+
+# ROC and AUC of models
+# glmer - village
+roc(lep_narm$result, pred_v_1, plot = TRUE, col = "red")
+# glmer - location
+roc(lep_narm$result, pred_l, plot = TRUE, add = TRUE, col = "blue")
+# glm
+roc(lep_narm$result, glm_selected$fitted.values, plot = TRUE, 
+    add = TRUE, col = "green")
+# legends
+legend("topleft", legend = c("glmer-village", "glmer-location", "glm"),
+       col = c("red", "blue", "green"), lty = c(1, 1, 1), lwd = c(2, 2, 2))
+```
+
+```{r, include = FALSE}
+# cv for mean AUC
+# glmer - village
+# set random seed
+set.seed(1)
+# set number of folds and create folds
+num_fold <- 10
+folds <- createFolds(lep_narm$result, k = num_fold)
+
+# generate training sets and fit regression models
+lglep_cv <- NULL
+for (i in (1 : num_fold)){
+  train_idx <- setdiff(1 : nrow(lep_narm), folds[[i]])
+  lglep_cv[[i]] <- glmer(result ~ gender + landuse + hhoccup + (1 | village), 
+                         family = "binomial"(link = "logit"), 
+                         data = lep_narm, subset = train_idx)
+}
+
+# initialize vectors to store predictive values and AUC
+pred_v_cv <- NULL
+auc_cv <- numeric(num_fold)
+
+# predict and compute AUC of each model 
+for (j in (1 : num_fold)){
+  # test set
+  test_idx <- folds[[j]] 
+  # model prediction
+  pred_v_cv[[j]] <- data.frame(obs = lep_narm$result[test_idx],
+                               pred = predict(lglep_cv[[j]], 
+                                              newdata = lep_narm, 
+                                              type = "response")[test_idx])
+  # compute AUC
+  auc_cv[j] <- roc(obs ~ pred, data = pred_v_cv[[j]])$auc
+}
+
+meanAUC_v <- round(mean(auc_cv), 4)
+```
+
+```{r, include = FALSE}
+lglep_cv <- NULL
+for (i in (1 : num_fold)){
+  train_idx <- setdiff(1 : nrow(lep_narm), folds[[i]])
+  lglep_cv[[i]] <- glmer(result ~ gender + landuse + hhoccup + (1|location), 
+                         family = "binomial"(link = "logit"), 
+                         data = lep_narm, subset = train_idx)
+}
+
+# initialize vectors to store predictive values and AUC
+pred_v_cv <- NULL
+auc_cv <- numeric(num_fold)
+
+# predict and compute AUC of each model 
+for (j in (1 : num_fold)){
+  # test set
+  test_idx <- folds[[j]] 
+  # model prediction
+  pred_v_cv[[j]] <- data.frame(obs = lep_narm$result[test_idx],
+                               pred = predict(lglep_cv[[j]], 
+                                              newdata = lep_narm, 
+                                              type = "response",
+                                              allow.new.levels = T)[test_idx])
+  # compute AUC
+  auc_cv[j] <- roc(obs ~ pred, data = pred_v_cv[[j]])$auc
+}
+
+meanAUC_l <- round(mean(auc_cv), 4)
+```
+
+```{r, include = FALSE}
+lglep_cv <- NULL
+for (i in (1 : num_fold)){
+  train_idx <- setdiff(1 : nrow(lep_narm), folds[[i]])
+  lglep_cv[[i]] <- glm(result ~ gender + landuse + hhoccup, 
+                       family = "binomial"(link = "logit"), 
+                       data = lep_narm, subset = train_idx)
+}
+
+# initialize vectors to store predictive values and AUC
+pred_v_cv <- NULL
+auc_cv <- numeric(num_fold)
+
+# predict and compute AUC of each model 
+for (j in (1 : num_fold)){
+  # test set
+  test_idx <- folds[[j]] 
+  # model prediction
+  pred_v_cv[[j]] <- data.frame(obs = lep_narm$result[test_idx],
+                               pred = predict(lglep_cv[[j]], 
+                                              newdata = lep_narm, 
+                                              type = "response")[test_idx])
+  # compute AUC
+  auc_cv[j] <- roc(obs ~ pred, data = pred_v_cv[[j]])$auc
+}
+
+meanAUC_glm <- round(mean(auc_cv), 4)
+```
+
+```{r}
+data.frame(model = c("glmer_v_1", "glmer_l","glm_selected"), 
+           meanAUC = c(meanAUC_v, meanAUC_l, meanAUC_glm))
+```
 
