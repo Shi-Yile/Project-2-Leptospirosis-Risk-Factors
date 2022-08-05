@@ -1,22 +1,24 @@
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
-\contentsline {section}{\numberline {2}Exploratory Data Analysis}{2}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Erroneous Data and Duplicated Data}{2}{subsection.2.1}%
-\contentsline {subsection}{\numberline {2.2}Missing Data}{2}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}livestk\_home}{2}{subsubsection.2.2.1}%
+\contentsline {section}{\numberline {2}Exploratory Data Analysis}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Erroneous Data and Duplicated Data}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Missing Data}{3}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}livestk\_home}{3}{subsubsection.2.2.1}%
 \contentsline {subsubsection}{\numberline {2.2.2}disthosp}{3}{subsubsection.2.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.3}location}{3}{subsubsection.2.2.3}%
-\contentsline {subsubsection}{\numberline {2.2.4}occupation}{3}{subsubsection.2.2.4}%
-\contentsline {subsection}{\numberline {2.3}Feature Selection and Transformation}{4}{subsection.2.3}%
-\contentsline {section}{\numberline {3}Implementation}{7}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Bayesian Network}{7}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Evaluation of Algorithms}{7}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Model Modification}{8}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Results}{9}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Age}{9}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Education}{9}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Depression}{10}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Gender}{10}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Country}{10}{subsection.4.5}%
-\contentsline {section}{\numberline {5}Conclusions}{11}{section.5}%
-\contentsline {section}{Appendix}{14}{section*.3}%
-\contentsline {section}{Word Count}{15}{section*.6}%
+\contentsline {subsubsection}{\numberline {2.2.3}location}{4}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.4}occupation}{4}{subsubsection.2.2.4}%
+\contentsline {subsection}{\numberline {2.3}Feature Selection}{6}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Nominal Variables}{7}{subsubsection.2.3.1}%
+\contentsline {subsubsection}{\numberline {2.3.2}Numerical Variables}{8}{subsubsection.2.3.2}%
+\contentsline {section}{\numberline {3}Implementation}{10}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Bayesian Network}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Evaluation of Algorithms}{10}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Model Modification}{11}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Results}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Age}{12}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Education}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Depression}{13}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Gender}{13}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Country}{13}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Conclusions}{14}{section.5}%
+\contentsline {section}{Appendix}{17}{section*.3}%
+\contentsline {section}{Word Count}{18}{section*.6}%

@@ -167,6 +167,8 @@ Dementia, a clinical state characterized by loss of function in multiple cogniti
 
 We apply exploratory data analysis on easySHARE dataset from Survey of Health, Ageing and Retirement in Europe (SHARE) and extract a sample of 57310 individuals recorded in 2013. Based on the subset, we build Bayesian networks and select the one with the best performance. Our goal is to find, among the following factors, the most likely to be relevant to cognitive decline: age; gender; country; education; drinking behaviour; smoking; obesity; physical activity; chronic disease; working status; household finance; social isolation; and depression. 
 
+\clearpage
+
 \section{Exploratory Data Analysis}  
 \label{sec: EDA}
 
@@ -184,7 +186,7 @@ Table \ref{tab:missing} displays the number and the proportion (4 decimal places
 	\centering
 	\begin{tabular}{|c|c|c|}
 		\hline
-		Variable & Number & Proportion \\
+		variable & count & proportion \\
 		\hline
 		\texttt{occupation} & 343 & 0.3649 \\ 
 		\texttt{disthosp} &259 & 0.2755 \\
@@ -220,14 +222,14 @@ According to the data description, \texttt{livestk\_home} is a binary variable i
 
 \subsubsection{location}
 
-\texttt{location} is the anonymised location of area where sampling was done, ranging from 1 to 19. This column has over 25\% missing data. Again, we consider using the \texttt{village} variable, which has no missing value, to determine the corresponding location in the same row. However, two problems are detected:
+\texttt{location} is the anonymised location of area where sampling was done, ranging from 1 to 19. This column has over 25\% missing data. Again, we consider using the \texttt{village} variable to determine the corresponding location in the same row. However, two problems are detected:
 
 \begin{itemize}
 	\item Similar to the case of \texttt{disthosp}, the locations of observations in some villages are completely missing, which makes it impossible to determine the correct locations.
-	\item Some observations in the same village belong to different locations, e.g. some individuals from village 17 belong to location 9 while others belong to location 18.
+	\item Some observations in the same village belong to different locations, e.g. some individuals from village 17 belong to location 9 while others belong to location 18. Without more information, we cannot decide which location they belong to. 
 \end{itemize}
 
-As a result, we drop all missing values in this column instead of imputation.
+As a result, we drop all missing values in this column instead of imputation due to these problems.
 
 \subsubsection{occupation}
 
@@ -249,33 +251,127 @@ The occupation of a person could be associated with various aspects. We first co
 	\label{fig:occ2}
 \end{figure}
 
-We observe very different distributions in two groups from the plots. For juveniles under 18 years old, they are most likely to be students, hence we impute the missing occupation for juvenile individuals with "Student", which is consistent with our general knowledge. However, the case for adult is more complex, as their occupations are also correlated with other variables. 
+We observe very different distributions in two groups from the plots. For juveniles under 18 years old, they are most likely to be students, hence we impute the missing occupation for juvenile individuals with "Student", which is consistent with our general knowledge.  
 
-\texttt{landuse} denotes the characterization of the sampling site based on land use, which might be correlated with individual's occupation. Figure \ref{fig:occ3} displays the conditional distributions of adults' occupations in different \texttt{landuse} groups.
+The case for adults is more complex, as their occupations are also correlated with other variables. \texttt{landuse} denotes the characterization of the sampling site based on land use, which might be correlated with individual's occupation. Figure \ref{fig:occ3} displays the conditional distributions of adults' occupations in different \texttt{landuse} groups.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width = 0.75\textwidth]{Images/occupation_landuse.png}
-	\caption{Distributions of \texttt{occupation} in adult group, conditioning on \texttt{landuse}}
+	\caption{Conditional distributions of \texttt{occupation} in adult group}
 	\label{fig:occ3}		
 \end{figure} 
 
-
-
-
-
-Here, we hold \texttt{landuse} as "pastoral" and plot the distributions of \texttt{occupation} in the adult group, conditioning on different genders and constituencies. 
+According to the plot, most sampled adults with land use as "riverine" or "irrigation" work as farmers, while individuals with land use as "pastoral" are most likely to be pastoralists. Moreover, holding the \texttt{landuse} as "pastoral", we observe significance difference among different gender and constituency groups, as shown in Figure \ref{fig:occ4}.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width = 0.75\textwidth]{Images/occupation_gender_constituency.png}
-	\caption{Conditional distributions of \texttt{occupation} (\texttt{age} $\geq$ 18, \texttt{landuse} = "pastoral")}
+	\caption{Conditional distributions of \texttt{occupation} in adult and "pastoral" group}
 	\label{fig:occ4}		
 \end{figure} 
 
-According to figure \ref{fig:occ4}, we observe very different distributions of people's occupations among groups. 
+In the "pastoral" stratification, male individuals across constituencies usually have their occupations as "Pastoralist", while female groups show various distributions. Females from "Tana North" and "Tana River" constituencies all work as pastoralists, but some of those from "Ijara" and "Sangailu" constituencies are housewives. Note that "Housewife" is the most popular occupation in "Sangailu" constituency, rather than "Pastoralist".
 
-\subsection{Feature Selection and Transformation}
+Therefore, we decide to drop observations with missing values in \texttt{occupation} instead of imputing them, as the cases are complicated and imputations probably lead to great model bias. 
+
+\subsection{Feature Selection}
+
+After dealing with missing data, we now determine which columns could be used for modelling. The column \texttt{result}, which represents whether the sample is positive or negative on ELISA (enzyme-linked immunosorbent assay), is considered as the response variable in our model. 
+
+As for potential risk factors, according to the data description, identifier columns including \texttt{sampleid} and \texttt{parent} are excluded from our model, as well as \texttt{relationshiphh} and \texttt{genhhid}. Besides, as mentioned before, we do not take the variable \texttt{livestk\_home} into consideration. We select features from other columns based on corresponding plots and the work of Goarant et al (2016) \cite{goarant2016}. 
+
+\subsubsection{Nominal Variables}
+
+We start from factor variables \texttt{gender}, \texttt{occupation}, \texttt{landuse}, \texttt{hhoccup} and \texttt{hhgender}. The last two columns are nominal variables indicating the occupation and gender of the corresponding household head. Before any selection, we count the number of observations in each category of \texttt{occupation} and \texttt{hhoccup}. Moreover, we plot the stacked bars of \texttt{result}, grouped by these two columns respectively.
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|l|l|l|l|}
+		\hline
+		\multicolumn{2}{|c|}{\texttt{occupation}} & \multicolumn{2}{|c|}{\texttt{hhoccup}} \\
+		\hline
+		category & 	count & category & count \\
+		\hline
+		Student & 239 & Pastoralist & 345 \\				
+		Pastoralist & 159 & Farmer & 247 \\
+		Farmer & 156 & Chief & 15 \\
+		Housewife & 36	& Businessman & 5 \\			
+		Herdsman & 20 & Civil Servant & 4 \\	
+		Chief & 6 & Herdsman & 3 \\	
+		Businessman & 2 & Crop Farming & 2 \\
+		Driver & 2 & None & 2 \\
+		Community animal health worker & 1 & Casual Labourer & 1 \\			
+		Community nurse & 1	& Driver & 1 \\	
+		Crop Farming & 1 & & \\			
+		Employed & 1 & & \\
+		None & 1 & & \\
+		\hline
+	\end{tabular}	
+	\caption{Number of observations in each category in \texttt{occupation} and \texttt{hhoccup}}
+	\label{tab:occ}
+\end{table}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/occupation_3.png}
+	\caption{Stacked bar plot of \texttt{result} in \texttt{occupation}}
+	\label{fig:occ5}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/hhoccup.png}
+	\caption{Stacked bar plot of \texttt{result} in \texttt{hhoccup}}
+	\label{fig:hhoccup}
+\end{figure}
+
+ According to Table \ref{tab:occ} and Figure \ref{fig:occ5} and \ref{fig:hhoccup}, most categories in two columns have observations less than 20. Small and insufficient group size would lead to unstable and  biased results. On the other hand, numbers of occupation groups could result in larger degrees of freedom, which increases model complexity. As discussed before, we may use these variables in the model, as the occupation of a person or the corresponding household head could have influence on the infection of Leptospirosis \cite{cook2016}. Thus, it is necessary to deal with these problems properly.
+
+We find that some occupation groups with similar meanings and risks of exposure could be merged. Thus, we merge "Crop Farming" with "Farmer" and merge "Herdsman" with "Pastoralist". However, most of the smaller occupation groups have very different risk profiles, e.g. drivers are unlikely to have the same contact with animal risk as farmers. In this case, we disregard such categories and discard corresponding observations.
+
+Now, we plot stacked bar charts for each aforementioned factor and report the prevalence in each category of it.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = \textwidth]{Images/factors.png}
+	\caption{Stacked bar plot of \texttt{result} in factor variables}
+	\label{fig:factor}
+\end{figure}
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		factor & category & prevalence \\
+		\hline
+		\multirow{2}{*}{\texttt{gender}} & Female & 0.2508 \\
+		 & Male & 0.1821 \\
+		\hline
+		\multirow{4}{*}{\texttt{occupation}} & Farmer & 0.1465 \\
+		 & Student & 0.1834 \\			
+		 & Pastoralist & 0.3257 \\			
+		 & Housewife & 0.2353 \\
+		\hline
+		\multirow{3}{*}{\texttt{landuse}} & irrigation & 0.1636 \\
+		 & pastoral & 0.2597 \\
+		 & riverine & 0.2090 \\
+		\hline
+		\multirow{2}{*}{\texttt{hhoccup}} & Farmer & 0.1325 \\
+		 & Pastoralist & 0.2803 \\
+		\hline
+		\multirow{2}{*}{\texttt{hhgender}} & Female & 0.1481 \\
+		 & Male & 0.2341 \\
+		\hline
+	\end{tabular}
+	\caption{Prevalence in each category of factor variables}
+	\label{tab:factor}
+\end{table}
+
+According to Figure \ref{fig:factor} and Table \ref{tab:factor}, \texttt{gender},  \texttt{occupation}, \texttt{landuse} and \texttt{hhoccup} show significantly different prevalence among categories, hence we select them as feature candidates in modelling step. Although it is also shown that prevalence between \texttt{hhgender} groups are significantly different, we do not include this column in our models as it is imbalanced distributed where over 80\% observations in this column are "Male".
+
+\subsubsection{Numerical Variables}
+
 
 
 \clearpage
