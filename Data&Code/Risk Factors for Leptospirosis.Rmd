@@ -271,7 +271,7 @@ lep_narm <- lep_dat %>%
   filter(disthosp < 100)
 ```
 
-```{r, fig.width = 8}
+```{r, fig.width = 8, fig.height = 4}
 occ_count <- lep_narm %>% select(occupation, result) %>%
   group_by(occupation) %>%
   count(occupation)
@@ -281,11 +281,11 @@ occ_count[order(occ_count$n, decreasing = T),]
 ggplot(lep_narm, aes(x = occupation, fill = result)) + 
   geom_bar(width = 0.35) + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1)) +
   labs(x ="occupation")                  
 ```
 
-```{r}
+```{r, fig.width = 8, fig.height = 4}
 hhocc_count <- lep_narm %>% select(hhoccup, result) %>%
   group_by(hhoccup) %>%
   count(hhoccup)
@@ -295,8 +295,17 @@ hhocc_count[order(hhocc_count$n, decreasing = T),]
 ggplot(lep_narm, aes(x = hhoccup, fill = result)) + 
   geom_bar(width = 0.35) + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1)) +
   labs(x ="hhoccup")                  
+```
+```{r}
+# combine categories in `occupation`
+lep_narm$occupation[lep_narm$occupation == "Crop Farming"] = "Farmer"
+lep_narm$occupation[lep_narm$occupation == "Herdsman"] = "Pastoralist"
+
+# combine categories in `hhoccup`
+lep_narm$hhoccup[lep_narm$hhoccup == "Crop Farming"] = "Farmer"
+lep_narm$hhoccup[lep_narm$hhoccup == "Herdsman"] = "Pastoralist"
 ```
 
 ```{r}
@@ -308,25 +317,8 @@ lep_narm <- lep_narm %>%
 
 lep_narm <- lep_narm %>% 
   filter(hhoccup %in% hhocc_count$hhoccup[hhocc_count$n > 20])
-
-lep_narm$occupation[lep_narm$occupation %in% 
-                        c("Herdsman", "Pastoralist")] = "Pastoral"
 ```
 
-
-```{r}
-# combine categories in `occupation`
-lep_narm$occupation[lep_narm$occupation %in% 
-                        c("Farmer", "Crop Farming")] = "Farming"
-lep_narm$occupation[lep_narm$occupation %in% 
-                        c("Herdsman", "Pastoralist")] = "Pastoral"
-
-# combine categories in `hhoccup`
-lep_narm$hhoccup[lep_narm$hhoccup %in% 
-                        c("Farmer", "Crop Farming")] = "Farming"
-lep_narm$hhoccup[lep_narm$hhoccup %in% 
-                        c("Herdsman", "Pastoralist")] = "Pastoral"
-```
 
 ```{r, fig.height = 10, fig.width = 8}
 # boxplots for continuous variables
@@ -386,17 +378,50 @@ p3 <- ggplot(lep_narm, aes(x = landuse, fill = result)) +
 
 # hhoccup
 p4 <- ggplot(lep_narm, aes(x = hhoccup, fill = result)) + 
-  geom_bar(width = 0.3) + 
+  geom_bar(width = 0.2) + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   labs(x ="hhoccup")
 
 p5 <- ggplot(lep_narm, aes(x = hhgender, fill = result)) + 
-  geom_bar(width = 0.3) + 
+  geom_bar(width = 0.2) + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   labs(x ="hhgender")
 
 # display plots
 grid.arrange(p1, p2, p3, p4, p5, ncol = 2)
+```
+```{r}
+# define a function to compute prevalence in different groups
+prevalence <- function(varname){
+  subset <- data.frame(lep_narm[, c(varname, "result")])
+  category <- unique(subset[, varname])
+  res <- data.frame(category = category, prevalence = rep(0, length(category)))
+  for (i in (1 : length(category))){
+    pos <- length(which(subset[, varname] == category[i] & 
+                          subset$result == "Positive"))
+    total <- length(which(subset[, varname] == category[i]))
+    res$prevalence[i] <-  round(pos / total, 4)
+  }
+  res
+}
+```
+
+```{r}
+# prevalence in different groups
+# gender
+prevalence("gender")
+
+# occupation
+prevalence("occupation")
+
+# landuse 
+prevalence("landuse")
+
+# hhoccup
+prevalence("hhoccup")
+
+# hhgender
+prevalence("hhgender")
 ```
 
 ```{r, fig.height = 8, fig.width = 8}
@@ -537,21 +562,31 @@ plot(sim, form = lep_narm$occupation)
 ```{r, fig.width = 8}
 # model predictions
 # glmer - village
-pred_v_1 <- predict(glmer_v_1, newdata = lep_narm, type = "response")
+pred_v_1 <- predict(glmer_v_1, newdata = lep_narm, 
+                    re.form = ~(1|village), type = "response")
 # glmer - location
-pred_l <- predict(glmer_l, newdata = lep_narm, type = "response")
+pred_l <- predict(glmer_l, newdata = lep_narm, 
+                  re.form = ~(1|location), type = "response")
+```
 
+```{r, fig.width = 8}
 # ROC and AUC of models
 # glmer - village
-roc(lep_narm$result, pred_v_1, plot = TRUE, col = "red")
+roc_v <- roc(lep_narm$result, pred_v_1, percent = TRUE, ci = TRUE,
+             quiet = TRUE, plot = TRUE, col = "red")
 # glmer - location
-roc(lep_narm$result, pred_l, plot = TRUE, add = TRUE, col = "blue")
+roc_l <- roc(lep_narm$result, pred_l, percent = TRUE, plot = TRUE, 
+             ci = TRUE, quiet = TRUE, add = TRUE, col = "blue")
 # glm
-roc(lep_narm$result, glm_selected$fitted.values, plot = TRUE, 
-    add = TRUE, col = "green")
+roc_glm <- roc(lep_narm$result, glm_selected$fitted.values, percent = TRUE, 
+               ci = TRUE, quiet = TRUE, plot = TRUE, add = TRUE, col = "green")
 # legends
 legend("topleft", legend = c("glmer-village", "glmer-location", "glm"),
        col = c("red", "blue", "green"), lty = c(1, 1, 1), lwd = c(2, 2, 2))
+```
+```{r}
+data.frame(model = c("glmer_v_1", "glmer_l","glm_selected"), 
+           AUC = c(roc_v$auc, roc_l$auc, roc_glm$auc))
 ```
 
 ```{r, include = FALSE}
