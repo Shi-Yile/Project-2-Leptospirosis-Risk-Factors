@@ -330,7 +330,7 @@ We start from factor variables \texttt{gender}, \texttt{occupation}, \texttt{lan
 
 We find that some occupation groups with similar meanings and risks of exposure could be merged. Thus, we merge "Crop Farming" with "Farmer" and merge "Herdsman" with "Pastoralist". However, most of the smaller occupation groups have very different risk profiles, e.g. drivers are unlikely to have the same contact with animal risk as farmers. In this case, we disregard such categories and discard corresponding observations.
 
-Now, we plot stacked bar charts for each aforementioned factor and report the prevalence in each category of it.
+Now, we plot stacked bar charts for each aforementioned factor and report the prevalence in each category of it. 
 
 \begin{figure}[!h]
 	\centering
@@ -368,106 +368,247 @@ Now, we plot stacked bar charts for each aforementioned factor and report the pr
 	\label{tab:factor}
 \end{table}
 
-According to Figure \ref{fig:factor} and Table \ref{tab:factor}, \texttt{gender},  \texttt{occupation}, \texttt{landuse} and \texttt{hhoccup} show significantly different prevalence among categories, hence we select them as feature candidates in modelling step. Although it is also shown that prevalence between \texttt{hhgender} groups are significantly different, we do not include this column in our models as it is imbalanced distributed where over 80\% observations in this column are "Male".
+According to Figure \ref{fig:factor} and Table \ref{tab:factor}, \texttt{gender},  \texttt{occupation}, \texttt{landuse} and \texttt{hhoccup} have significantly different prevalence among categories, hence we select them as feature candidates in modelling step. Although it is also shown that prevalence between \texttt{hhgender} groups are significantly different, we do not include this column in our models as it is imbalanced distributed where over 80\% observations in this column are "Male".
 
 \subsubsection{Numerical Variables}
 
+We make box plots for numerical variables including \texttt{age}, \texttt{altitude}, \texttt{nmales}, \texttt{nfemales}, \texttt{famsize} and \texttt{disthosp}, grouped by \texttt{result}. Here, \texttt{altitude} denotes the altitude (recorded via GPS) of the village where the sample was collected, \texttt{nmales} and \texttt{nfemales} represent the number of males and females in the household sampled respectively, and \texttt{famsize}, the sum of \texttt{nmales} and \texttt{nfemales}, is the number of people in the sampled household. Note that there exists an observation with \texttt{disthosp} over 500 kilometres, which is deleted as an outlier, because the values of this feature in other observations from the same village are much lower.
 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.8\textwidth]{Images/numerical.png}
+	\caption{Box plots of numerical variables, grouped by \texttt{result}}
+	\label{fig:numerical}
+\end{figure}
+
+Comparing with factors, the distributions of numerical variables do not show significant difference between "Negative" and "Positive" groups from Figure \ref{fig:numerical}, which are probably insignificant in the models. Based on \cite{goarant2016}, we select \texttt{age}, \texttt{altitude}, \texttt{famsize} and \texttt{disthosp} as feature candidates for modelling. 
+
+\subsubsection{Geographical Variables}
+
+\texttt{village}, \texttt{location} and \texttt{constituency} are nominal variables indicating the geographical information of sampled people, with a nested order $\texttt{village} < \texttt{location} < \texttt{constituency}$.  As what we do for other nominal variables, we plot the stacked bar charts of the response variable and compute the prevalence, grouped by the levels in \texttt{village}, \texttt{location} and \texttt{constituency} respectively. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/village.png}
+	\caption{Stacked bar plots of \texttt{result} in \texttt{village}}
+	\label{fig:village} 
+\end{figure}
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		category & prevalence & category & prevalence & category & prevalence \\
+		\hline
+		Village 1 & 0.2917 & Village 16 & 0.4167 & Village 29 & 1.0000 \\
+		Village 2 & 0.2857 & Village 17 & 0.0556 & Village 30 & 0.0968 \\
+		Village 3 & 0 & Village 18 & 0.2857 & Village 31 & 0.3333 \\
+		Village 4 & 0.1250 & Village 19 & 0.0000 & Village 32 & 0.5000 \\
+		Village 5 & 0.0938 & Village 20 & 0.3333 & Village 33 & 0.4000 \\
+		Village 6 & 0.0714 & Village 21 & 0.3333 & Village 34 & 0.4545 \\
+		Village 7 & 0.0857 & Village 22 & 0.1429 & Village 35 & 0.3750 \\
+		Village 8 & 0.1875 & Village 24 & 0.2424 & Village 36 & 0.3000 \\		
+		Village 9 & 0.1429 & Village 25 & 0.8571 & Village 37 & 0.3077 \\
+		Village 11 & 0.1667 & Village 26 & 0.4000 & Village 38 & 0.3000 \\
+		Village 14 & 0.3125 & Village 27 & 0.2500 &	Village 39 & 0.1905 \\
+		Village 15 & 0.5000 & Village 2 & 0.0303 & Village 40 & 0.5000	\\
+		\hline			
+	\end{tabular}
+	\caption{Prevalence in each category of \texttt{village}}
+	\label{tab:village}
+\end{table}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/location.png}
+	\caption{Stacked bar plots of \texttt{result} in \texttt{location}}
+	\label{fig:location}
+\end{figure}
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|}
+		\hline
+		category & prevalence & category & prevalence & category & prevalence \\
+		\hline
+		Location 1 & 0.5556 & Location 7 & 0.2857  & Location 13 & 0.3333 \\
+		Location 2 & 1.0000	 & Location 8 & 0.3182 & Location 14 & 0.2857 \\
+		Location 3 & 0.1571 & Location 9 & 0.0962 & Location 15 & 0.0667 \\
+		Location 4 & 1.0000 & Location 10 & 0.2424 & Location 16 & 0.3000 \\
+		Location 5 & 0.3125 & Location 11 & 0.5000 & Location 17 & 0.1667 \\
+		Location 6 & 0.1429 & Location 12 & 0.4250 & Location 18 & 0.0000 \\
+		 & & & & Location 19 & 0.4000 \\	
+		\hline			
+	\end{tabular}
+	\caption{Prevalence in each category of \texttt{location}}
+	\label{tab:location}
+\end{table}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/constituency.png}
+	\caption{Stacked bar plots of \texttt{result} in \texttt{constituency}}
+	\label{fig:constituency}
+\end{figure}	
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		category & prevalence & category & prevalence \\
+		\hline
+		Tana North & 0.1843 & Tana River & 0.2662 \\
+		Ijara & 0.4524 & Sangailu & 0.1597 \\
+		\hline			
+	\end{tabular}
+	\caption{Prevalence in each category of \texttt{constituency}}
+	\label{tab:constituency}
+\end{table}
+
+According to the plots and tables, we may also consider the influence of these geographical variables on Leptospirosis diagnosis in our models due to different prevalence among groups. However, \texttt{village} and \texttt{location} contain a number of levels, which causes great model complexity with high degrees of freedom and further unstable estimates. Thus, we consider the models with the random effect of these geographical variables. The details of random effect will be explained in the next section.
+
+Up to now, we have extracted a subset for modelling with 595 observations left and 11 feature candidates, including 4 nominal variables, 4 numerical variables and 3 geographical variables.
 
 \clearpage
 
 \section{Implementation}
 \label{sec:implementation}
 
-In this section, we introduce the Bayesian network and algorithms used for modelling. Moreover, we explain the evaluation of networks, and further the modification on the selected network.
+In this section, we introduce the definition and purpose of General Linear Mixed Model (GLMM) with random effect used for modelling. Moreover, we explain the model construction , and further the comparison among models.
 
-\subsection{Bayesian Network}
+\subsection{General Linear Mixed Model}
 
-The exposition in this subsection follows that in Scutari (2010) \cite{scutari2010learning}.
+The exposition in this subsection follows that in Zuur (2009) \cite{zuur2009}.
 
-A Bayesian network is a probabilistic graphical model that represents a set of variables and their conditional dependencies via a directed acyclic graph (DAG). The graph is denoted by $\mathcal{G} = (V,E)$, where $V$ is the node set consisting of variables of interest and $E$ is the edge set. Each edge in $E$ represents a direct dependence between two noes.  For example, edge "A $\rightarrow$ B" means that node B depends on A. In this case, A is called the parent, while B is called the child. As name suggests, the graph supposed to be acyclic. Cycles such as "A $\rightarrow$ B $\rightarrow$ A" are not permitted. Table \ref{tab:bn_type} shows the 3 types of Bayesian networks:
+\subsection{Model Construction and Selection}
 
-\begin{table}[!h]
-	\centering
-	\begin{tabular}{|c|c|c|}
-		\hline
-		Type & Feature & Common choices of local distributions \\
-		\hline
-		Discrete & Only has discrete variables & Multinomial, Binomial, Poisson \\
-		Continuous & Only has continuous variables & Multivariate normal, Student-t, Beta \\
-		Mixed & Has both discrete and continuous variables & - \\
-		\hline
-	\end{tabular}
-	\caption{Types of Bayesian networks}
-	\label{tab:bn_type} 
-\end{table}
+\subsubsection{Step 1: Initial Model}
 
-Bayesian network analysis starts with structure learning, which has two categories of algorithms:
-\begin{itemize}
+Following Zuur's logic, we start with a binomial GLM, i.e. logistic regression, containing all feature candidates excluding geographical variables. Here, we do not contain the interaction terms of variables in the model as we do not detect much interaction existing among features in EDA section. On the other hand, introducing interaction terms increases much model complexity due to a large number of potential interaction terms. 
 
-\item \textbf{Constraint-based algorithms}: these algorithms learn the network structure by analysing the probabilistic relations entailed by the Markov property of Bayesian networks with conditional independence tests (e.g. mutual information) and then constructing a graphs satisfying the corresponding d-separation statements. The common choices could be \emph{Peter-Clark (PC)} algorithm, and \emph{Incremental Association (IAMB)} algorithm.
+\subsubsection{Step 2: Find the Optimal Fixed Structure}
 
-\item \textbf{Score-based algorithms}: these algorithms assign a score (e.g. Bayesian Information Criteria) to each candidate Bayesian network and try to maximize it with some heuristic search algorithm. \emph{Hill-climbing (HC)}, based on greedy search algorithms, is the common choice.
-
-\end{itemize}
-
-Next, a blacklist and a whitelist are defined, based on general information and expert knowledge, to avoid or ensure some edges in the network. We define the blacklist following the rules below:
-
-\begin{itemize}
-	\item No arrow starts from the response node, cognitive score.
-	\item No arrow points to nodes of respondents' natures, i.e. age, gender or country.
-	\item As an early-life factor, education is only possibly influenced by age, gender and country.
-\end{itemize}
-
-We define the whitelist with two edges "working status $\rightarrow$ household finance" and "social isolation $\rightarrow$ depression" based on our common sense.
-
-\subsection{Evaluation of Algorithms}
-
-We now evaluate the performance of structure learning algorithms including \emph{PC}, \emph{IAMB} and \emph{HC}. For each algorithm, we calculate the average loss for the response node, cognitive score, through 10-fold cross-validations on the extracted subset. Classification error is implemented as the loss function, because most loss functions, including mean squared error, are not available in discrete networks.Values of cognitive score are predicted using the information present in its local distribution from its parent nodes. Lower value of the loss indicates better performance. Considering the random effect of cross-validation, we repeat computing average loss of each algorithm with different random seeds. As shown in table \ref{tab:bn_cv}, network based on HC over-performs the other two algorithms. Therefore, HC is selected for further modification and estimation. Figure \ref{fig:hc} displays the initial Bayesian Network based on HC.
-
-\begin{table}[!h]
-	\centering
-	\begin{tabular}{|c|c|c|c|c|c|}
-		\hline
-		algorithm & seed = 1 & seed = 2 & seed = 3 & seed = 4 & seed = 5 \\
-		\hline
-		PC & 0.3285017 & 0.3273365 & 0.3285484 & 0.3274023 &  0.3276248 \\
-		IAMB & 0.3231999 & 0.3242536 & 0.3238454 & 0.3234789 & 0.3229207 \\
-		HC & 0.3226488 & 0.3224045 & 0.3230326 & 0.3227360 & 0.3227883 \\
-		\hline
-	\end{tabular}
-	\caption{Average loss of algorithms after 10-fold cross-validation with different random seeds}
-	\label{tab:bn_cv}
-\end{table}
-
-\subsection{Model Modification}
-
- The network above may miss some edges of interest as algorithms do not exhaust all possible edges. Besides, casual effects indicated in some edges violates our general knowledge, although they are statistically significant. Thus, the network need further modification to make it more reasonable. Unlike constraint-based algorithms, HC doesn't require conditional independence test before any modification. We compare model performance after all modifications are finished.
-
-First, we drop the edge "household finance $\rightarrow$ smoking" as we do not believe the financial status of the household affects one's smoking habit directly. Similarly, edges "education $\rightarrow$ drinking behaviour" and "depression $\rightarrow$ physical activity" are dropped. Besides, we reverse the edge "depression $\rightarrow$ chronic disease" following the logic that physical diseases influence individual's mental health.
-
-Next, we add the edge "gender $\rightarrow$ cognitive score" into the network as gender is believed to have significant effect on respondents' cognition according to \cite{beam2018differences}. Moreover, since all risk factors are assumed to have direct or indirect effect on individual's cognitive function through at least one path, we add the edges "depression $\rightarrow$ cognitive score", "obesity $\rightarrow$ depression", "physical activity $\rightarrow$ obesity" and "drinking behaviour $\rightarrow$ obesity" to ensure the assumption holds. 
-
-We calculate the average loss of modified networks through 10-fold cross-validations, and compare the results with the initial network. We repeat the computation with different random seeds to reduce the random effect of cross-validations. The results are shown in table \ref{tab:hc}:
+The \texttt{summary} function and \texttt{step} function are both used to determine variables with the optimal fixed effect among candidates. The former function obtains the feature significance based on the $t$ test, while the latter one choose the optimal model and significant features by AIC and the $\chi^2$ test. Table \ref{tab:summary1} show the significance of features in the initial GLM based on \texttt{summary} function, and Table \ref{tab:step1} display the significant features based on \texttt{step} function.
 
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|}
 		\hline
-		seed & before & after \\
+		 & $t$ value & Pr($>|z|$) \\
 		\hline
-		1 & 0.3226488 & 0.3191122 \\
-		2 & 0.3224045 & 0.3198102 \\
-		3 & 0.3230326 & 0.3190773 \\
-		4 & 0.3227360 & 0.3192692 \\
-		5 & 0.3227883 & 0.3184842 \\
+		\texttt{(Intercept)} & -0.341 & 0.73317 \\
+		\texttt{genderMale} & -2.428 & \ \ \ 0.01520 * \\
+		\texttt{age} & -1.798 & \ \ 0.07219 . \\
+		\texttt{occupationHousewife} & -0.757 & 0.44890 \\  
+		\texttt{occupationPastoralist} & 0.754 & 0.45068 \\   
+		\texttt{occupationStudent} & -1.423 & 0.15463 \\  
+		\texttt{landusepastoral} & -2.347 & \ \ \ 0.01892 * \\ 
+		\texttt{landuseriverine} & -1.607 & 0.10810 \\   
+		\texttt{altitude} & -1.681 & \ \ 0.09283 . \\
+		\texttt{famsize} & 0.346 & 0.72900 \\   
+		\texttt{hhoccupPastoralist} & 3.181 & \ \ \ \ 0.00147 ** \\
+		\texttt{disthosp} & 0.301 & 0.76322 \\   
+		\hline
+		\multicolumn{3}{|l|}{Significance codes: 0,\ ‘***’ 0.001,\ ‘**’ 0.01,\ ‘*’ 0.05,\ ‘.’ 0.1,\ ‘ ’ 1} \\
 		\hline
 	\end{tabular}
-	\caption{Average classification error of the network before and after modification}
-	\label{tab:hc}
+	\caption{Feature significance in initial GLM using \texttt{summary} function}
+	\label{tab:summary1}
 \end{table}
 
-As a result, the modified network performs better and is selected for subsequent estimation and interpretation.
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		 & Df & AIC & Pr($>$Chi) \\
+		\hline
+		\texttt{(none)} & & 602.72 & \\                      
+		\texttt{altitude} & 1 & 603.45 & 0.0990659 . \\ 
+		\texttt{age} & 1 & 603.86 & 0.0765869 . \\ 
+		\texttt{landuse} & 2 & 604.59 & 0.0531339 . \\ 
+		\texttt{occupation} & 3 & 605.55 & \ 0.0316715 * \\ 
+		\texttt{gender} & 1 & 606.75 & \ 0.0141019 * \\ 
+		\texttt{hhoccup} & 1 & 611.90 & \ \ \ \ 0.0008302 *** \\
+		\hline
+		\multicolumn{4}{|l|}{Significance codes: 0,\ ‘***’ 0.001,\ ‘**’ 0.01,\ ‘*’ 0.05,\ ‘.’ 0.1,\ ‘ ’ 1} \\
+		\hline
+	\end{tabular}
+	\caption{Significant features in stepwise algorithm using \texttt{step} function}
+	\label{tab:step1}
+\end{table}
+
+Based on two tables, we select \texttt{gender} and \texttt{hhoccup} in further steps, which are both statistically significant at 0.05 significance level in two function results. Besides, \texttt{landuse} is also selected in fixed structure,  as it is significant at 0.1 significance level in stepwise selection and its level is statistically significant at 0.05 level in model summary.  
+
+Although \texttt{occupation} shows its significance in stepwise algorithm, none of its levels is significant in model summary. Moreover, as mentioned in EDA section, we observe high correlation between \texttt{occupation} and \texttt{landuse}, which probably causes the problem of collinearity and poor model performance. Therefore, we do not include \texttt{occupation} in the fixed structure.
+
+In conclusion, the optimal fixed structure consists of \texttt{gender}, \texttt{landuse} and \texttt{hhoccup}.
+
+\subsubsection{Step 3: Find the Optimal Random Structure}
+
+With the pre-determined fixed structure, we now introduce the random effect of geographical variables and determine GLMM with the best performance. As previously mentioned, we consider the random effect of \texttt{village} and \texttt{location} to investigate whether there is a village or location effect. 
+
+We start with fitting the random intercept model of \texttt{village}. To assess whether the model with mixed effect model is better than the ordinary binomial GLM, we refit the latter one over the selected features without random intercept and compare the models using \texttt{anova} function. The output is given in Table \ref{tab:glmm1}:
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		 & npar & AIC & BIC & logLik & deviance & Chisq & Df & Pr($>$Chisq) \\  
+		 \hline
+		GLM & 5 & 603.63 & 625.57 & -296.81 & 593.63 & & & \\                      
+		GLMM(\texttt{village}) & 6 & 601.87 & 628.20 & -294.93 & 589.87 & 3.7611 & 1 & 0.05246 . \\
+		\hline
+		\multicolumn{9}{|l|}{Significance codes: 0,\ ‘***’ 0.001,\ ‘**’ 0.01,\ ‘*’ 0.05,\ ‘.’ 0.1,\ ‘ ’ 1} \\
+		\hline
+	\end{tabular}
+	\caption{Comparison between GLM and GLMM of \texttt{village}}
+	\label{tab:glmm1}
+\end{table}
+
+The lower AIC value in the table indicate that the mixed model including the random effect of village is preferred. Moreover, we extend the random part by building random intercept and slope models. Specifically, the \texttt{landuse} effect may be different per village, and the same may hold for the \texttt{hhoccup} effect. Table \ref{tab:glmm2} show the output of model comparison using \texttt{anova} function:
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+		\hline
+		& npar & AIC & BIC & logLik & deviance & Chisq & Df & Pr($>$Chisq) \\  
+		\hline
+		random intercept & 6 & 601.87 & 628.20 & -294.93 & 589.87 & & & \\                      
+		random intercept + \texttt{landuse} & 8 & 605.75 & 640.85 & -294.87 & 589.75 & 0.122 & 2 & 0.9408 \\
+		random intercept + \texttt{hhoccup} & 11 & 611.48 & 659.76 & -294.74 & 589.48 & 0.264 & 3 & 0.9667 \\
+		\hline
+		\multicolumn{9}{|l|}{Significance codes: 0,\ ‘***’ 0.001,\ ‘**’ 0.01,\ ‘*’ 0.05,\ ‘.’ 0.1,\ ‘ ’ 1} \\
+		\hline
+	\end{tabular}
+	\caption{Comparison among GLMMs of \texttt{village} with different random structures}
+	\label{tab:glmm2}
+\end{table}
+
+Extending the model with random slopes gives no improvement as the AIC values of models with random slopes get higher. Now we look at the alternative random intercept model considering the location effect. Comparison between random intercept models of \texttt{village} and \texttt{location} using \texttt{AIC} command is displayed in Table \ref{tab:glmm3}:
+
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|}
+		\hline
+		& df & AIC  \\  
+		\hline
+		GLMM(\texttt{village}) & 6 & 576.9177	\\	
+		GLMM(\texttt{location}) & 6 & 577.3410 \\
+		\hline
+	\end{tabular}
+	\caption{Comparison between random intercept models of \texttt{village} and \texttt{location}}
+	\label{tab:glmm3}
+\end{table}
+
+According to the table, the AIC value of the random intercept model with the village effect is slightly lower. Besides, since \texttt{village} contains more levels than \texttt{location}, the models considering the random effect on village aspect obtain more detailed results. Moreover, the random intercept and slope models of \texttt{location} perform even worse. As a result, we prefer the random intercept model of \texttt{village}, with the following expression:
+
+$$logit(p_{ij}) = Intercept + \beta_1 \times gender + \beta_2 \times landuse + \beta_3 \times hhoccup + randomIntercept_i + \epsilon_{ij}$$
+
+Here, the index $i$ refers to villages and $j$ to the observation within a village. Moreover, $randomintercept_i$ denotes the random intercept across villages and $\epsilon_{ij}$ is the within-village variation.
+
+\
+
+Note that here we do not consider the constituency effect in our model as \texttt{constituency} only contains 4 levels. It may be better to include this variable in model's fixed structure. However, after introducing the fixed effect of \texttt{constituency}, other variables in the fixed structure become insignificant. Moreover, the variance and standard deviation of the random effect of \texttt{village} or \texttt{location} turn to 0, indicating the insignificance of random effect. Further details are given in Appendix. Consequently, the influence of \texttt{constituency} is ruled out.
 
 \clearpage
 

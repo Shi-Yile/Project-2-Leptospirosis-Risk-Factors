@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.12)  6 AUG 2022 00:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.12)  7 AUG 2022 23:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -453,7 +453,7 @@ ut)
 \openout3 = `"Analysis on Leptospirosis Risk Factors Based on General Linear Mi
 xed Model.out"'.
 
-<CentredLogoCMYK.jpg, id=96, 803.0pt x 641.39626pt>
+<CentredLogoCMYK.jpg, id=112, 803.0pt x 641.39626pt>
 File: CentredLogoCMYK.jpg Graphic file (type jpg)
 <use CentredLogoCMYK.jpg>
 Package pdftex.def Info: CentredLogoCMYK.jpg  used on input line 43.
@@ -499,7 +499,7 @@ g . maths . ed . ac . uk / main / msc-[]students / msc-[]programmes / statistic
 s /
  []
 
-<Images/Signature.png, id=138, 436.63126pt x 71.51718pt>
+<Images/Signature.png, id=154, 436.63126pt x 71.51718pt>
 File: Images/Signature.png Graphic file (type png)
 <use Images/Signature.png>
 Package pdftex.def Info: Images/Signature.png  used on input line 137.
@@ -531,7 +531,7 @@ l.170 \clearpage
 
 LaTeX Warning: Citation `cook2016' on page 3 undefined on input line 210.
 
-<Images/livestk.png, id=181, 650.43pt x 289.08pt>
+<Images/livestk.png, id=201, 650.43pt x 289.08pt>
 File: Images/livestk.png Graphic file (type png)
 <use Images/livestk.png>
 Package pdftex.def Info: Images/livestk.png  used on input line 214.
@@ -550,12 +550,12 @@ l.226
 
 LaTeX Warning: Citation `cook2016' on page 4 undefined on input line 236.
 
-<Images/occupation_age_1.png, id=190, 578.16pt x 216.81pt>
+<Images/occupation_age_1.png, id=210, 578.16pt x 216.81pt>
 File: Images/occupation_age_1.png Graphic file (type png)
 <use Images/occupation_age_1.png>
 Package pdftex.def Info: Images/occupation_age_1.png  used on input line 242.
 (pdftex.def)             Requested size: 362.77264pt x 136.03853pt.
-<Images/occupation_age_2.png, id=191, 578.16pt x 216.81pt>
+<Images/occupation_age_2.png, id=211, 578.16pt x 216.81pt>
 File: Images/occupation_age_2.png Graphic file (type png)
 <use Images/occupation_age_2.png>
 Package pdftex.def Info: Images/occupation_age_2.png  used on input line 249.
@@ -569,13 +569,13 @@ been already used, duplicate ignored
                    \relax 
 l.257 
        [4 <./Images/livestk.png> <./Images/occupation_age_1.png>]
-<Images/occupation_landuse.png, id=201, 578.16pt x 650.43pt>
+<Images/occupation_landuse.png, id=221, 578.16pt x 650.43pt>
 File: Images/occupation_landuse.png Graphic file (type png)
 <use Images/occupation_landuse.png>
 Package pdftex.def Info: Images/occupation_landuse.png  used on input line 260.
 
 (pdftex.def)             Requested size: 362.77264pt x 408.11563pt.
-<Images/occupation_gender_constituency.png, id=203, 578.16pt x 722.7pt>
+<Images/occupation_gender_constituency.png, id=223, 578.16pt x 722.7pt>
 File: Images/occupation_gender_constituency.png Graphic file (type png)
 <use Images/occupation_gender_constituency.png>
 Package pdftex.def Info: Images/occupation_gender_constituency.png  used on inp
@@ -592,12 +592,12 @@ de-scrip-tion, iden-ti-fier columns in-clud-ing \OT1/cmtt/m/n/10.95 sampleid
  []
 
 [6 <./Images/occupation_gender_constituency.png>]
-<Images/occupation_3.png, id=217, 578.16pt x 289.08pt>
+<Images/occupation_3.png, id=237, 578.16pt x 289.08pt>
 File: Images/occupation_3.png Graphic file (type png)
 <use Images/occupation_3.png>
 Package pdftex.def Info: Images/occupation_3.png  used on input line 317.
 (pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
-<Images/hhoccup.png, id=218, 578.16pt x 289.08pt>
+<Images/hhoccup.png, id=238, 578.16pt x 289.08pt>
 File: Images/hhoccup.png Graphic file (type png)
 <use Images/hhoccup.png>
 Package pdftex.def Info: Images/hhoccup.png  used on input line 324.
@@ -610,50 +610,103 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 LaTeX Warning: Citation `cook2016' on page 7 undefined on input line 329.
 
 [7 <./Images/occupation_3.png>]
-<Images/factors.png, id=230, 578.16pt x 361.35pt>
+<Images/factors.png, id=250, 578.16pt x 361.35pt>
 File: Images/factors.png Graphic file (type png)
 <use Images/factors.png>
 Package pdftex.def Info: Images/factors.png  used on input line 337.
 (pdftex.def)             Requested size: 483.69687pt x 302.30788pt.
- [8 <./Images/hhoccup.png> <./Images/factors.png>] [9]
+ [8 <./Images/hhoccup.png> <./Images/factors.png>]
+<Images/numerical.png, id=261, 578.16pt x 578.16pt>
+File: Images/numerical.png Graphic file (type png)
+<use Images/numerical.png>
+Package pdftex.def Info: Images/numerical.png  used on input line 379.
+(pdftex.def)             Requested size: 386.95897pt x 386.95937pt.
 
-LaTeX Warning: Reference `fig:hc' on page 10 undefined on input line 426.
+
+LaTeX Warning: Citation `goarant2016' on page 9 undefined on input line 384.
+
+[9 <./Images/numerical.png>]
+<Images/village.png, id=270, 722.7pt x 446.41782pt>
+File: Images/village.png Graphic file (type png)
+<use Images/village.png>
+Package pdftex.def Info: Images/village.png  used on input line 392.
+(pdftex.def)             Requested size: 362.77264pt x 224.08707pt.
+<Images/location.png, id=271, 578.16pt x 356.83313pt>
+File: Images/location.png Graphic file (type png)
+<use Images/location.png>
+Package pdftex.def Info: Images/location.png  used on input line 423.
+(pdftex.def)             Requested size: 362.77264pt x 223.89676pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[10
 
-] [11]
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Warning: Reference `fig:hc_mod' on page 12 undefined on input line 477.
+<Images/constituency.png, id=272, 578.16pt x 356.83313pt>
+File: Images/constituency.png Graphic file (type png)
+<use Images/constituency.png>
+Package pdftex.def Info: Images/constituency.png  used on input line 449.
+(pdftex.def)             Requested size: 362.77264pt x 223.89676pt.
 
-
-LaTeX Warning: Reference `fig:smoothing' on page 12 undefined on input line 479
-.
-
-
-LaTeX Warning: Reference `fig:age1' on page 12 undefined on input line 488.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-LaTeX Warning: Reference `fig:edu1' on page 12 undefined on input line 497.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[10 <./Images/village.png>] [11 <./Images/location.png> <./Images/constituency.
+png>]
+
+LaTeX Warning: Citation `zuur2009' on page 12 undefined on input line 481.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [12
 
 ]
+Overfull \hbox (15.492pt too wide) in paragraph at lines 572--583
+ [][] 
+ []
 
-LaTeX Warning: Reference `fig:depression1' on page 13 undefined on input line 5
-03.
+[13]
+Overfull \hbox (20.59627pt too wide) in paragraph at lines 607--608
+[]\OT1/cmr/m/n/10.95 Here, the in-dex $\OML/cmm/m/it/10.95 i$ \OT1/cmr/m/n/10.9
+5 refers to vil-lages and $\OML/cmm/m/it/10.95 j$ \OT1/cmr/m/n/10.95 to the ob-
+ser-va-tion within a vil-lage. More-over, $\OML/cmm/m/it/10.95 randomintercept[
+]$
+ []
 
-[13] [14
+[14]
+
+LaTeX Warning: Reference `fig:hc_mod' on page 15 undefined on input line 618.
+
+
+LaTeX Warning: Reference `fig:smoothing' on page 15 undefined on input line 620
+.
+
+
+LaTeX Warning: Reference `fig:age1' on page 15 undefined on input line 629.
+
+
+LaTeX Warning: Reference `fig:edu1' on page 15 undefined on input line 638.
+
+[15
+
+]
+
+LaTeX Warning: Reference `fig:depression1' on page 16 undefined on input line 6
+44.
+
+[16] [17
 
 ]
 (./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.b
-bl) [15
+bl) [18
 
-] [16] [17
+] [19] [20
 
-] [18
+] [21
 
 ]
 (./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.a
@@ -661,39 +714,34 @@ ux)
 
 LaTeX Warning: There were undefined references.
 
-
-Package rerunfilecheck Warning: File `"Analysis on Leptospirosis Risk Factors B
-ased on General Linear Mixed Model".out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `"Analysis on Leptospirosis Risk Fac
-tors Based on General Linear Mixed Model".out':
-(rerunfilecheck)             Before: F521B7F852FC6CD9D5665FA8678EAC61;2819
-(rerunfilecheck)             After:  AFBAA0820E6371BBBFB06097BE3D1F88;2980.
+Package rerunfilecheck Info: File `"Analysis on Leptospirosis Risk Factors Base
+d on General Linear Mixed Model".out' has not changed.
+(rerunfilecheck)             Checksum: 416230C0C86DDC8264E4DDD38F617D29;3868.
  ) 
 Here is how much of TeX's memory you used:
- 9911 strings out of 480901
- 144109 string characters out of 5906223
- 450002 words of memory out of 5000000
- 26910 multiletter control sequences out of 15000+600000
- 411383 words of font info for 58 fonts, out of 8000000 for 9000
+ 9965 strings out of 480901
+ 145037 string characters out of 5906223
+ 457665 words of memory out of 5000000
+ 26944 multiletter control sequences out of 15000+600000
+ 411719 words of font info for 60 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  71i,10n,74p,1317b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<d:/tex
 live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/texlive/2021
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/texlive/2021/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2021/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmr10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr12.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
-10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><d
-:/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
+type1/public/amsfonts/cm/cmmi8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmr10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr12.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.
+pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/t
+exlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/texlive/20
+21/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><d:/texlive/2021/texmf-
+dist/fonts/type1/public/cm-super/sfrm1095.pfb>
 Output written on "Analysis on Leptospirosis Risk Factors Based on General Line
-ar Mixed Model.pdf" (22 pages, 682186 bytes).
+ar Mixed Model.pdf" (25 pages, 734655 bytes).
 PDF statistics:
- 372 PDF objects out of 1000 (max. 8388607)
- 317 compressed objects within 4 object streams
- 79 named destinations out of 1000 (max. 500000)
- 235 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 432 PDF objects out of 1000 (max. 8388607)
+ 364 compressed objects within 4 object streams
+ 94 named destinations out of 1000 (max. 500000)
+ 287 words of extra memory for PDF output out of 10000 (max. 10000000)
 

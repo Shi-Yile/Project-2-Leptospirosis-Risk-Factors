@@ -9,16 +9,19 @@
 \contentsline {subsection}{\numberline {2.3}Feature Selection}{6}{subsection.2.3}%
 \contentsline {subsubsection}{\numberline {2.3.1}Nominal Variables}{7}{subsubsection.2.3.1}%
 \contentsline {subsubsection}{\numberline {2.3.2}Numerical Variables}{8}{subsubsection.2.3.2}%
-\contentsline {section}{\numberline {3}Implementation}{10}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Bayesian Network}{10}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Evaluation of Algorithms}{10}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Model Modification}{11}{subsection.3.3}%
-\contentsline {section}{\numberline {4}Results}{12}{section.4}%
-\contentsline {subsection}{\numberline {4.1}Age}{12}{subsection.4.1}%
-\contentsline {subsection}{\numberline {4.2}Education}{12}{subsection.4.2}%
-\contentsline {subsection}{\numberline {4.3}Depression}{13}{subsection.4.3}%
-\contentsline {subsection}{\numberline {4.4}Gender}{13}{subsection.4.4}%
-\contentsline {subsection}{\numberline {4.5}Country}{13}{subsection.4.5}%
-\contentsline {section}{\numberline {5}Conclusions}{14}{section.5}%
-\contentsline {section}{Appendix}{17}{section*.3}%
-\contentsline {section}{Word Count}{18}{section*.6}%
+\contentsline {subsubsection}{\numberline {2.3.3}Geographical Variables}{10}{subsubsection.2.3.3}%
+\contentsline {section}{\numberline {3}Implementation}{12}{section.3}%
+\contentsline {subsection}{\numberline {3.1}General Linear Mixed Model}{12}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Model Construction and Selection}{12}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Step 1: Initial Model}{12}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Step 2: Find the Optimal Fixed Structure}{12}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Step 3: Find the Optimal Random Structure}{13}{subsubsection.3.2.3}%
+\contentsline {section}{\numberline {4}Results}{15}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Age}{15}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Education}{15}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Depression}{16}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Gender}{16}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Country}{16}{subsection.4.5}%
+\contentsline {section}{\numberline {5}Conclusions}{17}{section.5}%
+\contentsline {section}{Appendix}{20}{section*.3}%
+\contentsline {section}{Word Count}{21}{section*.6}%
