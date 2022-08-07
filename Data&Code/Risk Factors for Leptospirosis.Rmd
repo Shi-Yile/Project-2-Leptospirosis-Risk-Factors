@@ -320,7 +320,7 @@ lep_narm <- lep_narm %>%
 ```
 
 
-```{r, fig.height = 10, fig.width = 8}
+```{r, fig.height = 8, fig.width = 8}
 # boxplots for continuous variables
 # age
 p1 <- ggplot(lep_narm, aes(x = result, y = age)) + 
@@ -424,29 +424,36 @@ prevalence("hhoccup")
 prevalence("hhgender")
 ```
 
-```{r, fig.height = 8, fig.width = 8}
+```{r, fig.width = 10}
 # village
-p1 <- ggplot(lep_narm, aes(x = village, fill = result)) + 
+ggplot(lep_narm, aes(x = village, fill = result)) + 
   geom_bar() + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(x ="village")
 
+prevalence("village")
+```
+
+```{r, fig.width = 8}
 # location
-p2 <- ggplot(lep_narm, aes(x = location, fill = result)) + 
+ggplot(lep_narm, aes(x = location, fill = result)) + 
   geom_bar() + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(x ="location")
 
+prevalence("location")
+```
+
+```{r, fig.width = 8}
 # constituency
-p3 <- ggplot(lep_narm, aes(x = constituency, fill = result)) + 
+ggplot(lep_narm, aes(x = constituency, fill = result)) + 
   geom_bar(width = 0.2) + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   labs(x ="constituency")
 
-# display plots
-grid.arrange(p1, p2, p3)
+prevalence("constituency")
 ```
 
 ## Inplementation
@@ -457,7 +464,7 @@ Model: Linear Mixed Model
 # factorize the response, i.e. result
 lep_narm$result <- factor(lep_narm$result)
 # initial GLM for binomial response over feature candidates
-glm <- glm(result ~ gender + age + occupation + landuse + altitude +
+glm <- glm(result ~ gender + age + occupation + landuse + altitude + 
              famsize + hhoccup + disthosp, 
            data = lep_narm,
            family = binomial(link = "logit"))
@@ -511,7 +518,7 @@ glmer_v_4 <- glmer(result ~ gender + landuse + hhoccup +
                  family = binomial(link = "logit"))
 
 # ANOVA
-anova(glmer_v_1, glmer_v_2, glmer_v_3, glmer_v_4)
+anova(glmer_v_1, glmer_v_3, glmer_v_4)
 ```
 
 ```{r}
