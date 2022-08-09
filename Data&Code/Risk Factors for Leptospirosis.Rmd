@@ -162,6 +162,10 @@ p3 <- ggplot(data = lep_dat %>%
 grid.arrange(p1, p2, p3)
 
 ```
+```{r, warning = FALSE}
+chisq.test(lep_dat$occupation, lep_dat$landuse)
+```
+
 
 The case of group "pastoral" is more complex. It seems that "Pastoralist" plays a much more important role than any other categories in this group. However, we notice that the second most popular job is "Housewife". In this case, we suspect that there probably exists different distributions between genders. As shown in the plots below, "Pastoralist" is the most popular job in male group, with a much higher frequency than any other categories. In female group, "Pastoralist" still has the most observations, but "Housewife" takes larger proportion, which is significantly different from the general case. 
 
@@ -314,7 +318,6 @@ lep_narm <- lep_narm %>%
 ```
 
 ```{r}
-
 lep_narm <- lep_narm %>% 
   filter(hhoccup %in% hhocc_count$hhoccup[hhocc_count$n > 20])
 ```
@@ -537,12 +540,11 @@ summary(glmer_v_1)
 ```
 
 ```{r}
-# location model summary
-summary(glmer_l)
+vif(glmer_v_1)
 ```
 
-```{r}
-vif(glmer_v_1)
+```{r, fig.width = 8, fig.height = 4}
+plot(glmer_v_1)
 ```
 
 
@@ -554,16 +556,9 @@ plot(sim)
 
 ```{r, warning = FALSE, fig.width = 8}
 # diagnosis plots for each dependent variable
-plot(sim, form = lep_narm$gender)
-plot(sim, form = lep_narm$landuse)
-plot(sim, form = lep_narm$hhoccup)
-```
-```{r, warning = FALSE, fig.width = 8}
-# diagnosis plot for some features unused in the model
-plot(sim, form = lep_narm$age)
-plot(sim, form = lep_narm$famsize)
-plot(sim, form = lep_narm$disthosp)
-plot(sim, form = lep_narm$occupation)
+par(mfrow = c(1, 2))
+plotResiduals(sim, form = lep_narm$landuse)
+plotResiduals(sim, form = lep_narm$occupation)
 ```
 
 ```{r, fig.width = 8}
@@ -579,21 +574,26 @@ pred_l <- predict(glmer_l, newdata = lep_narm,
 ```{r, fig.width = 8}
 # ROC and AUC of models
 # glmer - village
-roc_v <- roc(lep_narm$result, pred_v_1, percent = TRUE, ci = TRUE,
-             quiet = TRUE, plot = TRUE, col = "red")
+roc_v <- roc(lep_narm$result, pred_v_1, ci = TRUE, quiet = TRUE, plot = FALSE)
 # glmer - location
-roc_l <- roc(lep_narm$result, pred_l, percent = TRUE, plot = TRUE, 
-             ci = TRUE, quiet = TRUE, add = TRUE, col = "blue")
+roc_l <- roc(lep_narm$result, pred_l, plot = FALSE, ci = TRUE, quiet = TRUE)
 # glm
-roc_glm <- roc(lep_narm$result, glm_selected$fitted.values, percent = TRUE, 
-               ci = TRUE, quiet = TRUE, plot = TRUE, add = TRUE, col = "green")
-# legends
-legend("topleft", legend = c("glmer-village", "glmer-location", "glm"),
-       col = c("red", "blue", "green"), lty = c(1, 1, 1), lwd = c(2, 2, 2))
+roc_glm <- roc(lep_narm$result, glm_selected$fitted.values, 
+               ci = TRUE, quiet = TRUE, plot = FALSE)
 ```
+
+```{r}
+ggroc(list(GLMM_village = roc_v, GLMM_location = roc_l, 
+           GLM = roc_glm), size = 1) + 
+  geom_segment(aes(x = 1, xend = 0, y = 0, yend = 1), 
+               color="black", linetype="dashed") 
+```
+
 ```{r}
 data.frame(model = c("glmer_v_1", "glmer_l","glm_selected"), 
-           AUC = c(roc_v$auc, roc_l$auc, roc_glm$auc))
+           AUC = c(roc_v$auc, roc_l$auc, roc_glm$auc),
+           CI.lower = c(roc_v$ci[1], roc_l$ci[1], roc_glm$ci[1]),
+           CI.upper = c(roc_v$ci[3], roc_l$ci[3], roc_glm$ci[3]))
 ```
 
 ```{r, include = FALSE}
