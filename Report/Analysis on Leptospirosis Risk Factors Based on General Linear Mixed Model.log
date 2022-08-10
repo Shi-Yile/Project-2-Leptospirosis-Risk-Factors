@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.12)  9 AUG 2022 02:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.12)  10 AUG 2022 22:45
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -453,7 +453,7 @@ ut)
 \openout3 = `"Analysis on Leptospirosis Risk Factors Based on General Linear Mi
 xed Model.out"'.
 
-<CentredLogoCMYK.jpg, id=104, 803.0pt x 641.39626pt>
+<CentredLogoCMYK.jpg, id=92, 803.0pt x 641.39626pt>
 File: CentredLogoCMYK.jpg Graphic file (type jpg)
 <use CentredLogoCMYK.jpg>
 Package pdftex.def Info: CentredLogoCMYK.jpg  used on input line 43.
@@ -462,7 +462,7 @@ Package pdftex.def Info: CentredLogoCMYK.jpg  used on input line 43.
 
 {d:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./CentredLogoCM
 YK.jpg>]
-<Images/ROC.png, id=114, 526.96875pt x 325.215pt>
+<Images/ROC.png, id=102, 526.96875pt x 325.215pt>
 File: Images/ROC.png Graphic file (type png)
 <use Images/ROC.png>
 Package pdftex.def Info: Images/ROC.png  used on input line 90.
@@ -473,33 +473,33 @@ Package pdftex.def Info: Images/ROC.png  used on input line 90.
 
 ]
 LaTeX Font Info:    Trying to load font information for U+lasy on input line 13
-5.
+4.
 
 (d:/texlive/2021/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 135
+LaTeX Font Info:    Trying to load font information for U+msa on input line 134
 .
 
 (d:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 135
+LaTeX Font Info:    Trying to load font information for U+msb on input line 134
 .
 
 (d:/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-Overfull \hbox (13.30307pt too wide) in paragraph at lines 134--136
+Overfull \hbox (13.30307pt too wide) in paragraph at lines 133--135
 \OT1/cmr/m/n/10.95 reg-u-la-tions ([][]$\OT1/cmtt/m/n/10.95 https : / / teachin
 g . maths . ed . ac . uk / main / msc-[]students / msc-[]programmes / statistic
 s /
  []
 
-<Images/Signature.png, id=129, 436.63126pt x 71.51718pt>
+<Images/Signature.png, id=117, 436.63126pt x 71.51718pt>
 File: Images/Signature.png Graphic file (type png)
 <use Images/Signature.png>
-Package pdftex.def Info: Images/Signature.png  used on input line 142.
+Package pdftex.def Info: Images/Signature.png  used on input line 141.
 (pdftex.def)             Requested size: 241.84843pt x 39.61284pt.
 [4
 
@@ -514,31 +514,34 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.166 \clearpage
+l.165 \clearpage
                  [1
 
 ]
-
-LaTeX Warning: Citation `seixas2014bayesian' on page 2 undefined on input line 
-171.
-
-
-LaTeX Warning: Citation `alzheimer2019world' on page 2 undefined on input line 
-171.
-
+<Images/livestk.png, id=155, 578.16pt x 180.675pt>
+File: Images/livestk.png Graphic file (type png)
+<use Images/livestk.png>
+Package pdftex.def Info: Images/livestk.png  used on input line 206.
+(pdftex.def)             Requested size: 362.77264pt x 113.36543pt.
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has 
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.175 \clearpage
-                 [2
+l.212 
+       [2
 
-]
-<Images/livestk.png, id=172, 650.43pt x 289.08pt>
-File: Images/livestk.png Graphic file (type png)
-<use Images/livestk.png>
-Package pdftex.def Info: Images/livestk.png  used on input line 219.
-(pdftex.def)             Requested size: 362.77264pt x 161.23528pt.
+ <./Images/livestk.png>]
+<Images/occupation_age.png, id=166, 578.16pt x 289.08pt>
+File: Images/occupation_age.png Graphic file (type png)
+<use Images/occupation_age.png>
+Package pdftex.def Info: Images/occupation_age.png  used on input line 223.
+(pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
+<Images/occupation_landuse.png, id=168, 578.16pt x 433.62pt>
+File: Images/occupation_landuse.png Graphic file (type png)
+<use Images/occupation_landuse.png>
+Package pdftex.def Info: Images/occupation_landuse.png  used on input line 234.
+
+(pdftex.def)             Requested size: 362.77264pt x 272.07709pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -547,206 +550,181 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.231 
-       [3
-
-]
-<Images/occupation_age_1.png, id=184, 578.16pt x 216.81pt>
-File: Images/occupation_age_1.png Graphic file (type png)
-<use Images/occupation_age_1.png>
-Package pdftex.def Info: Images/occupation_age_1.png  used on input line 247.
-(pdftex.def)             Requested size: 362.77264pt x 136.03853pt.
-<Images/occupation_age_2.png, id=185, 578.16pt x 216.81pt>
-File: Images/occupation_age_2.png Graphic file (type png)
-<use Images/occupation_age_2.png>
-Package pdftex.def Info: Images/occupation_age_2.png  used on input line 254.
-(pdftex.def)             Requested size: 362.77264pt x 136.03853pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
-been already used, duplicate ignored
+l.248 
+       [3 <./Images/occupation_age.png>]pdfTeX warning (ext4): destination with
+ the same identifier (name{page.4}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.261 T
-       he case for adults is more complex, as their occupations are also cor...
-[4 <./Images/livestk.png> <./Images/occupation_age_1.png>]
-<Images/occupation_landuse.png, id=195, 578.16pt x 650.43pt>
-File: Images/occupation_landuse.png Graphic file (type png)
-<use Images/occupation_landuse.png>
-Package pdftex.def Info: Images/occupation_landuse.png  used on input line 265.
-
-(pdftex.def)             Requested size: 362.77264pt x 408.11563pt.
- [5 <./Images/occupation_age_2.png> <./Images/occupation_landuse.png>]
-<Images/occupation_gender_constituency.png, id=204, 578.16pt x 722.7pt>
-File: Images/occupation_gender_constituency.png Graphic file (type png)
-<use Images/occupation_gender_constituency.png>
-Package pdftex.def Info: Images/occupation_gender_constituency.png  used on inp
-ut line 274.
-(pdftex.def)             Requested size: 362.77264pt x 453.4618pt.
-
-Overfull \hbox (4.7311pt too wide) in paragraph at lines 287--288
-[]\OT1/cmr/m/n/10.95 As for po-ten-tial risk fac-tors, ac-cord-ing to the data 
-de-scrip-tion, iden-ti-fier columns in-clud-ing \OT1/cmtt/m/n/10.95 sampleid
- []
-
-[6 <./Images/occupation_gender_constituency.png>]
-<Images/occupation_3.png, id=212, 578.16pt x 289.08pt>
-File: Images/occupation_3.png Graphic file (type png)
-<use Images/occupation_3.png>
-Package pdftex.def Info: Images/occupation_3.png  used on input line 322.
-(pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
-<Images/hhoccup.png, id=213, 578.16pt x 289.08pt>
-File: Images/hhoccup.png Graphic file (type png)
-<use Images/hhoccup.png>
-Package pdftex.def Info: Images/hhoccup.png  used on input line 329.
-(pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[7 <./Images/occupation_3.png>]
-<Images/factors.png, id=227, 578.16pt x 361.35pt>
+l.279 
+       [4 <./Images/occupation_landuse.png>]
+<Images/factors.png, id=190, 650.43pt x 325.215pt>
 File: Images/factors.png Graphic file (type png)
 <use Images/factors.png>
-Package pdftex.def Info: Images/factors.png  used on input line 342.
-(pdftex.def)             Requested size: 483.69687pt x 302.30788pt.
-
-Underfull \vbox (badness 1803) has occurred while \output is active []
-
- [8 <./Images/hhoccup.png> <./Images/factors.png>]
-<Images/numerical.png, id=238, 578.16pt x 578.16pt>
+Package pdftex.def Info: Images/factors.png  used on input line 282.
+(pdftex.def)             Requested size: 483.69687pt x 241.85622pt.
+<Images/numerical.png, id=191, 650.43pt x 289.08pt>
 File: Images/numerical.png Graphic file (type png)
 <use Images/numerical.png>
-Package pdftex.def Info: Images/numerical.png  used on input line 384.
-(pdftex.def)             Requested size: 386.95897pt x 386.95937pt.
+Package pdftex.def Info: Images/numerical.png  used on input line 322.
+(pdftex.def)             Requested size: 386.95897pt x 171.98488pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Images/village.png, id=241, 722.7pt x 446.41782pt>
+
+Underfull \vbox (badness 1067) has occurred while \output is active []
+
+ [5 <./Images/factors.png>]
+<Images/village.png, id=202, 650.43pt x 216.81pt>
 File: Images/village.png Graphic file (type png)
 <use Images/village.png>
-Package pdftex.def Info: Images/village.png  used on input line 397.
-(pdftex.def)             Requested size: 362.77264pt x 224.08707pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<Images/location.png, id=242, 578.16pt x 356.83313pt>
+Package pdftex.def Info: Images/village.png  used on input line 335.
+(pdftex.def)             Requested size: 362.77264pt x 120.92645pt.
+<Images/location.png, id=203, 578.16pt x 216.81pt>
 File: Images/location.png Graphic file (type png)
 <use Images/location.png>
-Package pdftex.def Info: Images/location.png  used on input line 428.
-(pdftex.def)             Requested size: 362.77264pt x 223.89676pt.
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+Package pdftex.def Info: Images/location.png  used on input line 366.
+(pdftex.def)             Requested size: 362.77264pt x 136.03853pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Images/constituency.png, id=243, 578.16pt x 356.83313pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<Images/constituency.png, id=204, 578.16pt x 216.81pt>
 File: Images/constituency.png Graphic file (type png)
 <use Images/constituency.png>
-Package pdftex.def Info: Images/constituency.png  used on input line 454.
-(pdftex.def)             Requested size: 362.77264pt x 223.89676pt.
+Package pdftex.def Info: Images/constituency.png  used on input line 392.
+(pdftex.def)             Requested size: 362.77264pt x 136.03853pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[9]
-Underfull \vbox (badness 2582) has occurred while \output is active []
-
- [10 <./Images/numerical.png> <./Images/village.png>] [11 <./Images/location.pn
-g> <./Images/constituency.png>] [12]
-
-LaTeX Warning: Citation `zuur2009' on page 13 undefined on input line 486.
+[6 <./Images/numerical.png> <./Images/village.png>] [7 <./Images/location.png> 
+<./Images/constituency.png>]
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 428.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 428.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[13
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[8
 
 ]
-Overfull \hbox (15.492pt too wide) in paragraph at lines 577--588
+Overfull \hbox (15.492pt too wide) in paragraph at lines 531--542
  [][] 
  []
 
-[14] [15]
-<Images/std_resplot.png, id=301, 578.16pt x 289.08pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[9] [10]
+<Images/std_resplot.png, id=253, 578.16pt x 289.08pt>
 File: Images/std_resplot.png Graphic file (type png)
 <use Images/std_resplot.png>
-Package pdftex.def Info: Images/std_resplot.png  used on input line 638.
+Package pdftex.def Info: Images/std_resplot.png  used on input line 579.
 (pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
-<Images/diagnosis1.png, id=304, 578.16pt x 356.83313pt>
+<Images/diagnosis1.png, id=256, 578.16pt x 289.08pt>
 File: Images/diagnosis1.png Graphic file (type png)
 <use Images/diagnosis1.png>
-Package pdftex.def Info: Images/diagnosis1.png  used on input line 655.
-(pdftex.def)             Requested size: 362.77264pt x 223.89676pt.
- [16
+Package pdftex.def Info: Images/diagnosis1.png  used on input line 596.
+(pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
 
- <./Images/std_resplot.png>]
-<Images/diagnosis2.png, id=322, 578.16pt x 356.83313pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<Images/diagnosis2.png, id=259, 650.43pt x 289.08pt>
 File: Images/diagnosis2.png Graphic file (type png)
 <use Images/diagnosis2.png>
-Package pdftex.def Info: Images/diagnosis2.png  used on input line 666.
-(pdftex.def)             Requested size: 362.77264pt x 223.89676pt.
- [17 <./Images/diagnosis1.png> <./Images/diagnosis2.png>]
+Package pdftex.def Info: Images/diagnosis2.png  used on input line 605.
+(pdftex.def)             Requested size: 362.77264pt x 161.23528pt.
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
 File: Images/ROC.png Graphic file (type png)
 <use Images/ROC.png>
-Package pdftex.def Info: Images/ROC.png  used on input line 677.
+Package pdftex.def Info: Images/ROC.png  used on input line 616.
 (pdftex.def)             Requested size: 362.77264pt x 223.89243pt.
- [18]
 
-LaTeX Warning: Citation `livingston2017dementia' on page 19 undefined on input 
-line 724.
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[19
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[11
+
+ <./Images/std_resplot.png>] [12 <./Images/diagnosis1.png> <./Images/diagnosis2
+.png>] [13]
+Overfull \hbox (8.84082pt too wide) in paragraph at lines 705--706
+\OT1/cmr/m/n/10.95 lep-tospiro-sis seropos-i-tiv-ity in the base-line model abo
+ve, with the 95% con-fi-dence in-ter-val $(0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/1
+0.95 1159\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cm
+r/m/n/10.95 3316)$. 
+ []
+
+[14] [15
 
 ]
 (./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.b
-bl) [20
+bl) [16
 
-] [21
-
-] [22
+] [17
 
 ]
+<Images/wordcount.png, id=327, 235.47975pt x 136.1085pt>
+File: Images/wordcount.png Graphic file (type png)
+<use Images/wordcount.png>
+Package pdftex.def Info: Images/wordcount.png  used on input line 756.
+(pdftex.def)             Requested size: 362.77264pt x 209.69287pt.
+ [18
+
+ <./Images/wordcount.png>]
 (./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.a
 ux)
-
-LaTeX Warning: There were undefined references.
-
 Package rerunfilecheck Info: File `"Analysis on Leptospirosis Risk Factors Base
 d on General Linear Mixed Model".out' has not changed.
-(rerunfilecheck)             Checksum: C0C1BA9A4BD51B100B31E8A80E86FDA8;3846.
+(rerunfilecheck)             Checksum: E470779F09C5708D403A621563EC17CC;3387.
  ) 
 Here is how much of TeX's memory you used:
- 9977 strings out of 480901
- 145270 string characters out of 5906223
- 463806 words of memory out of 5000000
- 26953 multiletter control sequences out of 15000+600000
- 411719 words of font info for 60 fonts, out of 8000000 for 9000
+ 9971 strings out of 480901
+ 144852 string characters out of 5906223
+ 460662 words of memory out of 5000000
+ 26947 multiletter control sequences out of 15000+600000
+ 414287 words of font info for 69 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 71i,10n,74p,1027b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,13n,74p,934b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<d:/tex
 live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/texlive/2021
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/texlive/2021/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2021/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmmi8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr12.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.
-pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/t
-exlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><d:/texlive/20
-21/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><d:/texlive/2021/texmf-
-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><d:/texlive/2021/texmf-dist
-/fonts/type1/public/cm-super/sfrm1095.pfb>
+st/fonts/type1/public/amsfonts/cm/cmex10.pfb><d:/texlive/2021/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmmi6.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmmi8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+b10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><d
+:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><d:/texlive/
+2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><d:/texlive/2021/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><d:/texlive/2021/texmf-dist/font
+s/type1/public/amsfonts/cm/cmsy8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmti10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmtt10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mtt8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
+.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
 Output written on "Analysis on Leptospirosis Risk Factors Based on General Line
-ar Mixed Model.pdf" (26 pages, 764404 bytes).
+ar Mixed Model.pdf" (22 pages, 770695 bytes).
 PDF statistics:
- 428 PDF objects out of 1000 (max. 8388607)
- 350 compressed objects within 4 object streams
- 93 named destinations out of 1000 (max. 500000)
- 291 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 412 PDF objects out of 1000 (max. 8388607)
+ 339 compressed objects within 4 object streams
+ 87 named destinations out of 1000 (max. 500000)
+ 252 words of extra memory for PDF output out of 10000 (max. 10000000)
 

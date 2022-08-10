@@ -43,7 +43,7 @@
 \includegraphics[width=180pt]{CentredLogoCMYK.jpg}
 \end{figure}
 \vspace{2em}
-\textbf{\Huge{Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Models}}\\[2em]
+\textbf{\Huge{Analysis on Risk Factors for Leptospirosis Based on Generalized Linear Mixed Models}}\\[2em]
 \textbf{\LARGE{by}}\\
 \vspace{2em}
 \textbf{\LARGE{Yile Shi}}\\
@@ -66,24 +66,24 @@ MSc in Statistics with Data Science}\\
 \Large{Executive Summary}
 \end{center}
 
-\textbf{Background:} Leptospirosis, a widely distributed zoonotic disease in both developed and developing countries, has become a major public health concern due to its significant effect on human and animal morbidity and mortality \cite{haake2015leptospirosis}. Although various researches have been conducted to study this zoonotic infection in different domains, work on identifying individuals at risk, especially in low-income rural areas in developing countries, is still deficient.
+\textbf{Background:} Leptospirosis, a widely distributed zoonotic disease, has become a major public health concern due to its significant effect on human and animal morbidity and mortality \cite{haake2015leptospirosis}. Although various researches have been conducted to study this zoonotic infection in different domains, work on identifying individuals at risk, especially in low-income rural areas in developing countries, is still deficient.
 
 \
 
-\textbf{Research question:} This research aims to shed light on the potential risk factors that affects leptospirosis infection in a rural area of Kenya, and further generate knowledge to help inform health intervention programmes for leptospirosis infections reduction. We consider 8 demographic variables: gender, age, land use, occupation, distance to local hospital, altitude, family size, and occupation of household head, as well as 3 environmental variables including village, location and constituency.
+\textbf{Research question:} This research aims to shed light on the potential risk factors that affects individual's leptospirosis infection in a rural area of Kenya, and further generate knowledge to help inform health intervention programmes for leptospirosis infections reduction. We consider 8 explanatory variables: gender, age, land use, occupation, distance to local hospital, altitude, family size, and occupation of household head, as well as 3 environmental variables with nested structure.
 
 \
 
-\textbf{Data:} We use the dataset which consists of 595 samples collected by the International Livestock Research Institute from members of households in villages in Tana River County, Kenya, including the Leptospirosis test results using ELIZA (enzyme-linked immunosorbent assay) and aforementioned variables.
+\textbf{Data:} We use a subset with 595 subjects of the sampled data collected by the International Livestock Research Institute from members of households in villages in Tana River County, Kenya, including the leptospirosis test results using ELIZA (enzyme-linked immunosorbent assay). 
 
 
 \
 
-\textbf{Methods:} We construct binomial General Linear Mixed Models including the random effect of environmental variables, where the response of interest is individual's ELIZA test result. The random intercept model with village effect is selected due to its best performance by AIC (Akaike Information Criterion). Further, we conduct model diagnosis and evaluation including ROC (Receiver Operating Characteristic) curves (Figure \ref{fig:ROC}) and AUC (Area Under Curve).
+\textbf{Methods:} We construct binomial generalized linear mixed models including the random effect of environmental variables, where the response of interest is individual's ELIZA teste result. The random intercept model with village effect is selected due to its best performance by AIC (Akaike Information Criterion). Moreover, we conduct model diagnosis and evaluation, including residual plots and ROC (Receiver Operating Characteristic) curves (Figure \ref{fig:ROC}). 
 
 \
 
-\textbf{Results:} Gender, type of land use and occupation of household head are shown to have significant effects on individual's Leptospirosis infection. Specifically, males
+\textbf{Results:} We obtain the random intercept among villages is normally distributed with mean 0 and standard deviation 0.5053. Considering the village effect, gender, land use (at 0.1 significance level) and occupation of household head are shown to have significant effects on individual's leptospirosis infection. Specifically, male individuals (OR 0.6427; 95\% CI 0.4194 to 0.9764) has less risk for leptospirosis seropositivity than female individuals; people working on pastoral land (OR 0.3582; 95\% CI 0.1151 to 1.1372) or riverine land (OR 0.5738; 95\% CI 0.1657 to 1.8141) are less likely to be infected, comparing with irrigation land group; individuals with household heads working as pastoralists (OR 6.4987; 95\% CI 2.2190 to 19.3265) take more risk for leptospirosis seropositivity than farmers group.
 
 \begin{figure}[!h]
 	\centering
@@ -98,8 +98,7 @@ MSc in Statistics with Data Science}\\
 \Large{Acknowledgments}
 \end{center}
 
-I am sincerely grateful to the supervisors of this project, Dr. Sara Wade and Dr. Cecilia Balocchi, as well as PhD supporter Steven Soutar, for their advice and guidance. I would also like to thank SHARE for providing the data and background information used in the research. 
-
+I am sincerely grateful to the supervisors of this project, Dr. Gail Robertson and Dr. Amy Wilson, as well as PhD supporter Miss. Rebecca Akeresola, for their advice and guidance. I would also like to thank International Livestock Research Institute for providing the data and background information used in the research. 
 
 \clearpage
 
@@ -115,7 +114,7 @@ Name: Yile Shi
 
 Matriculation Number: s2168022
 
-Title of work: Analysis on Dementia Risk Factors Based on Bayesian Networks
+Title of work: Analysis on Leptospirosis Risk Factors Based on Generalized Linear Mixed Model
 
 \vspace{1cm}
 
@@ -168,24 +167,16 @@ Date: 2022/8/10
 \section{Introduction}
 \label{sec:intro}
 
-Dementia, a clinical state characterized by loss of function in multiple cognitive domains, becomes a serious public health concern worldwide \cite{seixas2014bayesian}. Someone develops dementia every 3 seconds and current annual cost of dementia is estimated at 1 million dollars, which is set double in 2030 \cite{alzheimer2019world}. Because of the absence of effective treatment, prevention strategy to reduce dementia risk becomes an active research topic. This report aims to contribute to this topic by identifying potential risk factors behind dementia diagnosis. We expect that a better understanding of the influence of factors on cognitive impairment can help to inform the development of lifestyle interventions for dementia risk reduction. 
+Leptospirosis, a zoonosis found worldwide, remains a major public health issue in many developing countries, which is expected to become more important due to a rapid urbanization, global warming, and extreme climatic events such as floods \cite{picardeau2013diagnosis}. Due the difficulty of accurate data collection, identification of risk factors for individual's leptospirosis infection in the rural areas of developing countries becomes an active research topic. This report aims to contribute to this topic by exploring potential risk factors behind leptospirosis diagnosis. We expect that a better understanding of the influence of factors on leptospirosis infection can help to inform the development of lifestyle interventions for leptospirosis risk reduction. 
 
-We apply exploratory data analysis on easySHARE dataset from Survey of Health, Ageing and Retirement in Europe (SHARE) and extract a sample of 57310 individuals recorded in 2013. Based on the subset, we build Bayesian networks and select the one with the best performance. Our goal is to find, among the following factors, the most likely to be relevant to cognitive decline: age; gender; country; education; drinking behaviour; smoking; obesity; physical activity; chronic disease; working status; household finance; social isolation; and depression. 
-
-\clearpage
+We apply exploratory data analysis (EDA) on sampled data collected by the International Livestock Research Institute from members of households in villages in Tana River County, Kenya, and extract a subset of 595 individuals with 11 columns as well as the leptospirosis test results using ELIZA (enzyme-linked immunosorbent assay). We build generalized linear mixed models including the random effect of environmental variables, and select the best performed one. Our goal is to find, among the following potential risk factors, the most likely to be relevant to leptospirosis seropositivity, with an environment effect into consideration: gender; age; land use; occupation; distance to local hospital; altitude; family size; and occupation of household head.
 
 \section{Exploratory Data Analysis}  
 \label{sec: EDA}
 
-\subsection{Erroneous Data and Duplicated Data}
-
-We start with going through the dataset to have some initial insight of the data and detect that there exist some fault data against our general knowledge. For example, according to the column \texttt{relationshiphh}, some sampled people are the daughters of their corresponding household heads while their genders are recoded as "Male". We fix these problems. Besides, we observe and drop some duplicated data which are possibly recorded by accident. 
-
-Note that there also exist some pairs of observations that are different in \texttt{sampleid} and \texttt{parent} but have same values in other columns. We decide to keep both of them in the dataset as we cannot tell whether these observations are duplicated or not.  
-
 \subsection{Missing Data}
 
-Table \ref{tab:missing} displays the number and the proportion (4 decimal places) of missing values in variables, arranged in descending order. 
+We detect a serious problem of missing values in the dataset after dropping duplicated data. Table \ref{tab:missing} displays the number and proportion of missing values, arranged in descending order. 
 
 \begin{table}[!h]
 	\centering
@@ -206,13 +197,9 @@ Table \ref{tab:missing} displays the number and the proportion (4 decimal places
 	\label{tab:missing}
 \end{table}
 
-According to the table above, we find that \texttt{landuse}, \texttt{gender} and \texttt{age} contain missing values less than 1\%. Thus, we drop the corresponding observations as it doesn't lead to much loss of information of the original dataset.
+\texttt{landuse}, \texttt{gender} and \texttt{age} contain missing values less than 1\% and we drop the corresponding observations without much loss of information of the original dataset.
 
-As for \texttt{occupation}, \texttt{disthosp}, \texttt{livestk\_home} and \texttt{location}, which contains a large amount of missing data respectively, they require exploration and discussion in more detail to determine a proper way to deal with missing data.
-
-\subsubsection{livestk\_home}
-
-According to the data description, \texttt{livestk\_home} is a binary variable indicating whether or not livestock is kept in the household of sampled person. The work of Cook et al in 2017 \cite{cook2017risk} found that the exposure to livestocks could be an important risk factor for Leptospirosis, hence we might also expect the significant contribution to Leptospirosis diagnosis of this variable. However, from figure \ref{fig:livestk}, we observe a significant imbalance in this column where most families of sampled people have livestocks at their homes. In this case, we will not include this variable in further analysis as the imbalance probably leads to insignificant results of this variable. It becomes unnecessary to think of the missing values in this column.
+According to data description, \texttt{livestk\_home} is a binary variable indicating whether or not livestock is kept in the household of sampled person. Although contact with animals increases risk of leptospirosis \cite{cook2017risk}, from figure \ref{fig:livestk}, we observe a significant imbalance, which probably leads to insignificant results. Thus, we exclude this column from further modelling.
 
 \begin{figure}[!h]
 	\centering
@@ -221,74 +208,43 @@ According to the data description, \texttt{livestk\_home} is a binary variable i
 	\label{fig:livestk}
 \end{figure}
 
-\subsubsection{disthosp}
-
-\texttt{disthosp} is the Euclidean distance from the sampled person's household to local hospital. Here, we assume that there is only one hospital in each village and people from that village only go to that hospital. Then, we use the mean distance to the local hospital of each village to impute the missing values in this column, which works for most villages. We observe that data in \texttt{disthosp} in village 12, 13 and 23 are completely missing, so we cannot obtain the mean distance to the local hospital and further fail to impute the missing distance in these villages. As a result, we drop the corresponding rows of village 12, 13 and 23.
+\texttt{disthosp} is the Euclidean distance from the sampled person's household to local hospital. Here, we assume that people from the same village go to the same hospital. Then, we impute the missing values with the mean distance to the local hospital of each village. However, we observe that data in \texttt{disthosp} in village 12, 13 and 23 are completely missing and fail to impute. Instead, we drop corresponding rows in these villages. 
 
 \subsubsection{location}
 
-\texttt{location} is the anonymised location of area where sampling was done, ranging from 1 to 19. This column has over 25\% missing data. Again, we consider using the \texttt{village} variable to determine the corresponding location in the same row. However, two problems are detected:
-
-\begin{itemize}
-	\item Similar to the case of \texttt{disthosp}, the locations of observations in some villages are completely missing, which makes it difficult to determine the correct locations.
-	\item Some observations in the same village belong to different locations, e.g. some individuals from village 17 belong to location 9 while others belong to location 18. Without more information, we cannot decide which location they belong to, as it could be a mistake in data input or the corresponding village is on the boundary of two locations.
-\end{itemize}
-
-As a result, we drop all missing values in this column instead of imputation due to problems above.
+\texttt{location} is the anonymised location of area where sampling was done. Again, we consider using \texttt{village} to determine the corresponding location in the same row. However, we still meet the problem that data in \texttt{locations} in some villages are completely missing. Besides, we observe that subjects from the same village could belong to different locations. possibly because the village is on the boundary of two locations or it is just a mistake in data input. As a result, we drop all missing values in this column instead of imputation.
 
 \subsubsection{occupation}
 
-The column \texttt{occupation} represents the occupation of the person sampled, which could have influence on the prevalence of Leptospirosis. Specifically, \cite{cook2017risk} pointed out that people whose working places are closer to water or animals are more likely to suffer from Leptospirosis. Therefore, we may want to take this variable into consideration when modelling and deal with this column more carefully. 
-
-The occupation of a person could be associated with various aspects. We first consider the influence of individual's age. Figure \ref{fig:occ1} and \ref{fig:occ2} show the conditional distributions of \texttt{occupation} in juvenile (< 18 yeas old) and adult ($\geq$ 18 years old) groups respectively. 
+Individual's occupation could have great influence on leptospirosis infection \cite{cook2017risk}, associated with various aspects. Figure \ref{fig:occ1} shows the conditional distributions of \texttt{occupation} in juvenile (< 18 yeas old) and adult ($\geq$ 18 years old) groups. 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[width = 0.75\textwidth]{Images/occupation_age_1.png}
-	\caption{Distribution of \texttt{occupation} in juvenile group}
+	\includegraphics[width = 0.75\textwidth]{Images/occupation_age.png}
+	\caption{Distribution of \texttt{occupation}, conditioning on \texttt{age}}
 	\label{fig:occ1}
 \end{figure}
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width = 0.75\textwidth]{Images/occupation_age_2.png}
-	\caption{Distribution of \texttt{occupation} in adult group}
-	\label{fig:occ2}
-\end{figure}
+It is shown that juveniles are most likely to be students, hence we impute the missing occupation for juvenile individuals with "Student". However, the case for adults is complicated. A p-value $<2.2e-16$ from the $\chi^2$ test shows strong evidence that individual's occupation is correlated with the land use. We also observed this relationship in Figure \ref{fig:occ3}. Specifically, most sampled adults working on irrigation or riverine land are farmers, while individuals pastoral land are most likely to be pastoralists. Besides, \texttt{gender} and \texttt{constituency} are also observed to be correlated with \texttt{occupation}. 
 
-We observe very different distributions in two groups from the plots. For juveniles under 18 years old, they are most likely to be students, hence we impute the missing occupation for juvenile individuals with "Student", which is consistent with our general knowledge.  
-
-The case for adults is more complex, as their occupations are also correlated with other variables. \texttt{landuse} denotes the characterization of the sampling site based on land use, which might be correlated with individual's occupation. Figure \ref{fig:occ3} displays the conditional distributions of adults' occupations in different \texttt{landuse} groups.
+It is hard to determine an appropriate imputation method for adult group. Instead, we drop adult subjects missing in \texttt{occupation}.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width = 0.75\textwidth]{Images/occupation_landuse.png}
-	\caption{Conditional distributions of \texttt{occupation} in adult group}
+	\caption{Ddistributions of \texttt{occupation} in adult group, conditioning on \texttt{landuse}}
 	\label{fig:occ3}		
 \end{figure} 
 
-According to the plot, most sampled adults with land use as "riverine" or "irrigation" work as farmers, while individuals with land use as "pastoral" are most likely to be pastoralists. Moreover, holding the \texttt{landuse} as "pastoral", we observe significance difference among different gender and constituency groups, as shown in Figure \ref{fig:occ4}.
-
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width = 0.75\textwidth]{Images/occupation_gender_constituency.png}
-	\caption{Conditional distributions of \texttt{occupation} in adult and "pastoral" group}
-	\label{fig:occ4}		
-\end{figure} 
-
-In the "pastoral" stratification, male individuals across constituencies usually have their occupations as "Pastoralist", while female groups show various distributions. Females from "Tana North" and "Tana River" constituencies all work as pastoralists, but some of those from "Ijara" and "Sangailu" constituencies are housewives. Note that "Housewife" is the most popular occupation in "Sangailu" constituency, rather than "Pastoralist".
-
-Therefore, we decide to drop observations with missing values in \texttt{occupation} instead of imputing them, as the cases are complicated and imputations probably lead to great model bias. 
-
 \subsection{Feature Selection}
 
-After dealing with missing data, we now determine which columns could be used for modelling. The column \texttt{result}, which represents whether the sample is positive or negative on ELISA (enzyme-linked immunosorbent assay), is considered as the response variable in our model. 
+We now determine which columns could be used for modelling. \texttt{result}, which represents whether the sample individual is leptospirosis seropositive or not based on ELISA (enzyme-linked immunosorbent assay), is considered as the response variable. 
 
-As for potential risk factors, according to the data description, identifier columns including \texttt{sampleid} and \texttt{parent} are excluded from our model, as well as \texttt{relationshiphh} and \texttt{genhhid}. Besides, as mentioned before, we do not take the variable \texttt{livestk\_home} into consideration. We select features from other columns based on corresponding plots and the work of Goarant et al (2016) \cite{goarant2016leptospirosis}. 
+As for potential risk factors, identifier columns including \texttt{sampleid} and \texttt{parent} are excluded from our model, as well as \texttt{relationshiphh} and \texttt{genhhid}. Besides, as mentioned before, we do not take \texttt{livestk\_home} into consideration. We select features from rest columns based on plots and the work of Goarant et al (2016) \cite{goarant2016leptospirosis}. 
 
 \subsubsection{Nominal Variables}
 
-We start from factor variables \texttt{gender}, \texttt{occupation}, \texttt{landuse}, \texttt{hhoccup} and \texttt{hhgender}. The last two columns are nominal variables indicating the occupation and gender of the corresponding household head. Before any selection, we count the number of observations in each category of \texttt{occupation} and \texttt{hhoccup}. Moreover, we plot the stacked bars of \texttt{result}, grouped by these two columns respectively.
+We start from factor variables \texttt{gender}, \texttt{occupation}, \texttt{landuse}, \texttt{hhoccup} and \texttt{hhgender}. We count the number of observations in each category of \texttt{occupation} and \texttt{hhoccup}, the occupation of household head, grouped by two columns respectively.
 
 \begin{table}[!h]
 	\centering
@@ -317,25 +273,9 @@ We start from factor variables \texttt{gender}, \texttt{occupation}, \texttt{lan
 	\label{tab:occ}
 \end{table}
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width = 0.75\textwidth]{Images/occupation_3.png}
-	\caption{Stacked bar plot of \texttt{result} in \texttt{occupation}}
-	\label{fig:occ5}
-\end{figure}
+ As shown in Table \ref{tab:occ}, most categories contain observations less than 20. Small and insufficient group size would lead to unstable and biased results. On the other hand, numbers of occupation groups could result in larger degrees of freedom, which increases model complexity. As a remedy, we merge occupation groups with similar meanings and risks of exposure, such as "Crop Farming" and "Farmer", "Herdsman" and "Pastoralist". However, most smaller occupation groups have very different risk profiles, e.g. drivers are unlikely to have the same contact with animal risk as farmers. In this case, we disregard such categories and discard corresponding observations.
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width = 0.75\textwidth]{Images/hhoccup.png}
-	\caption{Stacked bar plot of \texttt{result} in \texttt{hhoccup}}
-	\label{fig:hhoccup}
-\end{figure}
-
- According to Table \ref{tab:occ} and Figure \ref{fig:occ5} and \ref{fig:hhoccup}, most categories in two columns have observations less than 20. Small and insufficient group size would lead to unstable and  biased results. On the other hand, numbers of occupation groups could result in larger degrees of freedom, which increases model complexity. As discussed before, we may use these variables in the model, as the occupation of a person or the corresponding household head could have influence on the infection of Leptospirosis \cite{cook2017risk}. Thus, it is necessary to deal with these problems properly.
-
-We find that some occupation groups with similar meanings and risks of exposure could be merged. Thus, we merge "Crop Farming" with "Farmer" and merge "Herdsman" with "Pastoralist". However, most of the smaller occupation groups have very different risk profiles, e.g. drivers are unlikely to have the same contact with animal risk as farmers. In this case, we disregard such categories and discard corresponding observations.
-
-Now, we plot stacked bar charts for each aforementioned factor and report the prevalence in each category of it. 
+We plot stacked bar charts for nominal variables and report the prevalence in each category. From Figure \ref{fig:factor} and Table \ref{tab:factor}, \texttt{gender},  \texttt{occupation}, \texttt{landuse} and \texttt{hhoccup} have significantly different prevalence among categories, hence we select them as feature candidates for modelling. Although \texttt{hhgender} also tends to have significant effect, we exclude this column due to its imbalance where over 80\% observations are males.
 
 \begin{figure}[!h]
 	\centering
@@ -344,7 +284,7 @@ Now, we plot stacked bar charts for each aforementioned factor and report the pr
 	\label{fig:factor}
 \end{figure}
 
-\begin{table}
+\begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|}
 		\hline
@@ -373,11 +313,9 @@ Now, we plot stacked bar charts for each aforementioned factor and report the pr
 	\label{tab:factor}
 \end{table}
 
-According to Figure \ref{fig:factor} and Table \ref{tab:factor}, \texttt{gender},  \texttt{occupation}, \texttt{landuse} and \texttt{hhoccup} have significantly different prevalence among categories, hence we select them as feature candidates in modelling step. Although it is also shown that prevalence between \texttt{hhgender} groups are significantly different, we do not include this column in our models as it is imbalanced distributed where over 80\% observations in this column are "Male".
-
 \subsubsection{Numerical Variables}
 
-We make box plots for numerical variables including \texttt{age}, \texttt{altitude}, \texttt{nmales}, \texttt{nfemales}, \texttt{famsize} and \texttt{disthosp}, grouped by \texttt{result}. Here, \texttt{altitude} denotes the altitude (recorded via GPS) of the village where the sample was collected, \texttt{nmales} and \texttt{nfemales} represent the number of males and females in the household sampled respectively, and \texttt{famsize}, the sum of \texttt{nmales} and \texttt{nfemales}, is the number of people in the sampled household. Note that there exists an observation with \texttt{disthosp} over 500 kilometres, which is deleted as an outlier, because the values of this feature in other observations from the same village are much lower.
+We make box plots for numerical variables including \texttt{age}, \texttt{altitude}, \texttt{nmales}, \texttt{nfemales}, \texttt{famsize} and \texttt{disthosp}, grouped by \texttt{result}. 
 
 \begin{figure}[!h]
 	\centering
@@ -386,11 +324,11 @@ We make box plots for numerical variables including \texttt{age}, \texttt{altitu
 	\label{fig:numerical}
 \end{figure}
 
-Comparing with factors, the distributions of numerical variables do not show significant difference between "Negative" and "Positive" groups from Figure \ref{fig:numerical}, which are probably insignificant in the models. Based on \cite{goarant2016leptospirosis}, we select \texttt{age}, \texttt{altitude}, \texttt{famsize} and \texttt{disthosp} as feature candidates for modelling. 
+Comparing with nominal variables, numerical variables do not show such significantl difference between "Negative" and "Positive" groups in Figure \ref{fig:numerical}. Based on \cite{goarant2016leptospirosis}, we select \texttt{age}, \texttt{altitude}, \texttt{famsize}, the number of people in the sampled household and \texttt{disthosp} as feature candidates for modelling. 
 
 \subsubsection{Environmental Variables}
 
-\texttt{village}, \texttt{location} and \texttt{constituency} are nominal variables indicating the geographical information of sampled people, with a nested order $\texttt{village} < \texttt{location} < \texttt{constituency}$.  As what we do for other nominal variables, we plot the stacked bar charts of the response variable and compute the prevalence, grouped by the levels in \texttt{village}, \texttt{location} and \texttt{constituency} respectively. 
+Environmental variables including \texttt{village}, \texttt{location} and \texttt{constituency} indicate the geographical information of sampled people, with an order $\texttt{village} < \texttt{location} < \texttt{constituency}$.  Again, we plot the stacked bar charts of the response variable and compute the prevalence, grouped by the levels in \texttt{village}, \texttt{location} and \texttt{constituency} respectively. 
 
 \begin{figure}[!h]
 	\centering
@@ -470,36 +408,52 @@ Comparing with factors, the distributions of numerical variables do not show sig
 	\label{tab:constituency}
 \end{table}
 
-According to the plots and tables, we may also consider the influence of these geographical variables on Leptospirosis diagnosis in our models due to different prevalence among groups. However, \texttt{village} and \texttt{location} contain a number of levels, which causes great model complexity with high degrees of freedom and further unstable estimates. Thus, we consider the models with the random effect of these geographical variables. The details of random effect will be explained in the next section.
+Nested structures are observed in environmental variables and we would like to take the influence of them into consideration due to great difference of prevalence among groups. However, we might consider the random effect of these variables rather than fixed effect, due to the hierarchical structures with numbers of levels in \texttt{village} and \texttt{location}. Models with random effect will be explained in the next section.
 
-Up to now, we have extracted a subset for modelling with 595 observations left and 11 feature candidates, including 4 nominal variables, 4 numerical variables and 3 geographical variables.
+So far, we have extracted a subset for modelling with 595 observations, including 8 feature candidates and 3 environmental variables.
 
 \clearpage
 
 \section{Implementation}
 \label{sec:implementation}
 
-In this section, we introduce the definition and purpose of General Linear Mixed Model (GLMM) with random effect used for modelling. Moreover, we explain the model construction , and further the comparison among models.
+\subsection{Generalized Linear Mixed Model}
 
-\subsection{General Linear Mixed Model}
+The exposition in this subsection follows that in Zuur (2009) \cite{zuur2009mixed}.
 
-The exposition in this subsection follows that in Zuur (2009) \cite{zuur2009}.
+\
+
+Since the response variable in our model is binomial, we start with the generalized linear model (GLM) for binomial data, i.e. logistic regression. 
+
+Suppose the response $\boldsymbol{Y} = (Y_1, \cdots, Y_n)$ $Y_i \sim Bin(1, p_i)$, we have: 
+
+$$logit(p_i) = ln \frac{p_i}{1-p_i} = \boldsymbol{x}_i^T\boldsymbol{\beta}$$
+
+GLMs do not always work well. Sometimes data may contain multiple levels, which is known as nested or hierarchical structure, and data in each level may be correlated. In this case, regression results in different levels could vary and model assumptions such as homogeneity could be violated. To deal with it, we consider an extended model where part of parameters could change across different levels in the hierarchical variables (random effect), and the rest parameters keep consistent across levels (fixed effect). The GLM including both fixed and random effect is called the generalized linear mixed model (GLMM). 
+
+Now, for the binomial GLMM for response $\boldsymbol{Y}$, we have:
+
+$$logit(\boldsymbol{p})  = \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{Z}\boldsymbol{b} + \boldsymbol{\epsilon}$$
+
+Here, $\boldsymbol{p} = (p_{ih})$ is the probability matrix for individual $i$ in level $j$; $\boldsymbol{X}$ and $\boldsymbol{\beta}$ are the fixed effects design matrix and fixed effect respectively; $\boldsymbol{Z}$ and $\boldsymbol{b}$ are the random effects design matrix and random effect respectively; $\boldsymbol{\epsilon}$ is the matrix for unexplained information. Note that $\boldsymbol{b}$ and $\boldsymbol{\epsilon}$ follow normal distributions with mean 0. 
+
+Besides the allowance for correlations among observations and nested data structure, GLMMs also reduce the model complexity. If we include the hierarchical variables with numerous levels in the fixed structure, we will obtain complicated models without stable results and generality. Considering the random effect instead only requires one extra parameter and can obtain more general statements. That's why we consider the random effect of environmental variables rather than their fixed effect.
 
 \subsection{Model Construction and Selection}
 
 \subsubsection{Step 1: Initial Model}
 
-Following Zuur's logic, we start with a binomial GLM, i.e. logistic regression, containing all feature candidates excluding geographical variables. Here, we do not contain the interaction terms of variables in the model as we do not detect much interaction existing among features in EDA section. On the other hand, introducing interaction terms increases much model complexity due to a large number of potential interaction terms. 
+We start with a binomial GLM, containing feature candidates except geographical variables. Here, we do not contain the interaction terms of variables in the model as we do not detect much interaction among features. 
 
 \subsubsection{Step 2: Find the Optimal Fixed Structure}
 
-The \texttt{summary} function and \texttt{step} function are both used to determine variables with the optimal fixed effect among candidates. The former function obtains the feature significance based on the $t$ test, while the latter one choose the optimal model and significant features by AIC and the $\chi^2$ test. Table \ref{tab:summary1} show the significance of features in the initial GLM based on \texttt{summary} function, and Table \ref{tab:step1} display the significant features based on \texttt{step} function.
+The \texttt{summary} function and \texttt{step} function are both used to determine the optimal fixed structure among candidates. The latter function chooses the optimal model and significant features by AIC and the $\chi^2$ test. Table \ref{tab:summary1} and \ref{tab:step1} display the output of two functions.
 
 \begin{table}[!h]
 	\centering
 	\begin{tabular}{|c|c|c|}
 		\hline
-		 & $t$ value & Pr($>|z|$) \\
+		 & $t$ value & Pr($>|t|$) \\
 		\hline
 		\texttt{(Intercept)} & -0.341 & 0.73317 \\
 		\texttt{genderMale} & -2.428 & \ \ \ 0.01520 * \\
@@ -542,15 +496,15 @@ The \texttt{summary} function and \texttt{step} function are both used to determ
 	\label{tab:step1}
 \end{table}
 
-Based on two tables, we select \texttt{gender} and \texttt{hhoccup} in further steps, which are both statistically significant at 0.05 significance level in two function results. Besides, \texttt{landuse} is also selected in fixed structure,  as it is significant at 0.1 significance level in stepwise selection and its level is statistically significant at 0.05 level in model summary.  
+We select \texttt{gender} and \texttt{hhoccup}, which are statistically significant at 0.05 significance level in the output of both functions. Besides, \texttt{landuse} is also selected, as it is significant at 0.1 significance level in stepwise selection and one of its levels is statistically significant at 0.05 level in model summary.  
 
-Although \texttt{occupation} shows its significance in stepwise algorithm, none of its levels is significant in model summary. Moreover, as mentioned in EDA section, we observe high correlation between \texttt{occupation} and \texttt{landuse}, which probably causes the problem of collinearity and poor model performance. Therefore, we do not include \texttt{occupation} in the fixed structure.
+Although \texttt{occupation} shows its significance in stepwise algorithm, none of its levels is significant in model summary. On the other hand, we observe high correlation between \texttt{occupation} and \texttt{landuse}, which probably causes collinearity and poor model performance. Therefore, we do not include \texttt{occupation} in the fixed structure.
 
 In conclusion, the optimal fixed structure consists of \texttt{gender}, \texttt{landuse} and \texttt{hhoccup}.
 
 \subsubsection{Step 3: Find the Optimal Random Structure}
 
-With the pre-determined fixed structure, we now introduce the random effect of geographical variables and determine GLMM with the best performance, using R package \texttt{lme4} \cite{lme4}. As mentioned, we consider the random effect of \texttt{village} and \texttt{location} to investigate whether there is a village or location effect. 
+With the optimal fixed structure, we now introduce the random effect of environmental variables and determine GLMM with the best performance, using R package \texttt{lme4} \cite{lme4}. As mentioned, we investigate whether there is a village or location effect. 
 
 We start with fitting the random intercept model of \texttt{village}. To assess whether the model with mixed effect model is better than the ordinary binomial GLM, we refit the latter one over the selected features without random intercept and compare the models using \texttt{anova} function. The output is given in Table \ref{tab:glmm1}:
 
@@ -570,7 +524,7 @@ We start with fitting the random intercept model of \texttt{village}. To assess 
 	\label{tab:glmm1}
 \end{table}
 
-The lower AIC value in the table indicate that the mixed model including the random effect of village is preferred. Moreover, we extend the random part by building random intercept and slope models. Specifically, the \texttt{landuse} effect may be different per village, and the same may hold for the \texttt{hhoccup} effect. Table \ref{tab:glmm2} show the output of model comparison using \texttt{anova} function:
+Lower AIC value indicates that the mixed model including village effect is preferred. Moreover, we extend the random part by adding random slopes. Specifically, the \texttt{landuse} effect may be different per village and the same may hold for the \texttt{hhoccup} effect. Table \ref{tab:glmm2} show the output of model comparison using \texttt{anova} function:
 
 \begin{table}[!h]
 	\centering
@@ -589,7 +543,7 @@ The lower AIC value in the table indicate that the mixed model including the ran
 	\label{tab:glmm2}
 \end{table}
 
-Extending the model with random slopes gives no improvement as the AIC values of models with random slopes get higher. Now we look at the alternative random intercept model considering the location effect. Comparison between random intercept models of \texttt{village} and \texttt{location} using \texttt{AIC} command is displayed in Table \ref{tab:glmm3}:
+Extending the model with random slopes gives no improvement as the AIC values of models with random slopes get higher. Now we consider the alternative model with the random intercept of \texttt{location}. Comparison between random intercept models of \texttt{village} and \texttt{location} by AIC is displayed in Table \ref{tab:glmm3}:
 
 \begin{table}[!h]
 	\centering
@@ -597,41 +551,28 @@ Extending the model with random slopes gives no improvement as the AIC values of
 		\hline
 		& df & AIC  \\  
 		\hline
-		GLMM(\texttt{village}) & 6 & 576.9177	\\	
-		GLMM(\texttt{location}) & 6 & 577.3410 \\
+		GLMM(\texttt{village}) & 6 & 601.8683	\\	
+		GLMM(\texttt{location}) & 6 & 601.8942 \\
 		\hline
 	\end{tabular}
 	\caption{Comparison between random intercept models of \texttt{village} and \texttt{location}}
 	\label{tab:glmm3}
 \end{table}
 
-According to the table, the AIC value of the random intercept model with the village effect is slightly lower. Besides, since the column \texttt{village} contains more levels than \texttt{location}, the models considering the random effect on village aspect obtain more detailed results. Moreover, the random intercept and slope models of \texttt{location} perform even worse. As a result, we prefer the random intercept model with village effect.
+The AIC value of the random intercept model with the village effect is slightly lower. Besides, since the column \texttt{village} contains more levels than \texttt{location}, the models considering the random effect on village aspect obtain more detailed results. The random intercept and slope models of \texttt{location} performs even worse. Consequently, we choose the random intercept model with village effect as the optimal model.
 
 \
 
-Note that here we do not consider the constituency effect in our model as \texttt{constituency} only contains 4 levels. It may be better to include this variable in model's fixed structure. However, after introducing the fixed effect of \texttt{constituency}, other variables in the fixed structure become insignificant. Moreover, the variance and standard deviation of the random effect of \texttt{village} or \texttt{location} turn to 0, indicating the insignificance of random effect. Further details are given in Appendix. Consequently, the influence of \texttt{constituency} is ruled out.
+Note that we do not consider the constituency effect as \texttt{constituency} only contains 4 levels. It might be better to include this variable in model's fixed structure. However, after introducing the fixed effect of \texttt{constituency}, other variables in the fixed structure become insignificant. Moreover, the standard deviation of the random village or location effect turns to 0, indicating no difference among villages or locations. Thus, the influence of \texttt{constituency} is ruled out.
 
 \clearpage
 
 \section{Results}
 \label{sec:results}
 
-The random intercept model with \textbf{village} effect is determined as the optimal model, given by:
-\begin{align*}
-	Y_{ij} & \sim Binomial(1, p_{ij}) \\
-	logit(p_{ij}) &=  -1.5997 - 0.4711 \times \mathbb{I}(\texttt{gender}_{ij} = Male)  \\
-					      & \ \ \ \ - 0.9956 \times \mathbb{I}(\texttt{landuse}_{ij} = pastoral) - 0.4744 \times \mathbb{I}(\texttt{landuse}_{ij} = riverine) \\
-					      & \ \ \ \ + 1.7649 \times \mathbb{I}(\texttt{hhoccup}_{ij} = Pastoralist) + v_{ij} \\
-	v_i & \sim Normal(0, 0.2553^2)
-\end{align*}	
-
-Here, the index $i$ refers to villages and $j$ to the observation within a village. Moreover, $v_i$ denotes the random intercept across villages.
-
-Before any interpretation, we carry out the diagnosis and evaluation of the optimal model.
-
 \subsection{Model Diagnosis} 
 
-According to \cite{zuur2009mixed}, model diagnosis is required once we obtain the optimal model. In linear regressions, we usually look at the corresponding residual plots and normal Q-Q plots to check if the linearity assumption and the normality of error terms are satisfied. However, these are probably not suitable for GL(M)Ms. Standard residual plots, when interpreted in the same way as for linear models, seem to show all kind of problems, such as non-normality, heteroscedasticity, even if the model is correctly specified. For example, the standard residual plot of our optimal model, shown in Figure \ref{fig:std_resplot}, has an obvious pattern. In this case, we get confused and are not able to tell whether such pattern in GLMM residuals is a problem or not.
+In linear regressions, we usually look at the residual plots and normal Q-Q plots to check if the model assumptions are satisfied. However, these are probably not suitable for GL(M)Ms. Standard residual plots, when interpreted in the same way as for linear models, seem to show all kind of problems, such as non-normality, heteroscedasticity, even if the model is correctly specified. For example, the standard residual plot of our optimal model, shown in Figure \ref{fig:std_resplot}, has an obvious pattern. In this case, we get confused and are not able to tell whether such pattern in GLMM residuals is a problem or not.
 
 \begin{figure}[!h]
 	\centering
@@ -640,15 +581,15 @@ According to \cite{zuur2009mixed}, model diagnosis is required once we obtain th
 	\label{fig:std_resplot}
 \end{figure}
 
-To address this problem, we adopt the \texttt{DHARMa} package \cite{dharma}. This package aims to create readily interpretable residuals for GL(M)Ms that are standardized to values between 0 and 1. \texttt{DHARMa} also provides Q-Q plots to detect overall deviations from the expected distribution, by default with added tests for correct distribution (Kolmogorov-Smirnov test), dispersion and outliers. The use of simulation-based approach ensures the strength of diagnosis results. The basic steps \cite{dharma} are:
+To address this problem, we adopt the \texttt{DHARMa} package \cite{dharma}. It aims to create readily interpretable residuals for GL(M)Ms that are standardized to values between 0 and 1. \texttt{DHARMa} also provides Q-Q plots to detect overall deviations from the expected distribution. The basic steps are:
 
 \begin{enumerate}
-	\item Simulate new response data from the fitted model for each observation.
-	\item For each observation, calculate the empirical cumulative density function for the simulated observations, which describes the possible values (and their probability) at the predictor combination of the observed value, assuming the fitted model is correct.
-	\item The residual is defined as the value of the empirical density function at the value of the observed data.
+	\item Simulate new response data from the fitted model.
+	\item Calculate the empirical cumulative density function for the simulated observations, which describes the possible values (and their probability) at the predictor combination of the observed value, assuming the fitted model is correct.
+	\item The residual is then defined as the value of the empirical density function at the value of the observed data.
 \end{enumerate}
 
-Therefore, we simulate 1000 observations based on our optimal model, and plot the scaled residuals.
+We simulate 1000 observations based on our optimal model, and plot the scaled residuals. Intuitively, nothing in the Figure \ref{fig:diagnosis1} is highlighted in red, indicating no violation of model assumptions is detected. Specifically, well-performed Q-Q plot indicates that the residuals are normally distributed. In the residual plot on the right, we do not observe obvious pattern of scaled residuals. As a result, we do not detect significant problems in the optimal model.
 
 \begin{figure}[!h]
 	\centering
@@ -657,20 +598,18 @@ Therefore, we simulate 1000 observations based on our optimal model, and plot th
 	\label{fig:diagnosis1}
 \end{figure}
 
-Intuitively, nothing in the Figure \ref{fig:diagnosis1} is highlighted in red, indicating no violation of model assumptions is detected. Specifically, we observe the scaled residuals fall along the straight line at 45-degree angle in the Q-Q plot, hence we obtain that the residuals are normally distributed. Moreover, we cannot reject the null hypothesis of KS test that the observed distribution of scaled residuals is the same as the expected distribution, due to the p-value of 0.7119. Large p-values in dispersion test and outlier test also indicate no problem of overdispersion or outlier. In the residual plot on the right, we do not observe obvious pattern of residuals. The empirical 0.25, 0.5 and 0.75 quantiles does not show significant deviation from the theoretical quartiles, suggesting the uniformity in y-direction holds. As a result, we do not detect significant problems in the optimal model.
-
-It is highly recommended in \cite{dharma} to plot residuals against a specific predictor. Here, we plot the scaled residuals of \texttt{landuse}, one of the fixed effects in the optimal model, and \texttt{occupation}, one of the verbalises excluded from the model. Again, we do not find significant problems in Figure \ref{fig:diagnosis2}. Thus, the assumptions of the optimal model are satisfied.
+Besides, as recommended in \cite{dharma}, we plot the residuals against specific predictors including \texttt{landuse} and \texttt{occuparion} in Figure \ref{fig:diagnosis2}. Again, no significant problem is detected.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[width = 0.75\textwidth]{Images/diagnosis2.png}
-	\caption{\texttt{DHARMa} residual plots of \texttt{landuse} (left) and \texttt{occupation} (right)}
-	\label{fig:diagnosis2}	
-\end{figure} 
+	\caption{\texttt{DHARMa} residual plot and Q-Q plot of the optimal model}
+	\label{fig:diagnosis2}
+\end{figure}
 
 \subsection{Model Evaluation}
 
-Since the response of our model is binomial, for model evaluation, we plot the ROC (Receiver Operating Characteristic) curve of the optimal model and compute the corresponding AUC (Area Under Curve) value with 95\% confidence intervals. We repeat the same steps for the ordinary GLM and the random intercept model with location effect. 
+Due to binomial response, for model evaluation, we plot the ROC (Receiver Operating Characteristic) curve and compute the corresponding AUC (Area Under Curve) value with 95\% confidence intervals using R package \cite{proc}. We repeat the same steps for the ordinary GLM and the random intercept model with location effect. Furthermore, we compute the mean AUC of models using 10-fold cross validation using R package \texttt{caret} \cite{caret}. 
 
 \begin{figure}[!h]
 	\centering
@@ -681,47 +620,109 @@ Since the response of our model is binomial, for model evaluation, we plot the R
 
 \begin{table}[!h]
 	\centering
-	\begin{tabular}{|c|c|c|}
+	\begin{tabular}{|c|c|c|c|}
 		\hline
-		 & AUC & 95\% CI \\
+		 & AUC & 95\% CI & meanAUC in 10-fold CV\\
 		\hline
-		GLMM(\texttt{village}) & 0.7275 & (0.6806, 0.7745) \\
-		GLMM(\texttt{location}) & 0.7018 & (0.6520, 0.7516) \\
-		GLM & 0.6437 & (0.5942, 0.6932) \\
+		GLMM(\texttt{village}) & 0.7275 & (0.6806, 0.7745) & 0.6687 \\
+		GLMM(\texttt{location}) & 0.7018 & (0.6520, 0.7516) & 0.6681 \\
+		GLM & 0.6437 & (0.5942, 0.6932) & 0.6454 \\
 		\hline	
 	\end{tabular}
-	\caption{AUC values with 95\% confidence intervals of models}
+	\caption{AUC values of models}
 	\label{tab:AUC}
 \end{table}
 
-According to Figure \ref{fig:pROC} and Table \ref{tab:AUC}, ROC curve beyond the random guess line and AUC value of 0.7275, which is larger than 0.5, indicate better performance of the optimal model than the random classifier. Moreover, the random intercept model with village effect over-performs the rest two models, implying its better ability to explain and predict. 
+According to Figure \ref{fig:pROC} and Table \ref{tab:AUC}, ROC curve beyond the random baseline and $AUC = 0.7275 > 0.5$ indicate good performance of the optimal model. Moreover, the random intercept model with village effect over-performs the rest two models, implying its better ability to explain and predict. 
 
-Furthermore, we compute the mean AUC of models using 10-fold cross validation. As shown in Table \ref{tab:meanAUC}, again, the optimal model performs the best among three models.
+\subsection{Model Interpretation}
+
+Table \ref{tab:summary2} and Table \ref{tab:summary3} display the detailed model summary.
 
 \begin{table}[!h]
 	\centering
-	\begin{tabular}{|c|c|}
+	\begin{tabular}{|c|c|c|c|c|}
 		\hline
-		 & mean AUC \\
+		 & Estimate & Std.Error & $t$ value & Pr($>|t|$) \\
 		\hline
-		GLMM (\texttt{village}) & 0.6687 \\
-		GLMM (\texttt{location}) & 0.6681 \\
-		GLM & 0.6454 \\
+		\texttt{(Intercept)} & -1.6179 & 0.2589 & -6.249 & \ \ \ \ \ 4.13e-10 *** \\
+		\texttt{genderMale} & -0.4421 & 0.2141 & -2.065 & \ \ 0.03895 * \\  
+		\texttt{landusepastoral} & -1.0268 & 0.5697 & -1.802 & \ \ 0.07148 . \\ 
+		\texttt{landuseriverine} & -0.5554 & 0.5850 & -0.949 & 0.34245 \\    
+		\texttt{hhoccupPastoralist} & 1.8716 & 0.5401 & 3.465 & \ \ \ \ \ 0.00053 *** \\
 		\hline
+		\multicolumn{5}{|l|}{Significance codes: 0,\ ‘***’ 0.001,\ ‘**’ 0.01,\ ‘*’ 0.05,\ ‘.’ 0.1,\ ‘ ’ 1} \\
+	    \hline
 	\end{tabular}
-	\caption{Mean AUC of models based on 10-fold cross validation}
-	\label{tab:meanAUC}
+	\caption{Summary of the fixed effect}
+	\label{tab:summary2}
 \end{table}
 
-\subsection{Model Interpretation}
+\begin{table}[!h]
+	\centering
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		Groups & Name & Variance & Std.Dev. \\
+		\hline
+		\texttt{village} & (Intercept) & 0.2553 & 0.5053 \\
+		\hline
+	\end{tabular}
+	\caption{Summary of random effect}
+	\label{tab:summary3}
+\end{table}
+
+\texttt{gender}, \texttt{hhoccup} and \texttt{landuse} (0.1 significance level) show significant influence on leptospirosis seropositivity, hence they are considered as risk factors for leptospirosis. The optimal model is given by:
+\begin{align*}
+	Y_{ij} & \sim Bin(1, p_{ij}) \\
+	logit(p_{ij}) &=  -1.6179 - 0.4421 \times \mathbb{I}(\texttt{gender}_{ij} = Male)  \\
+	& \ \ \ \ - 1.0268 \times \mathbb{I}(\texttt{landuse}_{ij} = pastoral) - 0.5554 \times \mathbb{I}(\texttt{landuse}_{ij} = riverine) \\
+	& \ \ \ \ + 1.8176 \times \mathbb{I}(\texttt{hhoccup}_{ij} = Pastoralist) + v_i \\
+	v_i & \sim N(0, 0.5053^2)
+\end{align*}	
+
+Here, $Y_{ij}$ denotes the test result of individual $j$ in village $i$, with the probability $p_{ij}$. The notation \emph{logit} stands for the logistic link function. The notation $\mathbb{I}$ represents the indicator function, with the general expression:
+
+\begin{equation*}
+	\mathbb{I}_X(x) = 
+	\begin{cases}
+		1, \quad if \ x \in X \\
+		0, \quad if \ x \notin X	
+	\end{cases}
+\end{equation*}
+
+$v_i$ denotes the random intercept across villages, following a Normal distribution with mean $\mu = 0$ and standard deviation $\sigma = 0.5053$, indicating that the majority of the values (95\% to be more exact) of $v_i$ fall between $(-1.96 \times 0.5053, 1.96 \times 0.5053)$.  
+
+For example, a male individual from Village 1, with riverine land and household head occupation "Farmer", has a probability $p$ of being leptospirosis seropositive, where $p$ satisfies:
+
+$$ logit(p) = ln \frac{p}{1-p} =  -1.6179 - 0.4421 - 0.5554 + v_1 = -2.6154 + v_1, \quad v_1 \sim N(0, 0.5053^2)$$
+
+Based on \cite{jewell2003statistics} and \cite{zuur2009mixed}, the intercept terms including $v_i$ denote the log odds of leptospirosis seropositivity in the baseline model. The reference groups for features in the fixed structure are $\texttt{gender} = Female$, $\texttt{landuse} = irrigation$, and $\texttt{hhoccup} = Farmer$. In village $i$, we have 
+
+$$odds_{\texttt{result}} = \frac{P(Positive \ | \ female, irrigation, farmer)}{P(Negative \ | \ female,  irrigation, farmer)} \
+										= e^{-1.6179 + v_i} 
+										\approx 0.1983 \times e^{v_i} $$
+										
+Particularly, considering an average village effect, i.e. $v_i = 0$, we obtain an average odds 0.1983 for leptospirosis seropositivity in the baseline model above, with the 95\% confidence interval $(0.1159, 0.3316)$. 
+
+~\\
+Holding the average village effect, we have the odds ratios of factors with 95\% confidence intervals:
+
+\begin{itemize}
+	\item With \texttt{landuse} and \texttt{hhoccup} fixed, the odds of leptospirosis seropositivity for those in male group is 0.6427 (0.4194, 0.9764) times the odds of those in female group. Male individuals take less risk for leptospirosis seropositivity, probably because they have better resistance and immunity than females.
+	
+	\item With \texttt{gender} and \texttt{hhoccup} fixed, the odds of leptospirosis seropositivity for those working on pastoral land is 0.3582 (0.1151, 1.1372) times the odds of those working on irrigation land; the odds of leptospirosis seropositivity for those working on riverine land is 0.5738 (0.1657, 1.8141) times the odds of those working on irrigation land. People working on the irrigation land contact more with both polluted water and animal urine, which may contain the bacteria, and have higher risk for leptospirosis infection \cite{farr1995leptospirosis}. 
+	
+	\item With \texttt{gender} and \texttt{landuse} fixed, the odds of leptospirosis seropositivity for people whose household heads work as pastoralists is 6.4987 (2.2190, 19.3265) times the odds of those in farmers group. Comparing with farmers, pastoralists have more contact with animals and are more likely to be exposed to the bacteria. Further, leptospirosis has higher probability to be spread in the households of pastoralists. 
+	
+\end{itemize}
 
 \clearpage
 
 \section{Conclusions}
 
-We construct a modified Bayesian network on a subset of easySHARE dataset to identify risk factors on dementia. As a result, age, gender, country, education and depression tend to have significant influence on individual's cognitive function. Specifically, the probability of severe cognitive impairment rises as age or depression level increases. In particular, individuals over 65 years old or experiencing high-level depression have much higher dementia risk. Education shows opposite influence on cognitive function that people with higher education levels have lower risk. Gender and country affect individual's cognition in a variety of ways. Generally, females have higher dementia risk than males; people from countries with low aGDP have higher probability to suffer from dementia.
+We extract a subset of the data sampled from households in villages of Tana River County, Kenya, and construct a generalized linear mixed model including the random effect of villages, to identify risk factors on leptospirosis. As a result, individual's gender, land use type (0.1 significance level) and the occupation of household head appear to have significant influence on the seropositivity of leptospirosis. Specifically, male individuals seem to have lower risk of transmission of this zoonotic disease. People from household with the irrigation land are most likely to be infected, comparing with those from household with pastoral or riverine land. Besides, members from a household with the head working as a pastoralist tends to take more risk for leptospirosis seropositivity than those from a household with the head working as a farmer.
 
-There are some limitations of this research. First, although hearing loss, diabetes, and hypertension are believed to have important effect on cognitive impairment in \cite{livingston2017dementia}, their influence could not be identified due to the lack of relevant columns in easySHARE data. We could only define a general factor "chronic diseases" to count the number of chronic diseases the respondents had and explore its possible influence on dementia risk instead. To determine the specific effects of these diseases, we need to access data with relevant variables. Second, our research belongs to cross-sectional analysis, which focuses on data at a specific time point among different individuals and obtains conclusions for the general population. In this case, our research is lack of the exploration on longitudinal effects of some risk factors on dementia risk among particular respondents over the time.
+There are several limitations of this research. First, we delete over 300 observations in EDA section, due to missing or other problems, which leads to a great loss of information and further possibly biased model results. We expect improvement of model accuracy and performance, based on more complete dataset with less mistakes. Second, the response column for ELIZA test result has an imbalanced distribution where most observations have negative results. This may result in model bias as our classifier tends to over-adapt to the negative group. In this case, a possible future research could be the exploration of zero-inflated models on the count data, by concerting the observations from individual to household aspects. Moreover, we could explore the models using Bayesian methods with proper and informative priors in future.
 
 \clearpage
 
@@ -738,16 +739,23 @@ Programming part in this research is completed with R.
 
 \subsection*{R packages:}
 
-For EDA section, we use the \texttt{tidyverse} and \texttt{gridExtra} packages. We construct and estimate the networks with \texttt{bnlearn} package and display the network with \texttt{Rgraphviz} package. \texttt{MASS} package is used to fit the ordered logistic regression on cognitive score. All histograms and line graphs are generated with \texttt{ggplot2}.
+For EDA section, we use the \texttt{tidyverse} and \texttt{gridExtra} packages. We construct models with \texttt{lme4} package. \texttt{DHARMa} package is used for model diagnosis. \texttt{pROC} and \texttt{caret} packages are used for model evaluation. All histograms and line graphs are generated with \texttt{ggplot2}.
 
 \subsection*{R code: }
-The complete code is available via this \href{https://github.com/Shi-Yile/Project-1-Dementia-Risk-Factors.git}{Github repository}.
+The complete code is available via this \href{https://github.com/Shi-Yile/Project-2-Leptospirosis-Risk-Factors.git}{Github repository}.
 
 \clearpage
 
 \section*{Word Count}
 \addcontentsline{toc}{section}{Word Count}
 
-This report contains 4828 words, including executive summary, main text, references and appendix. The screenshot using  \texttt{Analyse Text} function in TeXstudio is provided.
+This report contains 4987 words, including executive summary, main text, and references. The screenshot using \texttt{Analyse Text} function in TeXstudio is provided.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[width = 0.75\textwidth]{Images/wordcount.png}
+	\caption{Word count in TeXstudio}
+	\label{fig:wordcount}
+\end{figure}
 
 \end{document}
