@@ -12,7 +12,6 @@ library(tidyverse)
 library(ggplot2)
 library(gridExtra)
 library(lme4)
-library(car)
 library(DHARMa)
 library(pROC)
 library(caret)
@@ -32,8 +31,6 @@ lep_dat$village[lep_dat$village == "village 5"] = "Village 5"
 lep_dat <- unique(lep_dat)
 ```
 
-Then, we have a look at the number of missing values in each column and the corresponding proportion.
-
 ```{r}
 miss_mat <- matrix(nrow = ncol(lep_dat), ncol = 2)
 # the number of missing values in each column
@@ -48,42 +45,17 @@ miss_mat <- miss_mat[which(miss_mat[, 1] > 0), ]
 miss_mat[order(miss_mat[, 1], decreasing = TRUE),]
 ```
 
-Most columns have no missing data. From the matrix above, we can find that `age`, `gender` and `landuse` have missing values less than 1%. Thus, we can drop these rows as we do not loss much information of the original dataset.
-
 ```{r}
 # drop rows with missing values in age, gender and landuse
 lep_dat <- lep_dat %>% drop_na(c(landuse, gender, age))
 ```
 
-As for `occupation`, `disthosp`, `livestk_home` and `location`, which contain a large amount of missing values, we cannot drop the corresponding observations directly. Instead, we explore the distribution of each variable and determine a proper way to deal with them.
-
-### `location`
-
-According to the data description, `location` is the anonymised location of area where sampling was done, from 1 to 19. A possible way to deal with the missing data in this column is using the `village` variable, with no missing value, in the same row to determine the corresponding location, as each village belongs to a location with no overlap. 
-However, looking at the dataset and referring to Google Maps, we decide to use `constituency` to represent the geographical feature of each sample, instead of `village` and `location`, based on the following reasons:
-\begin{itemize}
-  \item `constituency` has no missing value
-  \item `constituency` contains information in `village` and `location`
-  \item `constituency` has fewer categories but more significant geographical differences
-\end{itemize}
-
-From the map, we can observe a potential order in `constituency` based on the distance to Tana River and the terrain. Further details will be discussed in the feature transformation step.
-
-### `livestk_home`
-
-`livestk_home` is a binary variable indicating whether or not livestock is kept in the household of sampled person. The work of Cook et al (2016) found that the exposure to livestocks could be an important risk factor for Leptospirosis and we might also expect the significant contribution to Leptospirosis diagnosis of this variable. However, from the histogram below, we observe a significant imbalance in this column as most families have livestocks at home. In this case, we won't include this variable in our further analysis as the imbalance probably leads to insignificant results of this variable.
-
-```{r, fig.width = 9, fig.height = 4}
+```{r, fig.width = 8, fig.height = 2.5}
+# histogram for livestk_home
 ggplot(data = lep_dat, aes(x = factor(livestk_home)))+
   geom_bar(stat = "count", width = 0.15, color="darkblue", fill="lightblue") +
   labs(x ="livestk_home")
 ```
-
-### `disthosp`
-
-`disthosp` is the Euclidean distance from the sampled person's household to local hospital. Here, we assume that people from the same village go to the same and unique hospital. Thus, we can use the mean distance to the local hospital of each village to impute the missing values in this column.
-
-Note that `disthosp` in village 12, 13 and 23 are completely missing. We cannot calculate the mean distance to the local hospital and further fail to impute the missing data. In this case, we decide to drop the corresponding rows.
 
 ```{r}
 # compute the mean distance of each village
@@ -100,25 +72,21 @@ for (i in dist_mean$village){
 }
 ```
 
-### `occupation`
-
-The job of a person could have influence on the prevalence of Leptospirosis. Specifically, Cook et al (2016) pointed out that people whose working places are closer to water or animals are more likely to suffer from Leptospirosis. However, in our dataset, the column for the occupation of sampled person contains over 1/3 missing data. Unlike `location`, whose information is included in `constituency`, `occupation`has no other column to use instead and omission of missing values could result in a huge loss of information. Thus, we consider using other columns including `age`, `gender` and `landuse` to impute the variable. A general imputation idea is using the mode in some specific stratification.
-
-It is a common and reasonable assumption that people less than 18 years old are most likely to be students. Therefore, we impute the occupation of people below 18 years old with "Student".
-
-```{r, fig.width = 8, fig.height = 3}
+```{r, fig.width = 8, fig.height = 4}
 # histogram for occupation of people below 18
-ggplot(data = lep_dat %>% filter(age < 18) %>% drop_na(occupation), 
+p1 <- ggplot(data = lep_dat %>% filter(age < 18) %>% drop_na(occupation), 
        aes(x = factor(occupation)))+
   geom_bar(stat = "count", width = 0.25, color="darkblue", fill="lightblue") +
   labs(x ="occupation (age < 18)")
-```
 
-```{r, fig.width = 8, fig.height = 3}
-ggplot(data = lep_dat %>% filter(age >= 18) %>% drop_na(occupation), 
+# histogram for occupation of people over 18
+p2 <- ggplot(data = lep_dat %>% filter(age >= 18) %>% drop_na(occupation), 
        aes(x = factor(occupation)))+
   geom_bar(stat = "count", width = 0.5, color="darkblue", fill="lightblue") +
   labs(x ="occupation (age >= 18)")
+
+# display
+grid.arrange(p1, p2)
 ```
 
 ```{r}
@@ -128,13 +96,8 @@ idx <- which(lep_dat$age < 18 & is.na(lep_dat$occupation))
 lep_dat$occupation[idx] = "Student"
 ```
 
-For people at least 18 years old, their occupations could be correlated with various variables including `landuse`, `constituency` and `gender`, which makes it tricky to impute the missing values in `occupation`. Before applying any imputation methods, we hold `age` >= 18 and plot the corresponding conditional distributions to have a clear insight of this column. 
-
-"Farmer" becomes the most popular job among sample adults whose land use is "riverine" and "Pastoralist" comes to the second. Since the number of this category is small (47 observations), we do not explore further in different `constituency` groups.
-
-Holding `landuse` = "irrigation", we observe that over 90% adults have their occupations as "Farmer". To be more specific, we condition on `constituency` and plot the distribution in each group. As a result, most people come from "Tana North" and almost all of them have the job as "Farmer". Although "Farmer" is still the most popular job in the group of "Tana River", the proportion of people with a job as "Pastoralist" slightly increases.
-
-```{r, fig.width = 8, fig.height = 9}
+```{r, fig.width = 8, fig.height = 6}
+# histograms for occupation, conditioning on landuse 
 # landuse = riverine
 p1 <- ggplot(data = lep_dat %>% 
                filter(age >= 18 & landuse == "riverine") %>% 
@@ -159,19 +122,19 @@ p3 <- ggplot(data = lep_dat %>%
   geom_bar(stat = "count", width = 0.4, color="darkblue", fill="lightblue") +
   labs(x ="pastoral")
 
+# display
 grid.arrange(p1, p2, p3)
-
 ```
 ```{r, warning = FALSE}
-chisq.test(lep_dat$occupation, lep_dat$landuse)
+# chisq test for correlation between occupation and landuse
+chisq.test(lep_dat$occupation[lep_dat$age >= 18], 
+           lep_dat$landuse[lep_dat$age >= 18])
 ```
 
-
-The case of group "pastoral" is more complex. It seems that "Pastoralist" plays a much more important role than any other categories in this group. However, we notice that the second most popular job is "Housewife". In this case, we suspect that there probably exists different distributions between genders. As shown in the plots below, "Pastoralist" is the most popular job in male group, with a much higher frequency than any other categories. In female group, "Pastoralist" still has the most observations, but "Housewife" takes larger proportion, which is significantly different from the general case. 
-
-Moreover, we take the influence of `constituency` into consideration. Due to the great amount of "Pastoralist" in the male group, we do not observe significant difference among male individuals in different constituencies and "Pastoralist"
-
 ```{r, fig.width = 8, fig.height = 10}
+# histograms for occupation, conditioning on gender and constituency
+# not displayed in the report
+
 # landuse = pastoral + constituency = Tana North + gender = Male
 p1 <- ggplot(data = lep_dat %>% 
                filter(age >= 18 & 
@@ -266,42 +229,52 @@ grid.arrange(p1, p2, p3, p4, p5, p6, p7, p8, ncol = 2)
 
 ### Feature Selection
 
-Here, we drop the observations with missing values in `occupation` and `disthosp`
-directly from the dataset. After then, we combine some categories in `occupation` and `hhoccup` to ensure that each category contains sufficient observations. We make boxplots and barplots to explore if the feature affects `result` significantly:
 ```{r}
-# drop NAs in `occupation` and `disthosp`
+# drop NAs in occupation, disthosp and location
 lep_narm <- lep_dat %>%
   drop_na(occupation, disthosp, location) %>%
   filter(disthosp < 100)
 ```
 
-```{r, fig.width = 8, fig.height = 4}
+```{r}
+# count the number of observations in each category in occupation
 occ_count <- lep_narm %>% select(occupation, result) %>%
   group_by(occupation) %>%
   count(occupation)
 
+# display in decreasing order
 occ_count[order(occ_count$n, decreasing = T),]
 
-ggplot(lep_narm, aes(x = occupation, fill = result)) + 
-  geom_bar(width = 0.35) + 
-  scale_fill_manual(values = c("lightblue", "darkblue")) +
-  theme(axis.text.x = element_text(angle = 20, hjust = 1)) +
-  labs(x ="occupation")                  
-```
-
-```{r, fig.width = 8, fig.height = 4}
+# count the number of observations in each category in hhoccup
 hhocc_count <- lep_narm %>% select(hhoccup, result) %>%
   group_by(hhoccup) %>%
   count(hhoccup)
 
+# display in decreasing order
 hhocc_count[order(hhocc_count$n, decreasing = T),]
 
-ggplot(lep_narm, aes(x = hhoccup, fill = result)) + 
+```
+
+```{r, fig.width = 8, fig.height = 6}
+# not displayed in the report
+# stacked bar plot of result, grouped by occupation
+p1 <- ggplot(lep_narm, aes(x = occupation, fill = result)) + 
   geom_bar(width = 0.35) + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   theme(axis.text.x = element_text(angle = 20, hjust = 1)) +
-  labs(x ="hhoccup")                  
+  labs(x ="occupation")
+
+# stacked bar plot of result, grouped by hhoccup
+p2 <- ggplot(lep_narm, aes(x = hhoccup, fill = result)) + 
+  geom_bar(width = 0.35) + 
+  scale_fill_manual(values = c("lightblue", "darkblue")) +
+  theme(axis.text.x = element_text(angle = 20, hjust = 1)) +
+  labs(x ="hhoccup")      
+
+# display
+grid.arrange(p1, p2)
 ```
+
 ```{r}
 # combine categories in `occupation`
 lep_narm$occupation[lep_narm$occupation == "Crop Farming"] = "Farmer"
@@ -313,54 +286,14 @@ lep_narm$hhoccup[lep_narm$hhoccup == "Herdsman"] = "Pastoralist"
 ```
 
 ```{r}
+# drop small groups in occupation and hhoccup 
 lep_narm <- lep_narm %>% 
-  filter(occupation %in% occ_count$occupation[occ_count$n > 20])
-```
-
-```{r}
-lep_narm <- lep_narm %>% 
+  filter(occupation %in% occ_count$occupation[occ_count$n > 20]) %>%
   filter(hhoccup %in% hhocc_count$hhoccup[hhocc_count$n > 20])
 ```
 
-
-```{r, fig.height = 8, fig.width = 8}
-# boxplots for continuous variables
-# age
-p1 <- ggplot(lep_narm, aes(x = result, y = age)) + 
-  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
-  labs(x = "result")
-
-# altitude
-p2 <- ggplot(lep_narm, aes(x = result, y = altitude)) + 
-  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
-  labs(x = "result")
-
-# nmales
-p3 <- ggplot(lep_narm, aes(x = result, y = nmales)) + 
-  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
-  labs(x = "result")
-
-# nfemales
-p4 <- ggplot(lep_narm, aes(x = result, y = nfemales)) + 
-  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
-  labs(x = "result")
-
-# famsize
-p5 <- ggplot(lep_narm, aes(x = result, y = famsize)) + 
-  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
-  labs(x = "result")
-
-# disthosp
-p6 <- ggplot(lep_narm, aes(x = result, y = disthosp)) + 
-  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
-  labs(x = "result")
-
-# display plots
-grid.arrange(p1, p2, p3, p4, p5, p6, ncol = 2)
-```
-
-```{r, fig.height = 5, fig.width = 8}
-# stacked barplots for discrete factors
+```{r, fig.height = 4.5, fig.width = 9}
+# stacked barplots result, grouped by levels in factors
 # gender
 p1 <- ggplot(lep_narm, aes(x = gender, fill = result)) + 
   geom_bar(width = 0.2) + 
@@ -393,18 +326,29 @@ p5 <- ggplot(lep_narm, aes(x = hhgender, fill = result)) +
 # display plots
 grid.arrange(p1, p2, p3, p4, p5, ncol = 2)
 ```
+
 ```{r}
-# define a function to compute prevalence in different groups
 prevalence <- function(varname){
+  # this function is defined to compute prevalence in different groups
+  
+  # extract specific variable and result
   subset <- data.frame(lep_narm[, c(varname, "result")])
+  # get the levels in the specific variable
   category <- unique(subset[, varname])
+  # initialize a data frame to store prevalence
   res <- data.frame(category = category, prevalence = rep(0, length(category)))
+  
+  # loop to compute prevalence in each level
   for (i in (1 : length(category))){
+    # the number of positive observations in level i
     pos <- length(which(subset[, varname] == category[i] & 
                           subset$result == "Positive"))
+    # the number of all observations in level i
     total <- length(which(subset[, varname] == category[i]))
+    # calculate prevalence, in 4 decimal places
     res$prevalence[i] <-  round(pos / total, 4)
   }
+  # display the result
   res
 }
 ```
@@ -427,41 +371,78 @@ prevalence("hhoccup")
 prevalence("hhgender")
 ```
 
-```{r, fig.width = 10}
-# village
+```{r, fig.height = 4, fig.width = 9}
+# boxplots for continuous variables
+# age
+p1 <- ggplot(lep_narm, aes(x = result, y = age)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# altitude
+p2 <- ggplot(lep_narm, aes(x = result, y = altitude)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# nmales
+p3 <- ggplot(lep_narm, aes(x = result, y = nmales)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# nfemales
+p4 <- ggplot(lep_narm, aes(x = result, y = nfemales)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# famsize
+p5 <- ggplot(lep_narm, aes(x = result, y = famsize)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# disthosp
+p6 <- ggplot(lep_narm, aes(x = result, y = disthosp)) + 
+  geom_boxplot(width = 0.25, color = "darkblue", fill = "lightblue") + 
+  labs(x = "result")
+
+# display plots
+grid.arrange(p1, p2, p3, p4, p5, p6, ncol = 3)
+```
+
+```{r, fig.width = 9, fig.height = 3}
+# stacked bar plot of result, grouped by village
 ggplot(lep_narm, aes(x = village, fill = result)) + 
   geom_bar() + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(x ="village")
 
+# prevalence in each village
 prevalence("village")
 ```
 
-```{r, fig.width = 8}
-# location
+```{r, fig.width = 8, fig.height = 3}
+# stacked bar plot of result, grouped by location
 ggplot(lep_narm, aes(x = location, fill = result)) + 
   geom_bar() + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(x ="location")
 
+# prevalence in each location
 prevalence("location")
 ```
 
-```{r, fig.width = 8}
-# constituency
+```{r, fig.width = 8, fig.height = 3}
+# stacked bar plot of result, grouped by constituency
 ggplot(lep_narm, aes(x = constituency, fill = result)) + 
   geom_bar(width = 0.2) + 
   scale_fill_manual(values = c("lightblue", "darkblue")) +
   labs(x ="constituency")
 
+# prevalence in each constituency
 prevalence("constituency")
 ```
 
-## Inplementation
-
-Model: Linear Mixed Model
+## Model Construction and Selection
 
 ```{r}
 # factorize the response, i.e. result
@@ -472,7 +453,7 @@ glm <- glm(result ~ gender + age + occupation + landuse + altitude +
            data = lep_narm,
            family = binomial(link = "logit"))
 
-# identify which columns are significant based on model summary
+# model summary
 summary(glm)
 # significance check using step()
 step(glm, test = "Chisq")
@@ -486,103 +467,98 @@ glm_selected <- glm(result ~ gender + landuse + hhoccup,
 
 # model summary
 summary(glm_selected)
-# Chi-square test for variables
+# significance check
 step(glm_selected, test = "Chisq")
 ```
 
 
 ```{r}
-# glmer with random effect of constituency on intercept
+# GLMM with random effect of village on intercept
 glmer_v_1 <- glmer(result ~ gender + landuse + hhoccup + (1 | village), 
                    data = lep_narm,
                    family = binomial(link = "logit"))
 
-# ANOVA
+# model comparison using ANOVA
 anova(glmer_v_1, glm_selected)
 ```
-```{r}
-# constituency model considering random slopes
-# gender
+```{r, warning = FALSE}
+# GLMMs with village effect and random slopes
+# random slope on landuse
 glmer_v_2 <- glmer(result ~ gender + landuse + hhoccup + 
-                     (1 + gender| village), 
-                 data = lep_narm,
-                 family = binomial(link = "logit"))
-
-# landuse
-glmer_v_3 <- glmer(result ~ gender + landuse + hhoccup + 
                      (1 + landuse| village), 
                  data = lep_narm,
                  family = binomial(link = "logit"))
 
-# hhoccup
-glmer_v_4 <- glmer(result ~ gender + landuse + hhoccup + 
+# random slope on hhoccup
+glmer_v_3 <- glmer(result ~ gender + landuse + hhoccup + 
                      (1 + hhoccup| village), 
                  data = lep_narm,
                  family = binomial(link = "logit"))
 
-# ANOVA
-anova(glmer_v_1, glmer_v_3, glmer_v_4)
+# model comparison
+anova(glmer_v_1, glmer_v_2, glmer_v_3)
 ```
 
 ```{r}
-# glmer with random effect of location on intercept
+# GLMM with random effect of location on intercept
 glmer_l <- glmer(result ~ gender + landuse + hhoccup + (1 | location), 
                  data = lep_narm,
                  family = binomial(link = "logit"))
 
-# AIC
+# model comparison using AIC
 AIC(glmer_v_1, glmer_l)
 ```
 
-```{r}
-# village model summary
-summary(glmer_v_1)
-```
-
-```{r}
-vif(glmer_v_1)
-```
+### Model Diagnosis
 
 ```{r, fig.width = 8, fig.height = 4}
+# standard residual plot of the optimal model
 plot(glmer_v_1)
 ```
 
-
-```{r, fig.width = 8}
-# use plot function in DHARMa package for model diagnosis
+```{r, fig.width = 8, fig.height = 4}
+# simulation in DHARMa package, based on the optimal model
 sim <- simulateResiduals(glmer_v_1, 1000)
+# scaled residual plot and QQ plot
 plot(sim)
 ```
 
-```{r, warning = FALSE, fig.width = 8}
-# diagnosis plots for each dependent variable
-par(mfrow = c(1, 2))
+```{r, warning = FALSE, fig.width = 9, fig.height = 4}
+# diagnosis plots for specific explanatory variables
+par(mfrow = c(1, 3))
+# gender
+plotResiduals(sim, form = lep_narm$gender)
+# landuse
 plotResiduals(sim, form = lep_narm$landuse)
-plotResiduals(sim, form = lep_narm$occupation)
+# hhoccup
+plotResiduals(sim, form = lep_narm$hhoccup)
 ```
+
+### Model Evaluation
 
 ```{r, fig.width = 8}
 # model predictions
-# glmer - village
+# GLMM - village
 pred_v_1 <- predict(glmer_v_1, newdata = lep_narm, 
                     re.form = ~(1|village), type = "response")
-# glmer - location
+# GLMM - location
 pred_l <- predict(glmer_l, newdata = lep_narm, 
                   re.form = ~(1|location), type = "response")
 ```
 
 ```{r, fig.width = 8}
 # ROC and AUC of models
-# glmer - village
+# GLMM - village
 roc_v <- roc(lep_narm$result, pred_v_1, ci = TRUE, quiet = TRUE, plot = FALSE)
-# glmer - location
+# GLMM - location
 roc_l <- roc(lep_narm$result, pred_l, plot = FALSE, ci = TRUE, quiet = TRUE)
-# glm
+# GLM with selected features
 roc_glm <- roc(lep_narm$result, glm_selected$fitted.values, 
                ci = TRUE, quiet = TRUE, plot = FALSE)
 ```
 
 ```{r}
+# plot ROC curves using ggplot2
 ggroc(list(GLMM_village = roc_v, GLMM_location = roc_l, 
            GLM = roc_glm), size = 1) + 
   geom_segment(aes(x = 1, xend = 0, y = 0, yend = 1), 
@@ -590,6 +566,7 @@ ggroc(list(GLMM_village = roc_v, GLMM_location = roc_l,
 ```
 
 ```{r}
+# report AUC and 95% CI
 data.frame(model = c("glmer_v_1", "glmer_l","glm_selected"), 
            AUC = c(roc_v$auc, roc_l$auc, roc_glm$auc),
            CI.lower = c(roc_v$ci[1], roc_l$ci[1], roc_glm$ci[1]),
@@ -694,7 +671,20 @@ meanAUC_glm <- round(mean(auc_cv), 4)
 ```
 
 ```{r}
+# report the mean AUC across CV
 data.frame(model = c("glmer_v_1", "glmer_l","glm_selected"), 
            meanAUC = c(meanAUC_v, meanAUC_l, meanAUC_glm))
 ```
 
+# Model Interpretation
+
+```{r}
+# summary of random intercept model with village effect
+summary(glmer_v_1)
+```
+
+```{r}
+# 95% CI for model parameters
+logOR_ci_v <- confint(glmer_v_1, maxpts = 8)
+logOR_ci_v
+```
