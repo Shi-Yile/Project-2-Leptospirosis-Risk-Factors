@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.12)  10 AUG 2022 22:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.12)  11 AUG 2022 14:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -453,7 +453,7 @@ ut)
 \openout3 = `"Analysis on Leptospirosis Risk Factors Based on General Linear Mi
 xed Model.out"'.
 
-<CentredLogoCMYK.jpg, id=92, 803.0pt x 641.39626pt>
+<CentredLogoCMYK.jpg, id=84, 803.0pt x 641.39626pt>
 File: CentredLogoCMYK.jpg Graphic file (type jpg)
 <use CentredLogoCMYK.jpg>
 Package pdftex.def Info: CentredLogoCMYK.jpg  used on input line 43.
@@ -462,7 +462,7 @@ Package pdftex.def Info: CentredLogoCMYK.jpg  used on input line 43.
 
 {d:/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./CentredLogoCM
 YK.jpg>]
-<Images/ROC.png, id=102, 526.96875pt x 325.215pt>
+<Images/ROC.png, id=94, 526.96875pt x 325.215pt>
 File: Images/ROC.png Graphic file (type png)
 <use Images/ROC.png>
 Package pdftex.def Info: Images/ROC.png  used on input line 90.
@@ -496,7 +496,7 @@ g . maths . ed . ac . uk / main / msc-[]students / msc-[]programmes / statistic
 s /
  []
 
-<Images/Signature.png, id=117, 436.63126pt x 71.51718pt>
+<Images/Signature.png, id=109, 436.63126pt x 71.51718pt>
 File: Images/Signature.png Graphic file (type png)
 <use Images/Signature.png>
 Package pdftex.def Info: Images/Signature.png  used on input line 141.
@@ -518,7 +518,7 @@ l.165 \clearpage
                  [1
 
 ]
-<Images/livestk.png, id=155, 578.16pt x 180.675pt>
+<Images/livestk.png, id=145, 578.16pt x 180.675pt>
 File: Images/livestk.png Graphic file (type png)
 <use Images/livestk.png>
 Package pdftex.def Info: Images/livestk.png  used on input line 206.
@@ -531,17 +531,20 @@ l.212
        [2
 
  <./Images/livestk.png>]
-<Images/occupation_age.png, id=166, 578.16pt x 289.08pt>
+<Images/occupation_age.png, id=156, 578.16pt x 289.08pt>
 File: Images/occupation_age.png Graphic file (type png)
 <use Images/occupation_age.png>
-Package pdftex.def Info: Images/occupation_age.png  used on input line 223.
+Package pdftex.def Info: Images/occupation_age.png  used on input line 219.
 (pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
-<Images/occupation_landuse.png, id=168, 578.16pt x 433.62pt>
+<Images/occupation_landuse.png, id=158, 578.16pt x 433.62pt>
 File: Images/occupation_landuse.png Graphic file (type png)
 <use Images/occupation_landuse.png>
-Package pdftex.def Info: Images/occupation_landuse.png  used on input line 234.
+Package pdftex.def Info: Images/occupation_landuse.png  used on input line 230.
 
 (pdftex.def)             Requested size: 362.77264pt x 272.07709pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -550,65 +553,84 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.3}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.248 
-       [3 <./Images/occupation_age.png>]pdfTeX warning (ext4): destination with
- the same identifier (name{page.4}) has been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.279 
-       [4 <./Images/occupation_landuse.png>]
-<Images/factors.png, id=190, 650.43pt x 325.215pt>
+l.273 
+       [3 <./Images/occupation_age.png>]
+<Images/factors.png, id=175, 650.43pt x 325.215pt>
 File: Images/factors.png Graphic file (type png)
 <use Images/factors.png>
-Package pdftex.def Info: Images/factors.png  used on input line 282.
+Package pdftex.def Info: Images/factors.png  used on input line 278.
 (pdftex.def)             Requested size: 483.69687pt x 241.85622pt.
-<Images/numerical.png, id=191, 650.43pt x 289.08pt>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<Images/numerical.png, id=176, 650.43pt x 289.08pt>
 File: Images/numerical.png Graphic file (type png)
 <use Images/numerical.png>
-Package pdftex.def Info: Images/numerical.png  used on input line 322.
+Package pdftex.def Info: Images/numerical.png  used on input line 318.
 (pdftex.def)             Requested size: 386.95897pt x 171.98488pt.
 
+Underfull \vbox (badness 2134) has occurred while \output is active []
+
+pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.321 \end{figure}
+                   [4 <./Images/occupation_landuse.png>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-Underfull \vbox (badness 1067) has occurred while \output is active []
-
- [5 <./Images/factors.png>]
-<Images/village.png, id=202, 650.43pt x 216.81pt>
+<Images/village.png, id=186, 650.43pt x 216.81pt>
 File: Images/village.png Graphic file (type png)
 <use Images/village.png>
-Package pdftex.def Info: Images/village.png  used on input line 335.
+Package pdftex.def Info: Images/village.png  used on input line 331.
 (pdftex.def)             Requested size: 362.77264pt x 120.92645pt.
-<Images/location.png, id=203, 578.16pt x 216.81pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<Images/location.png, id=187, 578.16pt x 216.81pt>
 File: Images/location.png Graphic file (type png)
 <use Images/location.png>
-Package pdftex.def Info: Images/location.png  used on input line 366.
+Package pdftex.def Info: Images/location.png  used on input line 362.
 (pdftex.def)             Requested size: 362.77264pt x 136.03853pt.
 
-
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Images/constituency.png, id=204, 578.16pt x 216.81pt>
+<Images/constituency.png, id=188, 578.16pt x 216.81pt>
 File: Images/constituency.png Graphic file (type png)
 <use Images/constituency.png>
-Package pdftex.def Info: Images/constituency.png  used on input line 392.
+Package pdftex.def Info: Images/constituency.png  used on input line 388.
 (pdftex.def)             Requested size: 362.77264pt x 136.03853pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5 <./Images/factors.png>]
+
+LaTeX Warning: Text page 6 contains only floats.
+
+
+Overfull \vbox (0.20859pt too high) has occurred while \output is active []
+
 
 [6 <./Images/numerical.png> <./Images/village.png>] [7 <./Images/location.png> 
 <./Images/constituency.png>]
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 428.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 424.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 428.
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 424.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -619,7 +641,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 [8
 
 ]
-Overfull \hbox (15.492pt too wide) in paragraph at lines 531--542
+Overfull \hbox (15.492pt too wide) in paragraph at lines 527--538
  [][] 
  []
 
@@ -630,31 +652,31 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [9] [10]
-<Images/std_resplot.png, id=253, 578.16pt x 289.08pt>
+<Images/std_resplot.png, id=243, 578.16pt x 289.08pt>
 File: Images/std_resplot.png Graphic file (type png)
 <use Images/std_resplot.png>
-Package pdftex.def Info: Images/std_resplot.png  used on input line 579.
+Package pdftex.def Info: Images/std_resplot.png  used on input line 575.
 (pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
-<Images/diagnosis1.png, id=256, 578.16pt x 289.08pt>
+<Images/diagnosis1.png, id=246, 578.16pt x 289.08pt>
 File: Images/diagnosis1.png Graphic file (type png)
 <use Images/diagnosis1.png>
-Package pdftex.def Info: Images/diagnosis1.png  used on input line 596.
+Package pdftex.def Info: Images/diagnosis1.png  used on input line 592.
 (pdftex.def)             Requested size: 362.77264pt x 181.38472pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<Images/diagnosis2.png, id=259, 650.43pt x 289.08pt>
+<Images/diagnosis2.png, id=249, 650.43pt x 289.08pt>
 File: Images/diagnosis2.png Graphic file (type png)
 <use Images/diagnosis2.png>
-Package pdftex.def Info: Images/diagnosis2.png  used on input line 605.
+Package pdftex.def Info: Images/diagnosis2.png  used on input line 601.
 (pdftex.def)             Requested size: 362.77264pt x 161.23528pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 File: Images/ROC.png Graphic file (type png)
 <use Images/ROC.png>
-Package pdftex.def Info: Images/ROC.png  used on input line 616.
+Package pdftex.def Info: Images/ROC.png  used on input line 612.
 (pdftex.def)             Requested size: 362.77264pt x 223.89243pt.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -666,7 +688,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
  <./Images/std_resplot.png>] [12 <./Images/diagnosis1.png> <./Images/diagnosis2
 .png>] [13]
-Overfull \hbox (8.84082pt too wide) in paragraph at lines 705--706
+Overfull \hbox (8.84082pt too wide) in paragraph at lines 701--702
 \OT1/cmr/m/n/10.95 lep-tospiro-sis seropos-i-tiv-ity in the base-line model abo
 ve, with the 95% con-fi-dence in-ter-val $(0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/1
 0.95 1159\OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cm
@@ -682,10 +704,10 @@ bl) [16
 ] [17
 
 ]
-<Images/wordcount.png, id=327, 235.47975pt x 136.1085pt>
+<Images/wordcount.png, id=317, 235.47975pt x 136.1085pt>
 File: Images/wordcount.png Graphic file (type png)
 <use Images/wordcount.png>
-Package pdftex.def Info: Images/wordcount.png  used on input line 756.
+Package pdftex.def Info: Images/wordcount.png  used on input line 752.
 (pdftex.def)             Requested size: 362.77264pt x 209.69287pt.
  [18
 
@@ -694,13 +716,13 @@ Package pdftex.def Info: Images/wordcount.png  used on input line 756.
 ux)
 Package rerunfilecheck Info: File `"Analysis on Leptospirosis Risk Factors Base
 d on General Linear Mixed Model".out' has not changed.
-(rerunfilecheck)             Checksum: E470779F09C5708D403A621563EC17CC;3387.
+(rerunfilecheck)             Checksum: DF95A730B9C1C82E0958B54081FBA3F8;3161.
  ) 
 Here is how much of TeX's memory you used:
- 9971 strings out of 480901
- 144852 string characters out of 5906223
- 460662 words of memory out of 5000000
- 26947 multiletter control sequences out of 15000+600000
+ 9967 strings out of 480901
+ 144772 string characters out of 5906223
+ 460659 words of memory out of 5000000
+ 26945 multiletter control sequences out of 15000+600000
  414287 words of font info for 69 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  71i,13n,74p,934b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -721,10 +743,10 @@ onts/cm/cmtt10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mtt8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
 Output written on "Analysis on Leptospirosis Risk Factors Based on General Line
-ar Mixed Model.pdf" (22 pages, 770695 bytes).
+ar Mixed Model.pdf" (22 pages, 769945 bytes).
 PDF statistics:
- 412 PDF objects out of 1000 (max. 8388607)
- 339 compressed objects within 4 object streams
- 87 named destinations out of 1000 (max. 500000)
- 252 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 402 PDF objects out of 1000 (max. 8388607)
+ 329 compressed objects within 4 object streams
+ 85 named destinations out of 1000 (max. 500000)
+ 236 words of extra memory for PDF output out of 10000 (max. 10000000)
 

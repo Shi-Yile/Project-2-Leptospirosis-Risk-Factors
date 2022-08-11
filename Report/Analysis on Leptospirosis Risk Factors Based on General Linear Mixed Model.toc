@@ -1,12 +1,10 @@
 \contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
 \contentsline {section}{\numberline {2}Exploratory Data Analysis}{2}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Missing Data}{2}{subsection.2.1}%
-\contentsline {subsubsection}{\numberline {2.1.1}location}{3}{subsubsection.2.1.1}%
-\contentsline {subsubsection}{\numberline {2.1.2}occupation}{3}{subsubsection.2.1.2}%
 \contentsline {subsection}{\numberline {2.2}Feature Selection}{3}{subsection.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.1}Nominal Variables}{4}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.1}Nominal Variables}{3}{subsubsection.2.2.1}%
 \contentsline {subsubsection}{\numberline {2.2.2}Numerical Variables}{5}{subsubsection.2.2.2}%
-\contentsline {subsubsection}{\numberline {2.2.3}Environmental Variables}{6}{subsubsection.2.2.3}%
+\contentsline {subsubsection}{\numberline {2.2.3}Environmental Variables}{5}{subsubsection.2.2.3}%
 \contentsline {section}{\numberline {3}Implementation}{8}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Generalized Linear Mixed Model}{8}{subsection.3.1}%
 \contentsline {subsection}{\numberline {3.2}Model Construction and Selection}{8}{subsection.3.2}%
