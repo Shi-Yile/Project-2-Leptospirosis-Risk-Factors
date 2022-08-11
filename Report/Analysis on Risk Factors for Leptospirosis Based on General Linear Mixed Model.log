@@ -1,12 +1,12 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.12)  11 AUG 2022 14:08
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.10.12)  11 AUG 2022 14:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**"Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.t
-ex"
+**"Analysis on Risk Factors for Leptospirosis Based on General Linear Mixed Mod
+el.tex"
 
-(./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.t
-ex
+(./Analysis on Risk Factors for Leptospirosis Based on General Linear Mixed Mod
+el.tex
 LaTeX2e <2020-10-01> patch level 4
 L3 programming layer <2021-02-18>
 (d:/texlive/2021/texmf-dist/tex/latex/base/article.cls
@@ -340,10 +340,10 @@ File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count292
 \l__pdf_internal_box=\box49
 )
-(./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.a
-ux)
-\openout1 = `"Analysis on Leptospirosis Risk Factors Based on General Linear Mi
-xed Model.aux"'.
+(./Analysis on Risk Factors for Leptospirosis Based on General Linear Mixed Mod
+el.aux)
+\openout1 = `"Analysis on Risk Factors for Leptospirosis Based on General Linea
+r Mixed Model.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
 LaTeX Font Info:    ... okay on input line 29.
@@ -445,13 +445,13 @@ LaTeX Info: Redefining \ref on input line 29.
 LaTeX Info: Redefining \pageref on input line 29.
 LaTeX Info: Redefining \nameref on input line 29.
 
-(./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.o
-ut)
-(./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.o
-ut)
+(./Analysis on Risk Factors for Leptospirosis Based on General Linear Mixed Mod
+el.out)
+(./Analysis on Risk Factors for Leptospirosis Based on General Linear Mixed Mod
+el.out)
 \@outlinefile=\write3
-\openout3 = `"Analysis on Leptospirosis Risk Factors Based on General Linear Mi
-xed Model.out"'.
+\openout3 = `"Analysis on Risk Factors for Leptospirosis Based on General Linea
+r Mixed Model.out"'.
 
 <CentredLogoCMYK.jpg, id=84, 803.0pt x 641.39626pt>
 File: CentredLogoCMYK.jpg Graphic file (type jpg)
@@ -504,11 +504,11 @@ Package pdftex.def Info: Images/Signature.png  used on input line 141.
 [4
 
  <./Images/Signature.png>]
-(./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.t
-oc)
+(./Analysis on Risk Factors for Leptospirosis Based on General Linear Mixed Mod
+el.toc)
 \tf@toc=\write4
-\openout4 = `"Analysis on Leptospirosis Risk Factors Based on General Linear Mi
-xed Model.toc"'.
+\openout4 = `"Analysis on Risk Factors for Leptospirosis Based on General Linea
+r Mixed Model.toc"'.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
@@ -698,13 +698,13 @@ r/m/n/10.95 3316)$.
 [14] [15
 
 ]
-(./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.b
-bl) [16
+(./Analysis on Risk Factors for Leptospirosis Based on General Linear Mixed Mod
+el.bbl) [16
 
 ] [17
 
 ]
-<Images/wordcount.png, id=317, 235.47975pt x 136.1085pt>
+<Images/wordcount.png, id=318, 235.47975pt x 136.1085pt>
 File: Images/wordcount.png Graphic file (type png)
 <use Images/wordcount.png>
 Package pdftex.def Info: Images/wordcount.png  used on input line 752.
@@ -712,20 +712,20 @@ Package pdftex.def Info: Images/wordcount.png  used on input line 752.
  [18
 
  <./Images/wordcount.png>]
-(./Analysis on Leptospirosis Risk Factors Based on General Linear Mixed Model.a
-ux)
-Package rerunfilecheck Info: File `"Analysis on Leptospirosis Risk Factors Base
-d on General Linear Mixed Model".out' has not changed.
+(./Analysis on Risk Factors for Leptospirosis Based on General Linear Mixed Mod
+el.aux)
+Package rerunfilecheck Info: File `"Analysis on Risk Factors for Leptospirosis 
+Based on General Linear Mixed Model".out' has not changed.
 (rerunfilecheck)             Checksum: DF95A730B9C1C82E0958B54081FBA3F8;3161.
  ) 
 Here is how much of TeX's memory you used:
- 9967 strings out of 480901
- 144772 string characters out of 5906223
- 460659 words of memory out of 5000000
- 26945 multiletter control sequences out of 15000+600000
+ 9969 strings out of 480901
+ 144901 string characters out of 5906223
+ 460721 words of memory out of 5000000
+ 26946 multiletter control sequences out of 15000+600000
  414287 words of font info for 69 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 71i,13n,74p,934b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 71i,13n,74p,938b,393s stack positions out of 5000i,500n,10000p,200000b,80000s
 {d:/texlive/2021/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<d:/tex
 live/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><d:/texlive/2021
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><d:/texlive/2021/texmf-di
@@ -742,11 +742,11 @@ blic/amsfonts/cm/cmti10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmtt10.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mtt8.pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10
 .pfb><d:/texlive/2021/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb>
-Output written on "Analysis on Leptospirosis Risk Factors Based on General Line
-ar Mixed Model.pdf" (22 pages, 769945 bytes).
+Output written on "Analysis on Risk Factors for Leptospirosis Based on General 
+Linear Mixed Model.pdf" (22 pages, 770548 bytes).
 PDF statistics:
- 402 PDF objects out of 1000 (max. 8388607)
- 329 compressed objects within 4 object streams
- 85 named destinations out of 1000 (max. 500000)
+ 403 PDF objects out of 1000 (max. 8388607)
+ 330 compressed objects within 4 object streams
+ 86 named destinations out of 1000 (max. 500000)
  236 words of extra memory for PDF output out of 10000 (max. 10000000)
 
